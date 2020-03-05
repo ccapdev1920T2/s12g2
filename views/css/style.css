@@ -1,0 +1,1292 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans&display=swap" rel="stylesheet');
+
+html
+{
+  scroll-behavior: smooth;
+}
+
+body
+{
+	margin:0;
+	background: #ebebeb;
+	
+	font-size: 12px;
+	font-family: 'Josefin Sans', sans-serif, Arial;
+	letter-spacing: 1.2px;
+	line-height: 1.5;
+	color: #2e3e3e;
+}
+
+
+
+#wrapper1, #getstarted, #wrapperflex
+{
+	position: relative;
+	padding: 70px;
+	box-sizing: border-box;
+	min-height: 100vh;
+	text-align: center;
+}
+
+img
+{
+	object-fit: contain;
+	-webkit-user-drag: none;
+}
+
+#logo
+{
+	float: left;
+}
+
+
+
+#header
+{
+	position: relative;
+	user-select:none;
+	
+	height: 80px;
+	width: 100%;
+	background-color: transparent;
+	text-align: right;
+}
+
+.header_link
+{
+	position: relative;
+	bottom: 15px;
+	text-decoration: none;
+	margin-left: 30px;
+	text-transform: uppercase;
+	color: #2e3e3e;
+}
+
+
+.title
+{	
+	margin-left: auto;
+	margin-right:auto;
+	text-decoration:none;
+	letter-spacing: 5px;
+	font-size: 30px;
+	color: #382a1f;
+	cursor: default;
+	transition: 0.5s;
+}
+
+.title:hover
+{
+	color: #54463b;
+	letter-spacing: 10px;
+	transition: 0.5s;
+}
+
+
+
+#desc
+{
+	background-color: transparent;
+	padding: 40px;
+	margin-top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+	margin-bottom: 10vh;
+	width: 500px;
+	
+	font-size:20px;
+	text-align: center;
+}
+
+
+
+#form
+{
+	margin-top:30px;
+	margin-left: auto;
+    margin-right: auto;
+	margin-bottom: 30px;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	user-select: none;
+	
+	width: 300px;
+	background-color: white;
+	padding: 40px;
+    overflow: auto;
+	
+	text-align:center;
+}
+
+label
+{
+	padding: 0px 20px;
+	
+	font-size: 15px;
+	text-transform: lowercase;
+}
+
+input[type=email], input[type=password], input[type=text]
+{
+	border: none;
+	margin-bottom:20px;
+	
+	background-color: transparent;
+	text-align: center;
+	letter-spacing: 1.5px;
+    line-height: 2;
+	font-family: 'Open Sans', sans-serif;
+	width: 80%;
+	border-bottom: 0.5px solid rgb(46, 62, 62);
+}
+
+.submit
+{
+	margin-top: 10px;
+	border: 0.5px solid black;
+	background-color: transparent;
+	border-radius: 30px;
+	padding: 13px 20px 10px 20px;
+	text-transform: uppercase;
+	font-family:  'Josefin Sans', sans-serif, Arial;
+}
+
+.link
+{
+	text-decoration: none;
+	text-transform: uppercase;
+	color: black;
+}
+
+.link:hover
+{
+	color: #b1b1b1;
+	transition: .5s;
+}
+
+#footer
+{
+	margin-left: auto;
+	margin-right: auto;
+	height: 50px;
+}
+
+/** HOMEPAGE START **/
+
+#searchbar
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+
+	width: 700px;
+	box-sizing: border-box;
+	padding: 30px;
+}
+
+#search
+{
+	width: 400px;
+	border-bottom: 1px solid #2e3e3e;
+	padding: 5px;
+	
+	text-align: left;
+	text-transform: uppercase;
+	color: #2e3e3e;
+	font-weight: 700;
+}
+
+.sbbutton
+{
+	user-select: none;
+	padding: 14px 13px 10px 15px;
+	margin-left: 10px;
+	border-radius: 30px;
+	border: 1px solid black;
+
+	letter-spacing:2px;
+	text-decoration-line:none;
+	text-transform: uppercase;
+	font-size:12px;
+	color: black;
+}
+
+.post, .postmain
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 70px;
+	border-radius: 30px;
+
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	width: 700px;
+	box-sizing: border-box;
+	background-color:white;
+
+	text-align: left;
+}
+
+.postheader
+{
+	margin-bottom: 7px;
+}
+
+.ffbutton, .deletebutton, .acceptbutton
+{
+
+	float: right;
+	padding: 7px 15px 0px 15px;
+	border: 1px solid black;
+	border-radius: 50%;
+	user-select: none;
+
+	text-align: center;
+	text-decoration:none;
+	font-size: 25px;
+	font-family: 'Josefin Sans', sans-serif, Arial;
+	color: black;
+}
+
+.deletebutton, .acceptbutton
+{
+	margin-left: 20px;
+	padding-top: 10px;
+	height: 35px;
+	font-size: 20px;
+}
+
+.posttitle
+{
+	display: inline-block;
+	margin: 0;
+	max-width: 500px;
+
+	text-decoration:none;
+	text-transform: uppercase;
+	font-size: 20px;
+	word-wrap: break-word;
+	hyphens: auto;
+	color: #382a1f;
+	font-weight: 700;
+}
+
+.currentprice, .stealprice
+{
+	user-select: none;
+	float: right;
+	padding: 10px 15px 5px 15px;
+	border-radius: 30px;
+	text-align: center;
+
+	letter-spacing:1px;
+	text-transform: uppercase;
+	font-family: 'Josefin Sans', sans-serif, Arial;
+	font-size:16px;
+	color: white;
+}
+
+.currentprice
+{
+	background-color: green;
+}
+
+.stealprice
+{
+	margin-left:10px;
+	background-color: #e0a03e;
+}
+
+.increment
+{
+	background-color: rgb(80, 80, 80);
+}
+
+.posttags
+{
+	width: 100%;
+	user-select: none;
+}
+
+.tag
+{
+	padding: 3px 10px 3px 10px;
+	margin-right: 5px;
+	border-radius: 30px;
+	background-color: rgb(80, 80, 80);
+	color:white;
+
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+/* HOMEPAGE END */
+
+/* FILTERSORT START */
+
+#filtersortsubmit
+{
+	display: flex;
+	flex-direction: column;
+}
+
+#filtersort
+{
+	display: flex;
+	flex-direction: row;
+}
+
+#filter
+{
+	display: flex;
+	flex-direction: row;
+}
+
+.filteroptions
+{
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 200px;
+}
+
+#filtertitleoptions
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: 20px;
+}
+
+#sorttitleoptions
+{
+	display: flex;
+	flex-direction: column;
+	margin-right: auto;
+	margin-left: 20px;
+}
+
+#sort
+{
+	display: flex;
+	flex-direction: row;
+}
+
+.sortoptions
+{
+	margin: 20px;
+}
+
+.sortoption
+{
+	margin: 10px;
+}
+
+/* FILTER SORT END */
+
+/* ADMIN POSTS START */
+
+.adminprice
+{
+	background-color: #f8f8f8;
+	color: #2e3e3e;
+}
+			
+/* ADMIN POSTS END */
+
+/* INDIVIDUAL POSTS PAGE START */
+
+#wrapperflex
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.postmain
+{
+	margin-left: auto;
+    margin-right: 50px;
+    margin-bottom: 70px;
+}
+
+.ffnum
+{
+	float: right;
+	margin: 10px 15px 0px 15px;
+	
+	font-size: 20px;
+	color: black;
+}
+
+.postedby
+{
+	user-select: none;
+	margin-top: 10px;
+	height: 40px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.avatar, .headeravatar, .bidderavatar
+{
+	display: inline-block;
+	object-fit: cover;
+	margin-top: 5px;
+	border-radius: 50%;
+
+	max-height: 30px;
+	max-width: 30px;
+	min-height: 30px;
+	min-width: 30px;
+}
+
+.headeravatar
+{
+	margin-left: 30px;
+	margin-top: 0px;
+
+	max-height: 45px;
+	max-width: 45px;
+	min-height: 45px;
+	min-width: 45px;
+}
+
+.username
+{
+	position: absolute;
+	display: inline-block;
+	margin: 10px;
+
+	color:black;
+	text-decoration:none;
+}
+
+.postdesc
+{
+	max-width: 500px;
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+}
+
+.adtldetails
+{
+	margin: 10px 0px 10px 0px;
+	padding: 10px 25px;
+	border-radius: 20px;
+	background-color: #f8f8f8;
+	
+	line-height: 13px;
+	text-transform: uppercase;
+	font-family: "Open Sans", sans-serif;
+}
+
+.itemimage
+{
+	margin-top: 15px;
+	object-fit: cover;
+	height:350px;
+	width:100%;
+	border-radius:20px;
+}
+
+.dateposted
+{
+	margin-top: 5px;
+	text-transform: uppercase;
+	font-family: "Open Sans", sans-serif;
+	color: #b1b1b1;
+}
+
+.dateposted a
+{
+	text-decoration: none;
+}
+
+.sidebar
+{
+	margin-right: auto;
+	border-radius: 30px;
+	text-align:center;
+
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	max-height: 470px;
+	width: 300px;
+	box-sizing: border-box;
+	background-color:white;
+}
+
+.sidebarlabels
+{
+	margin-top: 10px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.pricemain
+{
+	display: inline-block;
+	user-select: none;
+	float: none;
+	margin-top: 2px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 15px 5px 15px;
+	border-radius: 30px;
+	text-align: center;
+
+	letter-spacing:1px;
+	text-transform: uppercase;
+	font-family: 'Josefin Sans', sans-serif, Arial;
+	font-size:16px;
+	color: white;
+}
+
+.bidderavatar
+{
+	min-height: 50px;
+	min-width: 50px;
+	max-height: 50px;
+	max-width: 50px;
+}
+
+.biddername
+{
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 10px;
+
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	color:black;
+	text-decoration:none;
+}
+
+.actions
+{
+	margin-top: 30px;
+}
+
+.actionbutton
+{
+	user-select: none;
+	padding: 13px 13px 10px 15px;
+	margin: 10px;
+	border: 1px solid black;
+	border-radius: 30px;
+
+	letter-spacing:2px;
+	text-decoration-line:none;
+	text-transform: uppercase;
+	font-size:16px;
+	color: black;
+
+}
+
+.actionslink
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* INDIVIDUAL POSTS END */
+
+/* CREATE POST AND EDIT POST START*/
+
+#createpost
+{
+	margin-top:30px;
+	margin-left: auto;
+    margin-right: auto;
+	margin-bottom: 30px;
+	user-select: none;
+	
+	width: 600px;
+	background-color: white;
+	overflow: auto;
+	text-align: left;
+}
+
+.postdetails p
+{
+	display: inline-block;
+	margin-bottom: 20px;
+	max-width: 500px;
+	text-decoration:none;
+	text-transform: uppercase;
+	font-size: 20px;
+	color: #382a1f;
+	font-weight: 700;
+}
+
+.postdetails label
+{
+	padding: 0 0;
+	font-size: 15px;
+	text-transform: uppercase;
+	color:  #382a1f;
+}
+
+.postdetails input[type=text]
+{
+	border: none;
+	border-bottom: 0.5px solid #ebebeb;
+	margin-right: 5px;
+	margin-bottom:20px;
+	
+	background-color: transparent;
+	text-align: start;
+	letter-spacing: 1.5px;
+    line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 80%;
+    border-bottom: 0.5px solid #ebebeb;
+}
+
+.postdetails button
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	margin-left: 80%;
+	border-radius: 30px;
+}
+.postdetails input[type=datetime-local]
+{
+	width: 40%;
+	font-family: 'Josefin Sans', sans-serif;
+	margin-bottom: 20px;	
+}
+.postdetails input[type=file], input[type=checkbox]
+{
+	margin-bottom:20px;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+.postdetails input[id="price"]
+{
+	border: none;
+	border-bottom: 0.5px solid #ebebeb;
+	margin-right: 5px;
+	margin-bottom:20px;
+	
+	background-color: transparent;
+	text-align: start;
+	letter-spacing: 1.5px;
+    line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 20%;
+	border-bottom: 0.5px solid #ebebeb;
+}
+.postdetails textarea
+{
+	margin-bottom:20px;
+	resize: none;
+	height: 100px;
+	width: 79%;
+	font-family: 'Josefin Sans', sans-serif;
+	opacity: 0.5;
+
+}
+
+.postdetails select
+{
+	margin-bottom:20px;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+/* CREATE AND EDIT POST END */
+
+/* FFPAGE START */
+
+.fftitle
+{
+	margin-bottom:20px;
+	letter-spacing: 5px;
+	font-size: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	color: #382a1f;
+}
+
+/* FFPAGE END */
+
+
+/* PROFILE START */
+#profile
+{
+	min-width: 100vh;
+	margin-bottom: 30px;
+	height: xx;
+	display: flex;
+	justify-content: space-between;
+}
+
+.createbutton
+{
+	margin: 0px 0px 20px 20px;
+	padding: 3px 3px 0px 3px;
+	margin-left: auto;
+	background-color: white;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+
+	text-decoration: none;
+	text-align: center;
+	font-size: 30px;
+	font-family: "Open Sans";
+}
+
+#details
+{
+	width: 400px;
+	height: 700px;
+	padding: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: white;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	margin-left: auto;
+	margin-right: 20px;
+}
+
+#detailscontent
+{
+	width: 400px;
+	height: 700px;
+	margin-top: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#dp
+{
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin: 10px;
+
+}
+
+#name
+{
+	margin: 20px;
+	float: center;
+	text-align: center;
+}
+
+#profileusername
+{
+	margin: 0px;
+	font-size: 30px;
+}
+
+#bio
+{
+	min-width: 180px;
+	max-height: 70px;
+	margin: 20px;
+}
+
+#biotext
+{
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+	text-align: center;
+}
+
+#socialmedia
+{
+	display: flex;
+	direction: column;
+	justify-content: center;
+	margin: 10px;
+}
+
+.icon
+{
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+}
+
+#contactdetails
+{
+	min-width: 180px;
+	max-height: 70px;
+	margin: 10px;
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+	text-align: center;
+}
+
+#reportbutton
+{
+	text-decoration: none;
+	font-size: 12px;
+	margin: 10px;
+	color: #990000;
+}
+
+#reviews
+{
+	color: #DBAB61;
+	margin: 10px;
+	height: 15px;
+	text-decoration: none;
+}
+
+#posts
+{
+	float: right;
+	margin-top: 50px;
+	margin-right: auto;
+	margin-left: 10px;
+}
+
+#reportscreen
+{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 1;
+	display: none;
+	position: fixed;
+}
+
+#reportcontent
+{
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	border-radius: 30px;
+	width: 900px;
+	height: 500px;
+	box-shadow: 10px 10px 20px gray;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+#close
+{
+	float: right;
+	margin: 20px;
+	border-radius: 100px;
+	border: 0px;
+	width: 30px;
+	height: 30px;
+	background-color: #DBAB61;
+	color: white;
+
+}
+
+#report
+{
+	height: 300px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 10px;
+}
+
+.reportreasons
+{
+	color: black;
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	margin-right: 10px;
+	width: 275px;
+	height: 100px;
+	float: left;
+}
+
+#textcomplaint
+{
+	height: 100px;
+	width: 600px;
+	border: 10px;
+	border-color: black;
+	padding: 10px;
+	background-color: #F8F8F8;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+	color: black;
+	tex-align: left;
+	resize: none;
+}
+
+#reportcomplaint
+{
+	text-align: center;
+}
+
+#submitbutton
+{
+	text-align: center;
+}
+
+#profilesubmit
+{
+	background-color: #DBAB61;
+	border-radius: 40px;
+	height: 30px;
+	width: 70px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+	color: white;
+}
+
+#iconattribute
+{
+	clear: both;
+	width: 100px;
+	margin: 0;
+	float: left;
+}
+/* PROFILE END */
+
+/* EDIT PROFILE START */
+#editpic
+{
+	width: 400px;
+	height: 40vh;
+	padding: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	float: left;
+	background-color: white;
+	border-radius: 30px;
+}
+
+#dpchange
+{
+	text-align: center;
+	margin-left: 70px;
+	font-family: 'Josefin Sans', 'sans-serif';
+}
+
+.editprofile
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	height: 950px;
+	width: 700px;
+	box-sizing: border-box;
+	background-color: white;
+}
+
+#editdetails
+{
+	margin-top:30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+	user-select: none;
+	
+	width: 600px;
+	background-color: white;
+	overflow: auto;
+	text-align: left;
+}
+
+.edit p
+{
+	display: inline-block;
+	margin-bottom: 20px;
+	max-width: 500px;
+	text-decoration:none;
+	text-transform: uppercase;
+	font-size: 20px;
+	color: #382a1f;
+	font-weight: 700;
+}
+
+.edit label
+{
+	padding: 0 0;
+	font-size: 15px;
+	text-transform: uppercase;
+	color:  #382a1f;
+}
+
+.edit textarea
+{
+	margin-bottom:20px;
+	resize: none;
+	height: 100px;
+	width: 79%;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+.edit button
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	margin-left: 80%;
+	border-radius: 30px;
+}
+
+.edit input[type=text]
+{
+	border: none;
+	border-bottom: 0.5px solid #ebebeb;
+	margin-right: 5px;
+	margin-bottom:20px;
+	
+	background-color: transparent;
+	text-align: start;
+	letter-spacing: 1.5px;
+	line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 80%;
+	border-bottom: 0.5px solid #ebebeb;
+}
+
+.edit input[type=password]
+{
+	border: none;
+	border-bottom: 0.5px solid #ebebeb;
+	margin-right: 5px;
+	margin-bottom:20px;
+	
+	background-color: transparent;
+	text-align: start;
+	letter-spacing: 1.5px;
+	line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
+	width: 80%;
+	border-bottom: 0.5px solid #ebebeb;
+}
+
+/* EDIT PROFILE END*/
+
+/* ADMIN REPORTED USERS START */
+
+.repuser
+{
+	margin-bottom: 7px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.reptitle
+{
+	display: inline-block;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	max-width: 500px;
+	text-decoration:none;
+	font-size: 13px;
+	word-wrap: break-word;
+	hyphens: auto;
+	color: #382a1f;
+	font-weight: 700;
+	position: relative;
+	bottom: 10px;
+}
+
+.repavatar
+{
+	display: inline-block;
+	border-radius: 50%;
+	margin-top: 10px;
+	margin-right: 5px;
+	height: 30px;
+	width: 30px;
+	object-fit: cover;
+}
+
+.repreason h3, .repcomplaint h3
+{
+	font-size: 20px;
+	letter-spacing: 5px;
+	font-family: 'Josefin Sans', sans-serif, 'Arial';
+	text-transform: uppercase;
+	color: black;
+	margin-top: 20px;
+	margin-block-end: auto;
+}
+
+.repreason p, .repcomplaint p
+{
+	font-size: 15px;
+	margin-top: 10px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.repcomplaint
+{
+	margin-bottom: 35px;
+	border-top: 0.5px solid #ebebeb;
+}
+
+/* ADMIN REPORTED USER END */
+
+/* REVIEWS START */
+.checked
+{
+	color: orange;
+}
+
+.reviewer
+{
+	font-size: 13px;
+	text-align: left;
+	margin: 5px;
+}
+
+.reviewdesc
+{
+	font-size: 15px;
+	margin: 20px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+}
+
+.reviews
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	border-radius: 30px;
+	
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	width: 700px;
+	box-sizing: border-box;
+	background-color:white;
+	display: flex;
+	justify-content: left;
+	flex-direction: column;
+
+}
+
+#reviewdiv
+{
+	width: 400px;
+	height: 100px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#reviewstars
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	margin: 5px;
+}
+
+#reviewbox
+{
+	height: 70px;
+	width: 600px;
+	resize: none;
+}
+
+#submitreviewbutton
+{
+	text-align: center;
+}
+
+#submitreview
+{
+	background-color: #DBAB61;
+	border-radius: 40px;
+	height: 30px;
+	width: 70px;
+	font-family: 'Open Sans', sans-serif;
+	letter-spacing: 0.5px;
+	color: white;
+	margin: 5px;
+}
+
+.writereviewtext
+{
+	font-size: 16px;
+	text-align: left;
+	margin: 5px;
+}
+
+#writereview
+{
+	margin: 10px;
+}
+/* REVIEWS END*/
+
+
+/**SCROLLBAR TAKEN FROM https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b */
+
+::-webkit-scrollbar {
+    background-color: #ebebeb;
+    width:12px;
+}
+
+/* scrollbar itself */
+::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 2px solid #f8ecec;
+}
+
+/* set button(top and bottom of the scrollbar) */
+::-webkit-scrollbar-button {display:none}
+
+::selection {
+  background: #eecee2; /* for WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #aed5d2; /* for Gecko Browsers */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	-webkit-text-fill-color: rgb(46, 62, 62);
+	transition: background-color 5000s ease-in-out 0s;
+}
