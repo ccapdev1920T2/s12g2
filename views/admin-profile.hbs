@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head> 
+        <title>bids++</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css\style.css">
+
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+    </head>
+    <body>
+		<div id = "wrapper1">
+			<!-- HEADER -->
+            {{> adminheader}}
+
+			<!-- PROFILE -->
+			<div id = "profile">
+
+				<!-- PROFILE DETAILS -->
+		    	<div id = "details">
+		    		<div id = "detailscontent">
+		    			<div id = "dpdiv">
+			    			<img id = "dp"src = "{{dp}}">
+			    		</div>
+
+			    		<div id = "name">
+			    			<p id = "profileusername">{{profileusername}}</p>
+			    		</div>
+
+			    		<div id = "review">
+			    			{{#each checkedstars}}
+								<span class="fa fa-star checked"></span>
+							{{/each}}
+							{{#each uncheckedstars}}
+								<span class="fa fa-star"></span>
+							{{/each}}
+			    		</div>
+
+			    		<div id = "bio">
+			    			<p id = "biotext">{{bio}}</p>
+			    		</div>
+
+			    		<div id = "socialmedia">
+							{{#if hasfb}}
+								<a href = "{{fb}}"><img class = "icon" id = "fb"src = "img\facebook.png"></a>
+							{{/if}}
+
+							{{#if hastw}}
+			    				<a href = "{{tw}}"><img class = "icon" id = "tw"src = "img\twitter.png"></a>
+							{{/if}}
+
+							{{#if hasig}}
+								<a href = "{{ig}}"><img class = "icon" id = "ig"src = "img\instagram.png"></a>
+							{{/if}}
+			    		</div>
+
+			    		<div id = "contactdetails">
+			    			<p>Contact Number: {{contactdetails}}</p>
+			    		</div>
+
+			    		
+			    		<a id = "reviews" href= "admin-reviews.hbs">
+				    		USER REVIEWS
+			    		</a>
+
+			    	</div>
+			    </div>
+
+		    	<div id = "posts">
+		    		<!-- POSTS -->
+					{{#each post}}
+						<div class="post">
+							<div class="postheader">
+								<a href="admin-post.hbs" class = "posttitle">
+									{{posttitle}}
+								</a>
+								<div class = "ffbutton">♡</div>
+							</div>
+
+							<div class="posttags">
+								<span class="tag">{{tag}}</span>
+							</div>
+
+							<div class="postedby">
+								<img class="avatar" src="{{avatar}}">
+								<a href="admin-profile.hbs" class="username">{{username}}</a>
+
+								<div class="adminprice stealprice">
+									{{stealprice}}
+								</div>
+								<div class="adminprice currentprice">
+									{{currentprice}}
+								</div>
+							</div>
+
+							<img class="itemimage" src="{{itemimage}}">
+							
+							<div class="dateposted">
+								{{dateposted}} | {{timeposted}}
+							</div>
+						</div>
+					{{/post}}
+
+		    	</div>
+			</div>
+
+			<div id = "iconattribute">
+				Icons made by
+				<a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> 
+				from
+				<a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+			</div>
+			
+
+		</div>	
+	
+		<script type = "text/javascript">
+
+			document.getElementById("reportbutton").onclick = function() {
+				document.getElementById("reportscreen").style.display = "block";
+			}
+
+			document.getElementById("close").onclick = function()
+			{
+				document.getElementById("reportscreen").style.display = "none";
+			}
+
+			document.getElementById("profilesubmit").onclick = function()
+			{
+				document.getElementById("reportscreen").style.display = "none";
+			}
+
+		</script>
+
+    </body>
+
+</html>
