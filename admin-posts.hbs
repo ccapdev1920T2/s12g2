@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head> 
+        <title>bids++</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css\style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+    </head>
+    <body>
+        <div id = "wrapper1">
+            {{> adminheader}}
+
+            <!-- POSTS -->
+
+            <!-- DUMMY POST 1 -->
+            {{#each post}}
+            <div class="post">
+                <div class="postheader">
+                    <a href="admin-post.hbs" class = "posttitle">
+                        {{posttitle}}
+                    </a>
+                    <div class = "deletebutton">✕</div>
+                    <div class = "acceptbutton">✓</div>
+                </div>
+
+                <div class="posttags">
+                    {{#each tag}}
+                    {<span class="tag">{{tag}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="postedby">
+                    <img class="avatar" src="{{avatar}}">
+                    <a href="profile.hbs" class="username">{{username}}</a>
+                
+                    <div class="adminprice stealprice">
+                        {{stealprice}}
+                    </div>
+                    <div class="adminprice currentprice">
+                        {{currentprice}}
+                    </div>
+                    
+                </div>
+                
+
+                <img class="itemimage" src="{{itemimage}}">
+                
+                <div class="dateposted">
+                    {{dateposted}} | {{timeposted}}
+                </div>
+            </div>
+            {{/each}}
+
+        <script type="text/javascript">
+            $(".acceptbutton").click(function(){
+                $(this).parent("div").parent("div").remove();
+            });
+            
+            $(".deletebutton").click(function(){
+                $(this).parent("div").parent("div").remove();
+            });
+
+            $(".acceptbutton").mouseenter(function(){
+                $(this).css("background-color", "green");
+                $(this).css("border-color", "green");
+                $(this).css("color", "white");
+                $(this).css("transition", "0.1s");
+            });
+
+            $(".acceptbutton").mouseleave(function(){
+                $(this).css("background-color", "white");
+                $(this).css("border-color", "black");
+                $(this).css("color", "black");
+                $(this).css("transition", "0.1s");
+            });
+
+            $(".deletebutton").mouseenter(function(){
+                $(this).css("background-color", "maroon");
+                $(this).css("border-color", "maroon");
+                $(this).css("color", "white");
+                $(this).css("transition", "0.1s");
+                
+            });
+
+            $(".deletebutton").mouseleave(function(){
+                $(this).css("background-color", "white");
+                $(this).css("border-color", "black");
+                $(this).css("color", "black");
+                $(this).css("transition", "0.1s");
+            });
+
+        </script>
+
+    </body>
+</html>

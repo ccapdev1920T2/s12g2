@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head> 
+        <title>bids++</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css\style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        {{> adminheader}}
+        
+            <!-- POSTS -->
+
+            {{#each complaint}}
+            <!-- DUMMY USER COMPLAINT 1 -->
+            <div class="post">
+                <div class="repuser">
+                    <img src="{{repavatar}}" class="repavatar">
+                   
+                    <a href="admin-profile.hbs" class = "reptitle">
+                        {{reptitle}}
+                    </a>
+                    <div class = "deletebutton">✕</div>
+                    <div class = "acceptbutton">✓</div>
+                </div>
+
+                <div class="repreason">
+                    <h3>Reason</h3>
+                    <p>{{repreason}}</p>
+                </div>
+
+                <div class="repcomplaint">
+                    <h3>Complaint</h3>
+                    <p>{{repcomplaint}}</p>
+                </div>
+    
+                <div class="dateposted">
+                    {{dateposted}} | {{timeposted}} | reported by {{user}}
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+
+        <script type="text/javascript">
+            $(".acceptbutton").click(function(){
+                $(this).parent("div").parent("div").remove();
+            });
+            
+            $(".deletebutton").click(function(){
+                $(this).parent("div").parent("div").remove();
+            });
+
+            $(".acceptbutton").mouseenter(function(){
+                $(this).css("background-color", "green");
+                $(this).css("border-color", "green");
+                $(this).css("color", "white");
+                $(this).css("transition", "0.1s");
+            });
+
+            $(".acceptbutton").mouseleave(function(){
+                $(this).css("background-color", "white");
+                $(this).css("border-color", "black");
+                $(this).css("color", "black");
+                $(this).css("transition", "0.1s");
+            });
+
+            $(".deletebutton").mouseenter(function(){
+                $(this).css("background-color", "maroon");
+                $(this).css("border-color", "maroon");
+                $(this).css("color", "white");
+                $(this).css("transition", "0.1s");
+                
+            });
+
+            $(".deletebutton").mouseleave(function(){
+                $(this).css("background-color", "white");
+                $(this).css("border-color", "black");
+                $(this).css("color", "black");
+                $(this).css("transition", "0.1s");
+            });
+
+        </script>
+
+    </body>
+</html>
