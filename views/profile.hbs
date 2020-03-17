@@ -10,6 +10,8 @@
 		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
+		<script src = "https://code.jquery.com/jquery-3.4.1.min.js" type = "text/javascript"></script>
+
     </head>
     <body>
 
@@ -23,26 +25,26 @@
     						<h3 style = "text-align: center; color: black">REASON/S</h3>
     						<div class = "reportreasons" id = "rr1">
     							<div>
-    							<input type = "checkbox" id = "offensive">
+    							<input type = "checkbox" class = "reportchecks" id = "offensive">
 	    						<label for = "offensive" style = "color: black">Offensive/Abusive Behavior</label>
 	    						</div>
 	    						<div>
-	    						<input type = "checkbox" id = "flaking">
+	    						<input type = "checkbox" class = "reportchecks" id = "flaking">
 	    						<label for = "flaking" style = "color: black">Flaking</label>
 	    						</div>
 	    						<div>
-	    						<input type = "checkbox" id = "defamation">
+	    						<input type = "checkbox" class = "reportchecks" id = "defamation">
 	    						<label for = "defamation" style = "color: black">Defamation</label>
 	    						</div>
 	    						
     						</div>
     						<div class = "reportreasons" id = "rr2">
 	    						<div>
-    							<input type = "checkbox" id = "slander">
+    							<input type = "checkbox" class = "reportchecks" id = "slander">
 	    						<label for = "slander" style = "color: black">Slander</label>
 	    						</div>
 	    						<div>
-	    						<input type = "checkbox" id = "spam">
+	    						<input type = "checkbox" class = "reportchecks" id = "spam">
 	    						<label for = "spam" style = "color: black">Spam</label>
 	    						</div>
     						</div>
@@ -52,7 +54,8 @@
     						<div id = "reportcomplaint">
     							<textarea form = "report" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
 
-    						</div>
+							</div>
+							<p id = "errormessage"></p>
     						<br>
     						<div id = "submitbutton">
     							<button id = "profilesubmit">SUBMIT</button>
@@ -117,7 +120,7 @@
 				    		USER REVIEWS
 			    		</a>
 
-			    		<a id = "reportbutton" href = "#" onclick="actionModal();">
+			    		<a id = "reportbutton" href = "#">
 				    		REPORT USER
 			    		</a>
 			    	</div>
@@ -173,19 +176,43 @@
 	
 		<script type = "text/javascript">
 
-			document.getElementById("reportbutton").onclick = function() {
-				document.getElementById("reportscreen").style.display = "block";
-			}
-
-			document.getElementById("close").onclick = function()
+			$("#reportbutton").click(function() 
 			{
-				document.getElementById("reportscreen").style.display = "none";
-			}
+				$("#textcomplaint").val("");
+				var checks = $(".reportchecks:checked");
+				var x;
+				
+				for(x = 0; x < checks.length; x++)
+					checks[x].checked = false;
 
-			document.getElementById("profilesubmit").onclick = function()
+				$("#reportscreen").css("display", "block");
+			});
+
+			$("#close").click(function() 
 			{
-				document.getElementById("reportscreen").style.display = "none";
-			}
+				$("#errormessage").text("");
+				$("#reportscreen").css("display", "none");
+			});
+
+			$("#profilesubmit").click(function() 
+			{
+				var checks = $(".reportchecks:checked");
+				
+				if(checks.length > 0 && !($("#textcomplaint").val().trim() == ""))
+				{
+					$("#errormessage").text("");
+					$("#reportscreen").css("display", "none");
+				}
+				else
+				{
+					if(checks.length == 0)
+						$("#errormessage").text("Please check at least one of the boxes.");
+					else if($("#textcomplaint").val().trim() == "")
+						$("#errormessage").text("Please write your complaint.");
+				}
+
+				
+			});
 
 		</script>
 

@@ -224,19 +224,21 @@
                 }
             });
 
-			document.getElementById("filterbutton").onclick = function() {
-				document.getElementById("reportscreen").style.display = "block";
-			}
-
-			document.getElementById("close").onclick = function()
+			$("#filterbutton").click(function() 
 			{
-				document.getElementById("reportscreen").style.display = "none";
-			}
+				$("#reportscreen").css("display", "block");
+			});
 
-			document.getElementById("profilesubmit").onclick = function()
+			$("#close").click(function() 
 			{
-				document.getElementById("reportscreen").style.display = "none";
-			}
+				$("#reportscreen").css("display", "none");
+			});
+
+			$("#profilesubmit").click(function() 
+			{
+				$("#reportscreen").css("display", "none");
+			});
+
 
         </script>
 
