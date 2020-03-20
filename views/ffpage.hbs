@@ -1,74 +1,56 @@
-<!DOCTYPE html>
+<div id = "wrapper1">
 
-<html>
+    {{> userheader ua = useravatar}}
 
-    <head> 
-        <title>bids++</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css\style.css">
+    <!-- TITLE -->
+    <div class="fftitle">
+        liked posts
+    </div>
 
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
-        
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
-
-    </head>
-    <body>
-        <div id = "wrapper1">
-
-            {{> userheader ua = useravatar}}
-        
-            <!-- TITLE -->
-            <div class="fftitle">
-                liked posts
+    <!-- POSTS -->
+    {{#each post}}
+        <div class="post">
+            <div class="postheader">
+                <a href="{{postlink}}" class = "posttitle">
+                    {{title}}
+                </a>
+                <div class = "ffbutton">♡</div>
             </div>
 
-            <!-- POSTS -->
-            {{#each post}}
-                <div class="post">
-                    <div class="postheader">
-                        <a href="user-sharpost.html" class = "posttitle">
-                            {{title}}
-                        </a>
-                        <div class = "ffbutton">♡</div>
-                    </div>
+            <div class="posttags">
+                {{#each tag}}
+                    <a href="{{taglink}}" class="tag">{{tagname}}</a>
+                {{/each}}
+            </div>
 
-                    <div class="posttags">
-                        {{#each tag}}
-                            <a href="{{taglink}}" class="tag">{{tagname}}</a>
-                        {{/each}}
-                    </div>
-
-                    <div class="postedby">
-                        <img class="avatar" src="{{postervatar}}">
-                        <a href="{{posterprofile}}" class="username">{{postername}}</a>
-                    
-                        <div class="stealprice">
-                            P{{stealprice}}
-                        </div>
-                        <div class="currentprice">
-                            P{{currentprice}}
-                        </div>
-                        
-                    </div>
-                    
-
-                    <img class="itemimage" src="{{itemimg}}g">
-                    
-                    <div class="dateposted">
-                        {{datetime}}
-                    </div>
+            <div class="postedby">
+                <img class="avatar" src="{{posteravatar}}">
+                <a href="{{posterprofile}}" class="username">{{postername}}</a>
+            
+                <div class="stealprice">
+                    P{{stealprice}}
                 </div>
-            {{/each}}
+                <div class="currentprice">
+                    P{{currentprice}}
+                </div>
+                
+            </div>
+            
+
+            <img class="itemimage" src="{{itemimg}}">
+            
+            <div class="dateposted">
+				{{date}} | {{time}}
+            </div>
         </div>
+    {{/each}}
+</div>
 
-        <script type="text/javascript">
-            $(".ffbutton").css("background-color", "black");
-            $(".ffbutton").css("color", "white");
+<script type="text/javascript">
+    $(".ffbutton").css("background-color", "black");
+    $(".ffbutton").css("color", "white");
 
-            $(".ffbutton").click(function(){
-                $(this).parent("div").parent("div").remove();
-            });
-        </script>
-
-    </body>
-</html>
+    $(".ffbutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+</script>

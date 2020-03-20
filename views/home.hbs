@@ -1,0 +1,65 @@
+<div id = "wrapper1">
+    <!-- HEADER -->
+    <div id = "header">
+        <img src="img\icon2.png" id="logo" alt="bids++ logo" width=150>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div id = "desc">
+        <p>
+        <b>Built by Lasallians, for Lasallians.</b>
+        <br><br>
+        Bids to Pick, made easier. Bid, steal, and sell within the Lasallian community.
+        </p>
+    </div>
+
+    <a href="#getstarted" class = "title">↓ GET STARTED ↓</a>
+
+</div>
+		
+<div id = "getstarted">
+
+    <a href="" class = "title">LOG IN</a>
+                
+    <!-- LOG IN -->
+
+    <div id = "form">
+        <form method="post">
+            <label for = "email">email</label><br>
+            <input type="email" id="email"><br>
+            
+            <label for = "password">password</label><br>
+            <input type="password" id="password"><br>
+
+            <div id="warning"></div>
+            
+            <input class="submit" type="submit" id="submit" value="log in">
+        </form>
+        
+        <br><br>
+        
+        <a href="registration" class="link">not yet registered? register here.</a>
+    </div>
+</div>
+
+<script>
+
+    $(".submit").click(function(){
+        var email = $("#email").val();
+        var pw = $("#password").val();
+
+        if(email == "bidspp@gmail.com" && pw == "p@ssword")
+        {
+            $(this).parent("form").attr("action", "admin-posts");
+        }
+
+        else if(email == "nemo@puppers.com" && pw == "henlo")
+        {
+            $(this).parent("form").attr("action", "home");
+        }
+        else
+        {
+            alert("Incorrect email and/or password.");
+        }
+    });
+</script>
