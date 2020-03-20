@@ -3,43 +3,35 @@
 
     <!-- POSTS -->
 
-    {{#each post}}
+    {{#each complaint}}
         <div class="post">
-            <div class="postheader">
-                <a href="view-post" class = "posttitle">
-                    {{title}}
+            <div class="repuser">
+                <img src="{{avatar}}" class="repavatar">
+                
+                <a href="profile" class = "reptitle">
+                    {{reported}}
                 </a>
                 <div class = "deletebutton">✕</div>
                 <div class = "acceptbutton">✓</div>
             </div>
 
-            <div class="posttags">
-                {{#each tag}}
-                    <span class="tag">{{tagname}}</span>
-                {{/each}}
+            <div class="repreason">
+                <h3>Reason</h3>
+                <p>{{reason}}</p>
             </div>
 
-            <div class="postedby">
-                <img class="avatar" src="{{posteravatar}}">
-                <a href="profile" class="username">{{postername}}</a>
-            
-                <div class="adminprice stealprice">
-                    {{stealprice}}
-                </div>
-                <div class="adminprice currentprice">
-                    {{currentprice}}
-                </div>
-                
+            <div class="repcomplaint">
+                <h3>Complaint</h3>
+                <p>{{complaint}}</p>
             </div>
-            
 
-            <img class="itemimage" src="{{itemimg}}">
-            
             <div class="dateposted">
-                {{date}} | {{time}}
+                {{date}} | {{time}} | reported by {{reporter}}
             </div>
         </div>
     {{/each}}
+
+</div>
 
 <script type="text/javascript">
     $(".acceptbutton").click(function(){

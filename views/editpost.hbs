@@ -1,49 +1,23 @@
-<!DOCTYPE html>
+<div id = "wrapper1">
 
-<html>
+    {{> userheader ua=useravatar}}
 
-    <head> 
-        <title>bids++</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css\style.css">
+    <!-- EDIT POSTS -->
+    <div class="post">
 
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
-		
-    </head>
-    <body>
-        <div id = "wrapper1">
+            <form action="profile" class="createpost" action="#" id="createpost">
+                <div class="postdetails">
+                    <p>edit post</p><br>
+                    <label for="description">Description</label><br>
+                    <textarea name="description" form="createpost" placeholder="Enter a description of your item..."></textarea><br>
+                    <label for="meetup">Meet-up Details</label><br>
+                    <input type="text" id="meetup" name="meetup"><br>
+                    <button type="submit" form="createpost" value="Submit">Submit</button>
+                </div>
 
-            {{> userheader ua=useravatar}}
-			<!-- HEADER -->
-            <div id = "header">
-                <a href="homepage.html">
-                    <img src="img\icon2.png" id="logo" alt="bids++ logo" width=150>
-                </a>
-                <a href="homepage.html" class = "header_link">home</a>
-                <a href="ffpage.html" class = "header_link">ffs</a>
-                <a href="home.html" class = "header_link">log out</a>
-                
-                <a href="nemoprofile.html"><img class="headeravatar" src="img\dp_nemo.jpg"></a>
-            </div>
+            </form>
+            
+        
+    </div>
 
-            <!-- EDIT POSTS -->
-            <div class="post">
-    
-                    <form action="user-nemopost.html" class="createpost" action="#" id="createpost">
-                        <div class="postdetails">
-                            <p>edit post</p><br>
-                            <label for="description">Description</label><br>
-                            <textarea name="description" form="createpost" placeholder="Enter a description of your item..."></textarea><br>
-                            <label for="meetup">Meet-up Details</label><br>
-                            <input type="text" id="meetup" name="meetup"><br>
-                            <button type="submit" form="createpost" value="Submit">Submit</button>
-                        </div>
-
-                    </form>
-                    
-              
-            </div>
-
-        </div>
-    </body>
-</html>
+</div>

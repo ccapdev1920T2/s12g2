@@ -1,85 +1,62 @@
-<!DOCTYPE html>
+<div id = "wrapper1">
 
-<html>
+	{{> userheader ua=useravatar}}
 
-    <head> 
-        <title>bids++</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css\style.css">
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
-
-		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">		
-    </head>
-    <body>
-
-
-		<div id = "wrapper1">
-
-            {{> userheader ua=useravatar}}
-
-			<!-- PROFILE -->
-			<div id = "profile">
-				<div id = "editpic">
-						
-						<img id ="dp" src="{{dp}}" alt="image">
-						<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
-				</div>
-
-				<div class = "editprofile">
-					<div id = "editdetails">
-						<form name = "profile">
-							<div class = "edit">
-								<p>user details</p><br>
-								<label id="bio">description</label>
-								<textarea id="bio" name="bio" form="profile">{{bio}}</textarea><br>
-								<label id="pw">Password</label><br>
-								<input type="password" id="pw" name="pw" minlength=8 m><br>
-								<label id="cpw">Confirm Password</label>
-								<input type="password" id="cpw" name="cpw" minlength=8><br>
-
-								
-								<p>contact details</p><br>
-								<label id="contact">phone number</label>
-								<input type="text" id="contactd" name="contactd" placeholder="{{contactd}}"><br>
-
-								<p>social media</p><br>
-								<label id="twt">Twitter</label><br>
-								<input type="text" id="twt" name="twt" placeholder="{{twt}}"><br>
-								<label id="fb">FaceBook</label><br>
-								<input type="text" id="fb" name="fb" placeholder="{{fb}}"><br>
-								<label id="ig">Instagram</label><br>
-								<input type="text" id="ig" name="ig" placeholder="{{ig}}"><br>
-								
-								<a href="profile.hbs"><button type="submit" form="createpost" value="Submit">Submit</button></a>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
+	<!-- PROFILE -->
+	<div id = "profile">
+		<div id = "editpic">
+				<img id ="dp" src="{{dp}}" alt="image">
+				<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
 		</div>
 
-		<script type="text/javascript">
-		
-			function readURL(input) {
-				if (input.files && input.files[0]) {
-					var reader = new FileReader();
+		<div class = "editprofile">
+			<div id = "editdetails">
+				<form name = "profile">
+					<div class = "edit">
+						<p>user details</p><br>
+						<label id="bio">description</label>
+						<textarea id="bio" name="bio" form="profile">{{bio}}</textarea><br>
+						<label id="pw">Password</label><br>
+						<input type="password" id="pw" name="pw" minlength=8 m><br>
+						<label id="cpw">Confirm Password</label>
+						<input type="password" id="cpw" name="cpw" minlength=8><br>
 
-					reader.onload = function (e) {
-						$('#dp').attr('src', e.target.result);
-					};
+						
+						<p>contact details</p><br>
+						<label id="contact">phone number</label>
+						<input type="text" id="contactd" name="contactd" placeholder="{{contactdetails}}"><br>
 
-					reader.readAsDataURL(input.files[0]);
-				}
+						<p>social media</p><br>
+						<label id="twt">Twitter</label><br>
+						<input type="text" id="twt" name="twt" placeholder="{{twt}}"><br>
+						<label id="fb">FaceBook</label><br>
+						<input type="text" id="fb" name="fb" placeholder="{{fb}}"><br>
+						<label id="ig">Instagram</label><br>
+						<input type="text" id="ig" name="ig" placeholder="{{ig}}"><br>
+						
+						<a href="profile"><button type="submit" form="createpost" value="Submit">Submit</button></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-				console.log("hello");
-			}
+</div>
 
-		
-		
-		</script>
+<script type="text/javascript">
 
-    </body>
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-</html>
+			reader.onload = function (e) {
+				$('#dp').attr('src', e.target.result);
+			};
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+
+
+</script>

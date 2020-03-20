@@ -985,7 +985,6 @@ input[type=email], input[type=password], input[type=text]
 {
 	width: 400px;
 	height: 40vh;
-	padding: 10px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
