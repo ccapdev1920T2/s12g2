@@ -916,7 +916,7 @@ input[type=email], input[type=password], input[type=text]
 
 #report
 {
-	height: 300px;
+	height: auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -962,13 +962,13 @@ input[type=email], input[type=password], input[type=text]
 
 #profilesubmit
 {
+	font-family: 'Josefin Sans', sans-serif;
 	background-color: #DBAB61;
-	border-radius: 40px;
-	height: 30px;
-	width: 70px;
-	font-family: 'Open Sans', sans-serif;
-	letter-spacing: 0.5px;
 	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;	
 }
 
 #iconattribute
@@ -1238,14 +1238,13 @@ input[type=email], input[type=password], input[type=text]
 
 #submitreview
 {
+	font-family: 'Josefin Sans', sans-serif;
 	background-color: #DBAB61;
-	border-radius: 40px;
-	height: 30px;
-	width: 70px;
-	font-family: 'Open Sans', sans-serif;
-	letter-spacing: 0.5px;
 	color: white;
-	margin: 5px;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;
 }
 
 .writereviewtext
