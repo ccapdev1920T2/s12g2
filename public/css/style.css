@@ -860,6 +860,12 @@ input[type=email], input[type=password], input[type=text]
 	text-decoration: none;
 }
 
+#stars
+{
+	font-family: 'Open Sans', sans-serif;
+	text-align: center;
+}
+
 #posts
 {
 	float: right;
@@ -878,7 +884,7 @@ input[type=email], input[type=password], input[type=text]
 	position: fixed;
 }
 
-#errormessage
+.errormessage
 {
 	color: red;
 	text-align: center;
@@ -895,7 +901,7 @@ input[type=email], input[type=password], input[type=text]
 	margin-top: 50px;
 	border-radius: 30px;
 	width: 900px;
-	height: 530px;
+	height: 550px;
 	box-shadow: 10px 10px 20px gray;
 	box-sizing: border-box;
 	overflow: auto;
@@ -958,6 +964,7 @@ input[type=email], input[type=password], input[type=text]
 #submitbutton
 {
 	text-align: center;
+	margin: 5px;
 }
 
 #profilesubmit
@@ -1224,11 +1231,21 @@ input[type=email], input[type=password], input[type=text]
 	margin: 5px;
 }
 
+#writereviewstars
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	margin: 20px;
+}
+
 #reviewbox
 {
 	height: 70px;
 	width: 600px;
 	resize: none;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 #submitreviewbutton
@@ -1245,6 +1262,15 @@ input[type=email], input[type=password], input[type=text]
 	border-width: 0px;
 	margin-top: 20px;
 	border-radius: 30px;
+}
+
+.reviewtext 
+{
+	text-align: left;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+	font-size: 15px;
 }
 
 .writereviewtext

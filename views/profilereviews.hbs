@@ -8,26 +8,26 @@
 				<h3 style = "text-align: center; color: black">REASON/S</h3>
 				<div class = "reportreasons" id = "rr1">
 					<div>
-					<input type = "checkbox" id = "offensive">
+					<input type = "checkbox" class = "reportchecks" id = "offensive">
 					<label for = "offensive" style = "color: black">Offensive/Abusive Behavior</label>
 					</div>
 					<div>
-					<input type = "checkbox" id = "flaking">
+					<input type = "checkbox" class = "reportchecks" id = "flaking">
 					<label for = "flaking" style = "color: black">Flaking</label>
 					</div>
 					<div>
-					<input type = "checkbox" id = "defamation">
+					<input type = "checkbox" class = "reportchecks" id = "defamation">
 					<label for = "defamation" style = "color: black">Defamation</label>
 					</div>
 					
 				</div>
 				<div class = "reportreasons" id = "rr2">
 					<div>
-					<input type = "checkbox" id = "slander">
+					<input type = "checkbox" class = "reportchecks" id = "slander">
 					<label for = "slander" style = "color: black">Slander</label>
 					</div>
 					<div>
-					<input type = "checkbox" id = "spam">
+					<input type = "checkbox" class = "reportchecks" id = "spam">
 					<label for = "spam" style = "color: black">Spam</label>
 					</div>
 				</div>
@@ -38,9 +38,9 @@
 					<textarea form = "report" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
 
 				</div>
-				<br>
+				<p class = "errormessage" id = "reporterrormessage"></p>
 				<div id = "submitbutton">
-					<button id = "profilesubmit">SUBMIT</button>
+					<button type = "button" id = "profilesubmit">SUBMIT</button>
 				</div>
 			
 			</form>
@@ -67,10 +67,10 @@
 				</div>
 
 				<div id = "review">
-					{{#each checkedstars}}
+					{{#each (loop checkedstars)}}
 						<span class="fa fa-star checked"></span>
 					{{/each}}
-					{{#each uncheckedstars}}
+					{{#each (loop uncheckedstars)}}
 						<span class="fa fa-star"></span>
 					{{/each}}
 				</div>
@@ -109,43 +109,43 @@
 		</div>
 
 		<div id = "posts">
-			<div class="reviews">
+			<div class=" reviews">
 				<h1> Leave a Review</h1>
-				<div class="writereviewtext">
+				<form name = "review">
 					<p class = "reviewtext">
 						Stars:
 					</p>
-				</div>
-				<div id = "reviewstars">
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-				</div>
-				<div class="writereviewtext">
+					<div id = "writereviewstars">
+						<select id = "stars">
+							<option value = "none">select number of stars</option>
+							<option value = "1">☆</option>
+							<option value = "2">☆☆</option>
+							<option value = "3">☆☆☆</option>
+							<option value = "4">☆☆☆☆</option>
+							<option value = "5">☆☆☆☆☆</option>
+						</select>
+					</div>
+
 					<p class = "reviewtext">
 						Review:
 					</p>
-				</div>
-					<form id = "writereview">
-						<textarea id = "reviewbox" for = "writereview"></textarea>
-					</form>
+					<textarea id = "reviewbox" for = "writereview"></textarea>
+					<p class = "errormessage" id = "reviewerrormessage"></p>
+					<div id = "submitbutton">
+						<button type = "button" id = "submitreview">SUBMIT</button>
+					</div>
 
-				<div id = "submitbutton">
-						<button id = "submitreview">SUBMIT</button>
-				</div>
+				</form>
 			</div>
-
 
 			<!-- REVIEWS -->
 			{{#each review}}
 				<div class="reviews">
 					<div id = "reviewstars">
-						{{#each checkedstars}}
+						{{#each (loop checkedstars)}}
 							<span class="fa fa-star checked"></span>
 						{{/each}}
-						{{#each uncheckedstars}}
+						{{#each (loop uncheckedstars)}}
 							<span class="fa fa-star"></span>
 						{{/each}}
 					</div>
@@ -176,18 +176,64 @@
 
 <script type = "text/javascript">
 
-	document.getElementById("reportbutton").onclick = function() {
-		document.getElementById("reportscreen").style.display = "block";
-	}
-
-	document.getElementById("close").onclick = function()
+	$("#reportbutton").click(function() 
 	{
-		document.getElementById("reportscreen").style.display = "none";
-	}
+		$("#textcomplaint").val("");
+		var checks = $(".reportchecks:checked");
+		var x;
+		
+		for(x = 0; x < checks.length; x++)
+			checks[x].checked = false;
 
-	document.getElementById("submit").onclick = function()
+		$("#reportscreen").css("display", "block");
+	});
+
+	$("#close").click(function() 
 	{
-		document.getElementById("reportscreen").style.display = "none";
-	}
+		$("#errormessage").text("");
+		$("#reportscreen").css("display", "none");
+	});
+
+	$("#profilesubmit").click(function() 
+	{
+		var checks = $(".reportchecks:checked");
+		
+		if(checks.length > 0 && !($("#textcomplaint").val().trim() == ""))
+		{
+			$("#reporterrormessage").text("");
+			$("#reportscreen").css("display", "none");
+		}
+		else
+		{
+			$("#reportscreen").css("display", "block");
+
+			if(checks.length == 0)
+				$("#reporterrormessage").text("Please check at least one of the boxes.");
+			else if($("#textcomplaint").val().trim() == "")
+				$("#reporterrormessage").text("Please write your complaint.");
+
+		}
+
+	});
+
+	$("#submitreview").click(function()
+	{
+		
+		if(!($("#stars option:selected").val() == 'none') && !($("#reviewbox").val().trim() == ""))
+		{
+			$("#reviewerrormessage").text("");
+			$("#reviewbox").val("");
+			$("#stars").val('0');
+			alert("Your review has been submitted.");
+		}
+		else
+		{
+			if($("#stars option:selected").val() == 'none')
+				$("#reviewerrormessage").text("Please choose how many stars you are rating the user.");
+			else
+				$("#reviewerrormessage").text("Please write your review before submitting.");
+		}
+
+	});
 
 </script>

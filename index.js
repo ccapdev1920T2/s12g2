@@ -18,7 +18,14 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs');
 
+handlebars.registerHelper('loop', function(n) {
+    var a = [];
 
+    for(var i = 0; i < n; i++)
+        a.push(' ');
+
+    return a;
+})
 
 /* HOME AND REGISTER */
 
@@ -372,8 +379,8 @@ app.get('/profile', function(req, res){
             useravatar: "img/default.png",
             title: "profile",
             profileusername: "nemo",
-            checkedstars: "4",
-            uncheckedstars: "1",
+            checkedstars: "3",
+            uncheckedstars: "2",
             dp: "img/default.png",
             bio: "woof woof",
             contactdetails: "911",

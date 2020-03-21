@@ -38,10 +38,9 @@
 					<textarea form = "report" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
 
 				</div>
-				<p id = "errormessage"></p>
-				<br>
+				<p class = "errormessage" id = "reporterrormessage"></p>
 				<div id = "submitbutton">
-					<button id = "profilesubmit">SUBMIT</button>
+					<button type = "button" id = "profilesubmit">SUBMIT</button>
 				</div>
 			
 			</form>
@@ -68,10 +67,10 @@
 				</div>
 
 				<div id = "review">
-					{{#each checkedstars}}
+					{{#each (loop checkedstars)}}
 						<span class="fa fa-star checked"></span>
 					{{/each}}
-					{{#each uncheckedstars}}
+					{{#each (loop uncheckedstars)}}
 						<span class="fa fa-star"></span>
 					{{/each}}
 				</div>
@@ -190,10 +189,13 @@
 		}
 		else
 		{
+			$("#reportscreen").css("display", "block");
+
 			if(checks.length == 0)
 				$("#errormessage").text("Please check at least one of the boxes.");
 			else if($("#textcomplaint").val().trim() == "")
 				$("#errormessage").text("Please write your complaint.");
+			
 		}
 
 		
