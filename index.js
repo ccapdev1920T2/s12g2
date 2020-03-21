@@ -364,12 +364,16 @@ app.get('/view-post', function(req, res){
 /* VIEW PROFILE */
 
 app.get('/profile', function(req, res){
+    // check first if username is valid
+
     if(!admin)
     {
         res.render('profile', {
             useravatar: "img/default.png",
             title: "profile",
             profileusername: "nemo",
+            checkedstars: "4",
+            uncheckedstars: "1",
             dp: "img/default.png",
             bio: "woof woof",
             contactdetails: "911",
@@ -425,6 +429,23 @@ app.get('/profile', function(req, res){
 
 /* (USER) EDIT PROFILE */
 
+app.post('/edit-profile', function(req, res){
+    if(!admin)
+    {
+        res.render('editprofile', {
+            useravatar: "img/default.png",
+            title: "profile",
+            dp: "img/default.png",
+            bio: "woof woof",
+            contactdetails: 911
+        });
+    }
+    else
+    {
+        res.send(cannotBeFound);
+    }
+});
+
 app.get('/edit-profile', function(req, res){
     if(!admin)
     {
@@ -453,16 +474,22 @@ app.get('/reviews', function(req, res){
             useravatar: "img/default.png",
             title: "username - reviews",
             profileusername: "nemo",
+            checkedstars: 4,
+            uncheckedstars: 1,
             dp: "img/default.png",
             bio: "woof woof",
             contactdetails: 911,
             review: [
                 {
+                    checkedstars: 4,
+                    uncheckedstars: 1,
                     username: "nemo",
                     avatar: "img/default.png",
                     text: "woof",
                 },
                 {
+                    checkedstars: 3,
+                    uncheckedstars: 2,
                     username: "nemo",
                     avatar: "img/default.png",
                     text: "WOOOOOOOOF"
@@ -502,6 +529,20 @@ app.get('/reviews', function(req, res){
 
 /* (USER) CREATE POST */
 
+app.post('/create-post', function(req, res){
+    if(!admin)
+    {
+        res.render('createpost', {
+            useravatar: "img/default.png",
+            title: "username - create post"
+        });
+    }
+    else
+    {
+        res.send(cannotBeFound);
+    }
+});
+
 app.get('/create-post', function(req, res){
     if(!admin)
     {
@@ -519,6 +560,20 @@ app.get('/create-post', function(req, res){
 
 
 /* (USER) EDIT POST */
+
+app.post('/edit-post', function(req, res){
+    if(!admin)
+    {
+        res.render('createpost', {
+            useravatar: "img/default.png",
+            title: "username - create post"
+        });
+    }
+    else
+    {
+        res.send(cannotBeFound);
+    }
+});
 
 app.get('/edit-post', function(req, res){
     if(!admin)
