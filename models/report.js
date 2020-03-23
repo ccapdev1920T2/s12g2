@@ -7,7 +7,7 @@ var reportSchema = new Schema({
     reporter_email:     {type: Schema.Types.ObjectId, ref: 'Client', required: true},
     reporteduser_email: {type: Schema.Types.ObjectId, ref: 'Client', required: true},
     complaint:          {type: String, /*max: ,*/ required: true}
-});s
+});
 
 //export model
 module.exports = mongoose.model('Report', reportSchema);
