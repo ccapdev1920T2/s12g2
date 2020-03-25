@@ -3,7 +3,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const handlebars = require('handlebars');
 
-const port = 9090;
+const port = 3000;
 const app = express();
 
 const admin = false;
