@@ -9,6 +9,7 @@
     "express-hbs": "^2.3.1",
     "handlebars": "^4.7.3",
     "hbs": "^4.1.0",
+    "mongodb": "^3.5.5",
     "mongoose": "^5.9.5"
   },
   "devDependencies": {},
