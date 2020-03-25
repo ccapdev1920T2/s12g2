@@ -22,14 +22,14 @@ const database = {
     createCollection: function(collection) {
         client.connect(url, options, function(err, db) {
             if(err) throw err;
-            var database = db.db('database');
+            var database = db.db(databaseName);
 
             database.createCollection(collection, function(err, res) {
                 if(err) throw err;
                 console.log('Collection created');
                 db.close();
             });
-        })
+        });
     },
 
     /* INSERT ONE DOCUMENT INTO COLLECTION */
@@ -42,7 +42,7 @@ const database = {
                 if(err) throw err;
                 console.log('document inserted');
                 db.close();
-            })
+            });
             
         });
     },
@@ -57,7 +57,7 @@ const database = {
                 if(err) throw err;
                 console.log(res);
                 db.close();
-            })
+            });
         });
     },
 
