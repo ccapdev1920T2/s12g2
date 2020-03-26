@@ -19,8 +19,8 @@ var client = new Client({
 
     number:             09123456789,
     bio:                'I am an adorable little dog, who will bid for treats.',
-    twitter:            'https://www.twitter.com/nemumu',
-    facebook:           'https://www.facebook.com/nemumu',
+    twitter:            'nemumu',
+    facebook:           'nemumu',
     // hasfb:              null,
     // hastw:              null,
     // hasig:              null,
