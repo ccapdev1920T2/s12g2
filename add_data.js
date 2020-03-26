@@ -17,10 +17,10 @@ var client = new Client({
     id_num:             11646845,
     username:           'nemumu',
 
-    number:             09123456789,
+    number:             "09123456789",
     bio:                'I am an adorable little dog, who will bid for treats.',
-    twitter:            'https://www.twitter.com/nemumu',
-    facebook:           'https://www.facebook.com/nemumu',
+    twitter:            'nemumu',
+    facebook:           'nemumu',
     // hasfb:              null,
     // hastw:              null,
     // hasig:              null,
