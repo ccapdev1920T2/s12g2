@@ -59,11 +59,11 @@
 		<div id = "details">
 			<div id = "detailscontent">
 				<div id = "dpdiv">
-					<img id = "dp"src = "{{dp}}">
+					<img id = "dp" src = "{{avatar}}">
 				</div>
 
 				<div id = "name">
-					<p id = "profileusername">{{profileusername}}</p>
+					<p id = "profileusername">{{username}}</p>
 				</div>
 
 				<div id = "review">
@@ -80,21 +80,21 @@
 				</div>
 
 				<div id = "socialmedia">
-					{{#if hasfb}}
-						<a href = "{{fb}}"><img class = "icon" id = "fb"src = "img\facebook.png"></a>
-					{{/if}}
+					{{!-- {{#if hasfb}} --}}
+						<a href = "{{facebook}}"><img class = "icon" id = "fb"src = "img\facebook.png"></a>
+					{{!-- {{/if}} --}}
 
-					{{#if hastw}}
-						<a href = "{{tw}}"><img class = "icon" id = "tw"src = "img\twitter.png"></a>
-					{{/if}}
+					{{!-- {{#if hastw}} --}}
+						<a href = "{{twitter}}"><img class = "icon" id = "tw"src = "img\twitter.png"></a>
+					{{!-- {{/if}} --}}
 
-					{{#if hasig}}
-						<a href = "{{ig}}"><img class = "icon" id = "ig"src = "img\instagram.png"></a>
-					{{/if}}
+					{{!-- {{#if hasig}} --}}
+						<a href = "{{instagram}}"><img class = "icon" id = "ig"src = "img\instagram.png"></a>
+					{{!-- {{/if}} --}}
 				</div>
 
 				<div id = "contactdetails">
-					<p>Contact Number: {{contactdetails}}</p>
+					<p>Contact Number: {{number}}</p>
 				</div>
 
 				

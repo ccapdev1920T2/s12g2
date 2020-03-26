@@ -1,7 +1,12 @@
+
 const db = require('.../models/db.js');
 
 const controller = {
-
+    
+    getFavicon: function (req, res) {
+        res.status(204);
+    },
+  
     /* LOADS A USER'S PROFILE */
     getProfile: function(req, res) {
         var name = req.params.username;
@@ -39,4 +44,7 @@ const controller = {
     getLogInPage : function() {
         res.render('home');
     }
+ 
 };
+
+module.exports = controller;
