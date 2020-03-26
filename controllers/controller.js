@@ -14,10 +14,10 @@ const controller = {
         var query = {username : name};
 
         db.findOne('client', query, function(result) {
-            
-            // var hasfb = (result.facebook != null);
-            // var hasig = (result.instagram != null);
-            // var hastw = (result.twitter != null);
+
+            result.hasfb = (result.facebook != null);
+            result.hasig = (result.instagram != null);
+            result.hastw = (result.twitter != null);
 
             // res.render('profile', {
             //     ua = result.avatar /*temp*/,
@@ -36,7 +36,7 @@ const controller = {
             //     //post = /*not sure pa */res
             
             // }) 
-            console.log(result.next());
+            //console.log(result[0].facebook);
             res.render('profile', result);
 
             

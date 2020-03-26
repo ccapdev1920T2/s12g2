@@ -12,6 +12,7 @@ app.get('/favicon.ico', controller.getFavicon);
 
 // execute function getFavicon() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/home`
+// hmm feeling ko dapat '/user/:username' nalang to? HAHAHAH IDK NA
 app.get('/:username', controller.getProfile);
 
 // exports the object `app` (defined above) when another script exports from this file

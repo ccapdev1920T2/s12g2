@@ -2,16 +2,17 @@
 
 // import module from `./models/db.js`
 const db = require('./models/db.js');
+const Client = require('./models/clients.js')
 
 // name of the collection (table) to perform CRUD (Create, Read, Update, Delete) operations
-const profileCollection = 'profile';
+const clientCollection = 'client';
 const postCollection = 'posts';
 
 // calls the function createDatabase() defined in the `database` object in `./models/db.js`
 db.createDatabase();
 
 // creates an object containing first name, last name, username, and bio of a user
-var user = {
+var client = new Client({
     email:              'nemo@puppers.com',
     id_num:             11646845,
     username:           'nemumu',
@@ -20,16 +21,19 @@ var user = {
     bio:                'I am an adorable little dog, who will bid for treats.',
     twitter:            'https://www.twitter.com/nemumu',
     facebook:           'https://www.facebook.com/nemumu',
-    instagram:          'https://instagram.com/nemumu',
+    instagram:          null,
+//    hasfb:              null,
+//    hastw:              null,
+//    hasig:              null,
     isSuspended:        false,
     // likedPosts:         {type: Schema.Types.ObjectId, ref: 'Posts'},
-    avatar:             'img\default.jpg',
+    avatar:             'img\default.png',
 
-};
+});
 
 // calls the function insertOne() defined in the `database` object in `./models/db.js`
 // stores the object `user` in the collection (table) `profiles`
-db.insertOne(profileCollection, user);
+db.insertOne(clientCollection, client);
 
 // var post = {
     
