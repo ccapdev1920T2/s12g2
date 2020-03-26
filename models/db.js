@@ -13,7 +13,7 @@ const database = {
     createDatabase: function() {
         client.connect(url, options, function(err, db) {
             if(err) throw err;
-            console.log('Database created!');
+            console.log(databaseName + 'Database created!');
             db.close();
         });
     },
@@ -40,7 +40,8 @@ const database = {
             var database = (db.db(databaseName));
             database.collection(collection).insertOne(doc, function (err, res) {
                 if(err) throw err;
-                console.log('document inserted');
+                console.log('Document inserted in ' + collection);
+                console.log(doc);
                 db.close();
             });
             
@@ -48,8 +49,8 @@ const database = {
     },
 
     /* FIND A DOCUMENT FROM A COLLECTION */
-    findOne: function(collection, query) {
-        client.connect(url, function(err, db) {
+    findOne: function(collection, query, callback) {
+        client.connect(url, options, function(err, db) {
             if(err) throw err;
             var database = db.db(databaseName);
 
@@ -57,12 +58,13 @@ const database = {
                 if(err) throw err;
                 console.log(res);
                 db.close();
+                return callback(res);
             });
         });
     },
 
     /* FIND MULTIPLE DOCUMENTS FROM A COLLECTION */
-
+    
     /* UPDATE A DOCUMENT */
 
     /* DELETE A DOCUMENT */
