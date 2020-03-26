@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var postsSchema = new Schema({
+var postSchema = new Schema({
     //post_id:      {type: Number, required: true},
     poster:         {type: Schema.Types.ObjectId, ref: 'Client', required: true},
     name:           {type: String, /*max: ,*/ required: true},
@@ -29,4 +29,4 @@ var postsSchema = new Schema({
 });
 
 //export model
-module.exports = mongoose.model('Posts', postsSchema);
+module.exports = mongoose.model('Post', postSchema);

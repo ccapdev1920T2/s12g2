@@ -2,7 +2,7 @@
 
 // import module from `./models/db.js`
 const db = require('./models/db.js');
-const Client = require('./models/clients.js')
+const Client = require('./models/client.js')
 
 // name of the collection (table) to perform CRUD (Create, Read, Update, Delete) operations
 const clientCollection = 'client';
