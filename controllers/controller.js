@@ -15,12 +15,12 @@ const controller = {
 
         db.findOne('client', query, function(result) {
 
-            result.hasfb = (result.facebook != null);
-            result.hasig = (result.instagram != null);
-            result.hastw = (result.twitter != null);
+            // result.hasfb = (result.facebook != null);
+            // result.hasig = (result.instagram != null);
+            // result.hastw = (result.twitter != null);
 
-            if(result.avatar == null)
-                result.avatar = "img/default.png"
+            // if(result.avatar == null)
+            //     result.avatar = "img/default.png"
 
             // res.render('profile', {
             //     ua = result.avatar /*temp*/,
@@ -43,15 +43,28 @@ const controller = {
             res.render('profile', result);
 
             
-        })
+        });
+    },
 
+    editProfile: function(req, res) {
+        var name = 'nemumu'; //try lang kung gagana hahaha
+
+        var query = {username : name};
+        
+        db.findOne('client', query, function (result){
+            console.log(result);
+
+            res.render('editprofile', result);
+        })
+        
     },
 
     /* LOADS LOG IN PAGE */
    /* getLogInPage : function() {
         res.render('home');
     } */
- 
+    
+
 };
 
 module.exports = controller;

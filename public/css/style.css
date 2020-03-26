@@ -807,7 +807,6 @@ input[type=email], input[type=password], input[type=text]
 {
 	min-width: 180px;
 	max-height: 70px;
-	margin: 20px;
 }
 
 #biotext

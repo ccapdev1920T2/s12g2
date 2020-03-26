@@ -5,7 +5,7 @@ const url = "mongodb://localhost:27017";
 
 const options = { useUnifiedTopology: true};
 
-const databaseName = 'bidspp';
+const databaseName = 'bids';
 
 const database = {
 

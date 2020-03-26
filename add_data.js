@@ -17,7 +17,7 @@ var client = new Client({
     id_num:             11646845,
     username:           'nemumu',
 
-    number:             09123456789,
+    number:             "09123456789",
     bio:                'I am an adorable little dog, who will bid for treats.',
     twitter:            'nemumu',
     facebook:           'nemumu',

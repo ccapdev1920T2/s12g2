@@ -7,7 +7,7 @@ var clientSchema = new Schema({
     id_num:             {type: Number, maxLength: 8, required: true},
     username:           {type: String,/* maxLength: ,*/ required: true},
 
-    number:             {type: Number, maxLength: 11, required: true},
+    number:             {type: String, maxLength: 11, required: true},
     bio:                {type: String/*, maxLength: */},
     twitter:            {type: String},
     facebook:           {type: String},
