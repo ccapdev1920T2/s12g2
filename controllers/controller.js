@@ -1,5 +1,5 @@
 
-const db = require('.../models/db.js');
+const db = require('../models/db.js');
 
 const controller = {
     
@@ -13,37 +13,41 @@ const controller = {
 
         var query = {username : name};
 
-        db.findOne('client', query, function(res) {
-
-            var hasfb = (res.facebook != null);
-            var hasig = (res.instagram != null);
-            var hastw = (res.twitter != null);
-
-            res.render('profile', {
-                ua = res.avatar /*temp*/,
-                dp = res.avatar,
-                profileusername = res.username,
-                checkedstars = res.rating /*temp*/,
-                uncheckedstars = 5 - res.rating,
-                bio = res.bio,
-                hasfb = this.hasfb,
-                fb = res.facebook,
-                hastwitter = this.hastw,
-                tw = res.twitter,
-                hasig = this.hasig,
-                ig = res.instagram,
-                contactdetails = res.number,
-                post = /*not sure pa */res
+        db.findOne('client', query, function(result) {
             
-            })
+            // var hasfb = (result.facebook != null);
+            // var hasig = (result.instagram != null);
+            // var hastw = (result.twitter != null);
+
+            // res.render('profile', {
+            //     ua = result.avatar /*temp*/,
+            //     dp = result.avatar,
+            //     profileusername = result.username,
+            //     checkedstars = result.rating /*temp*/,
+            //     uncheckedstars = 5 - result.rating,
+            //     bio = result.bio,
+            //     hasfb = this.hasfb,
+            //     fb = result.facebook,
+            //     hastwitter = this.hastw,
+            //     tw = result.twitter,
+            //     hasig = this.hasig,
+            //     ig = result.instagram,
+            //     contactdetails = result.number,
+            //     //post = /*not sure pa */res
+            
+            // }) 
+            console.log(result.next());
+            res.render('profile', result);
+
+            
         })
 
     },
 
     /* LOADS LOG IN PAGE */
-    getLogInPage : function() {
+   /* getLogInPage : function() {
         res.render('home');
-    }
+    } */
  
 };
 
