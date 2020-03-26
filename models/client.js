@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var clientSchema = new Schema({
     email:              {type: Schema.Types.ObjectId, ref: 'User', required: true},
     id_num:             {type: Number, maxLength: 8, required: true},
-    username:           {type: String,/* maxLength: ,*/ required: true},
+    username:           {type: String,/* maxLength: ,*/ unique: true, required: true},
 
     number:             {type: Number, maxLength: 11, required: true},
     bio:                {type: String/*, maxLength: */},
