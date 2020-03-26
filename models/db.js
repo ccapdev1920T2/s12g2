@@ -32,6 +32,10 @@ const database = {
         });
     },
 
+
+
+    /// CREATE ///
+
     /* INSERT ONE DOCUMENT INTO COLLECTION */
     insertOne: function(collection, doc) {
         client.connect(url, options, function(err, db) {
@@ -47,6 +51,10 @@ const database = {
             
         });
     },
+
+
+
+    /// READ ///
 
     /* FIND A DOCUMENT FROM A COLLECTION */
     findOne: function(collection, query, callback) {
@@ -64,10 +72,36 @@ const database = {
     },
 
     /* FIND MULTIPLE DOCUMENTS FROM A COLLECTION */
+    findMany: function(collection, query, sort=null, projection=null, callback) {
+        client.connect(url, options, function(err, db) {
+            if(err) throw err;
+            var database = db.db(databaseName);
+
+            database.collection(collection).find(query, {projection: projection})
+            .sort(sort).toArray(function(err, res) {
+                if(err) throw err;
+                console.log(res);
+                db.close();
+                return callback(res);
+            });
+        });
+    },
     
+
+
+    /// UPDATE ///
+
     /* UPDATE A DOCUMENT */
 
+    // hi robi hehehe
+
+
+
+    /// DELETE ///
+
     /* DELETE A DOCUMENT */
+
+    // hi robi hehehe
 };
 
 module.exports = database;
