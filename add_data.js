@@ -21,13 +21,12 @@ var client = new Client({
     bio:                'I am an adorable little dog, who will bid for treats.',
     twitter:            'https://www.twitter.com/nemumu',
     facebook:           'https://www.facebook.com/nemumu',
-    instagram:          null,
-//    hasfb:              null,
-//    hastw:              null,
-//    hasig:              null,
+    // hasfb:              null,
+    // hastw:              null,
+    // hasig:              null,
     isSuspended:        false,
     // likedPosts:         {type: Schema.Types.ObjectId, ref: 'Posts'},
-    avatar:             'img\default.png',
+    // avatar:             'img\default.png',
 
 });
 

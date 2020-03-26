@@ -19,6 +19,9 @@ const controller = {
             result.hasig = (result.instagram != null);
             result.hastw = (result.twitter != null);
 
+            if(result.avatar == null)
+                result.avatar = "img/default.png"
+
             // res.render('profile', {
             //     ua = result.avatar /*temp*/,
             //     dp = result.avatar,
