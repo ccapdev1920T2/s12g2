@@ -92,16 +92,41 @@ const database = {
     /// UPDATE ///
 
     /* UPDATE A DOCUMENT */
+    updateOne: function(collection, filter, update) {
+        client.connect(url, options, function (err, db) {
+            if(err) throw err;
+            var database = db.db(databaseName);
 
-    // hi robi hehehe
+            database.collection(collection).updateOne(filter, update, function (err, res){
+                if(err) throw err;
+
+                console.log('document updated in ' + collection);
+                db.close();
+            });
+        });
+    },
+    
 
 
 
     /// DELETE ///
 
     /* DELETE A DOCUMENT */
+    deleteOne: function(collection, filter) {
+        client.connect(url, options, function(err, db){
+            if(err) throw err;
+            var database = db.db(databaseName);
 
-    // hi robi hehehe
+            database.collection(collection).deleteOne(filter, function (err, res){
+                if(err) throw err;
+                
+                console.log('document deleted from ' + collection);
+                db.close();
+            });
+
+        });
+    },
+    
 };
 
 module.exports = database;
