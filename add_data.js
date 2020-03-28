@@ -2,11 +2,13 @@
 
 // import module from `./models/db.js`
 const db = require('./models/db.js');
-const Client = require('./models/client.js')
+const Client = require('./models/client.js');
+const Review = require('./models/review.js');
 
 // name of the collection (table) to perform CRUD (Create, Read, Update, Delete) operations
 const clientCollection = 'client';
 const postCollection = 'posts';
+const reviewCollection = 'review';
 
 // calls the function createDatabase() defined in the `database` object in `./models/db.js`
 db.createDatabase();
@@ -33,6 +35,17 @@ var client = new Client({
 // calls the function insertOne() defined in the `database` object in `./models/db.js`
 // stores the object `user` in the collection (table) `profiles`
 db.insertOne(clientCollection, client);
+
+var review = new Review ({
+    review_id: 001,
+    num_stars: 4,
+    reviewer_email: 'christine@gmail.com',
+    revieweduser: 'nemumu',
+    review: 'great doggo. Would work with again.'
+
+});
+
+db.insertOne(reviewCollection, review);
 
 // var post = {
     
