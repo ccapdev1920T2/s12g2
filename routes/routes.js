@@ -13,12 +13,25 @@ app.get('/favicon.ico', controller.getFavicon);
 // when a client sends an HTTP GET request for `/editprofile`
 app.get('/editprofile', controller.editProfile);
 
-// execute function getFavicon() as defined in object controller in `../controllers/controller.js`
+// execute function getProfile() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username`
-// hmm feeling ko dapat '/user/:username' nalang to? HAHAHAH IDK NA
 app.get('/:username', controller.getProfile);
 
+// execute function getReviews() as defined in object controller in `../controllers/controller.js`
+// when a client sends an HTTP GET request for `/:username/reviews`
+app.get('/reviews_:username', controller.getReviews);
 
+// execute function getRegistration() as defined in object controller in `../controllers/controller.js`
+// when a client sends an HTTP GET request for `/register`
+app.get('/register', controller.getRegistration);
+
+// execute function getPost() as defined in object controller in `../controllers/controller.js`
+// when a client sends an HTTP GET request for `/:postId`
+app.get('/:postId', controller.getPost);
+
+app.get('/', function(req, res) {
+    res.render('home')}
+);
 
 // exports the object `app` (defined above) when another script exports from this file
 module.exports = app;

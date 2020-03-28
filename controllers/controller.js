@@ -1,6 +1,8 @@
 
 const db = require('../models/db.js');
 
+var isAdmin = false; //temp
+
 const controller = {
     
     getFavicon: function (req, res) {
@@ -40,9 +42,12 @@ const controller = {
             
             // }) 
             //console.log(result[0].facebook);
-            res.render('profile', result);
 
-            
+            if(!isAdmin)
+                res.render('profile', result);
+            else
+                res.render('adminprofile', result);
+
         });
     },
 
@@ -60,11 +65,46 @@ const controller = {
     },
 
     /* LOADS LOG IN PAGE */
-   /* getLogInPage : function() {
+   getLogInPage : function() {
         res.render('home');
-    } */
+    },
     
+    /* LOADS REGISTRATION */
+    getRegistration: function(req, res) {
+        res.render('registration');
+    },
 
+    /* LOADS A POST */
+    getPost: function(req, res) {
+        var post = req.params.postId;
+
+        var query = {post_id : post};
+
+        db.findOne('post', query, function(result) {
+            if(!isAdmin)
+                res.render('viewpost', result);
+            else
+                res.render('admin-viewpost', result);
+        })
+    },
+
+    /* LOADS REVIEWS */
+    getReviews: function(req, res) {
+        var username = req.params.username;
+
+        var query1 = {revieweduser: username};
+        var query2 = {username: this.username};
+
+        db.findMany('review', query1, function(result){
+
+            db.findOne('user', query2, function(result2) {
+                res.render('profilereviews', {
+                    dp: result,
+                    review: result2});
+            });
+
+        });
+    }
 };
 
 module.exports = controller;
