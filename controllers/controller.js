@@ -17,12 +17,12 @@ const controller = {
 
         db.findOne('client', query, function(result) {
 
-            // result.hasfb = (result.facebook != null);
-            // result.hasig = (result.instagram != null);
-            // result.hastw = (result.twitter != null);
+            result.hasfb = (result.facebook != null);
+            result.hasig = (result.instagram != null);
+            result.hastw = (result.twitter != null);
 
-            // if(result.avatar == null)
-            //     result.avatar = "img/default.png"
+            if(result.avatar == null)
+                result.avatar = "img/default.png"
 
             // res.render('profile', {
             //     ua = result.avatar /*temp*/,
@@ -44,7 +44,10 @@ const controller = {
             //console.log(result[0].facebook);
 
             if(!isAdmin)
-                res.render('profile', result);
+                res.render('profile', {
+                    title: result.username,
+                    profiledetails: result
+                });
             else
                 res.render('adminprofile', result);
 
