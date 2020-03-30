@@ -17,39 +17,28 @@ const controller = {
 
         db.findOne('client', query, function(result) {
 
-            result.hasfb = (result.facebook != null);
-            result.hasig = (result.instagram != null);
-            result.hastw = (result.twitter != null);
+            if(result != null)
+            {
+                result.hasfb = (result.facebook != null);
+                result.hasig = (result.instagram != null);
+                result.hastw = (result.twitter != null);
 
-            if(result.avatar == null)
-                result.avatar = "/img/default.png"
+                if(result.avatar == null)
+                    result.avatar = "/img/default.png"
 
-            // res.render('profile', {
-            //     ua = result.avatar /*temp*/,
-            //     dp = result.avatar,
-            //     profileusername = result.username,
-            //     checkedstars = result.rating /*temp*/,
-            //     uncheckedstars = 5 - result.rating,
-            //     bio = result.bio,
-            //     hasfb = this.hasfb,
-            //     fb = result.facebook,
-            //     hastwitter = this.hastw,
-            //     tw = result.twitter,
-            //     hasig = this.hasig,
-            //     ig = result.instagram,
-            //     contactdetails = result.number,
-            //     //post = /*not sure pa */res
-            
-            // }) 
-            //console.log(result[0].facebook);
-
-            if(!isAdmin)
-                res.render('profile', {
-                    title: result.username,
-                    profiledetails: result
-                });
+                if(!isAdmin)
+                    res.render('profile', {
+                        title: result.username,
+                        profiledetails: result
+                    });
+                else
+                    res.render('adminprofile', result);
+            }
             else
-                res.render('adminprofile', result);
+            {
+                res.send("oof 404 error cannot find user, error page to be implemented hehe")
+            }
+            
 
         });
     },
