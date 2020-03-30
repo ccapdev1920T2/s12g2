@@ -1,20 +1,41 @@
 // Dummy Data
 
-// import module from `./models/db.js`
+// import models
 const db = require('./models/db.js');
-const Client = require('./models/client.js');
-const Review = require('./models/review.js');
 
-// name of the collection (table) to perform CRUD (Create, Read, Update, Delete) operations
-const clientCollection = 'client';
-const postCollection = 'posts';
-const reviewCollection = 'review';
+const Category  = require('./models/category.js');
+const Client    = require('./models/client.js');
+const File      = require('./models/file.js');
+const Post      = require('./models/post.js');
+const Report    = require('./models/report.js');
+const Review    = require('./models/review.js');
+const User      = require('./models/user.js');
+
+// declaration of collections
+const categoryCollection    = 'category';
+const clientCollection      = 'client';
+const fileCollection        = 'file';
+const postCollection        = 'post';
+const reportCollection      = 'report';
+const reviewCollection      = 'review';
+const userCollection        = 'user';
 
 // calls the function createDatabase() defined in the `database` object in `./models/db.js`
 db.createDatabase();
 
-// creates an object containing first name, last name, username, and bio of a user
-var client = new Client({
+/// USERS ///
+
+var user = new User
+({
+    email:      'nemo@puppers.com',
+    password:   'henlo',
+    isClient:   true
+});
+
+/// CLIENTS ///
+
+var client = new Client
+({
     email:              'nemo@puppers.com',
     id_num:             11646845,
     username:           'nemumu',
@@ -23,17 +44,9 @@ var client = new Client({
     bio:                'I am an adorable little dog, who will bid for treats.',
     twitter:            'nemumu',
     facebook:           'nemumu',
-    // hasfb:              null,
-    // hastw:              null,
-    // hasig:              null,
     isSuspended:        false,
-    // likedPosts:         {type: Schema.Types.ObjectId, ref: 'Posts'},
-    // avatar:             'img\default.png',
-
 });
 
-// calls the function insertOne() defined in the `database` object in `./models/db.js`
-// stores the object `user` in the collection (table) `profiles`
 db.insertOne(clientCollection, client);
 
 var review = new Review ({
