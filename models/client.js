@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var clientSchema = new Schema({
-    email:              {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    user:               {type: Schema.Types.ObjectId, ref: 'User'/*, required: true*/},
     id_num:             {type: Number, maxLength: 8, required: true},
     username:           {type: String,/* maxLength: ,*/ unique: true, required: true},
 
