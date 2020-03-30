@@ -22,17 +22,21 @@ app.get('/editprofile', controller.editProfile);
 
 // execute function getProfile() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username`
-app.get('/user/:username', function(req, res, next) {
-    var user = req.body;
-    console.log(req.body);
-    if(!user){
-        req.session.backTo = req.originalUrl;
-        res.redirect('/');
-    }
-    else
-        controller.getProfile;
+// app.get('/user/:username', function(req, res, next) {
+//     // var user = req.body;
+//     // console.log(req.body);
+//     // if(!user){
+//     //     req.session.backTo = req.originalUrl;
+//     //     res.redirect('/');
+//     // }
+//     // else
+//     //     controller.getProfile;
 
-});
+//     controller.getProfile;
+
+// });
+
+app.get('/user/:username', controller.getProfile);
 
 // execute function getReviews() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username/reviews`
