@@ -22,7 +22,7 @@ const controller = {
             result.hastw = (result.twitter != null);
 
             if(result.avatar == null)
-                result.avatar = "img/default.png"
+                result.avatar = "/img/default.png"
 
             // res.render('profile', {
             //     ua = result.avatar /*temp*/,
@@ -98,15 +98,19 @@ const controller = {
         var query1 = {revieweduser: username};
         var query2 = {username: this.username};
 
-        db.findMany('review', query1, function(result){
-
-            db.findOne('user', query2, function(result2) {
-                res.render('profilereviews', {
-                    dp: result,
-                    review: result2});
-            });
-
+        db.findOne('review', query1, function(result){
+            res.render('profilereviews', result);
         });
+        
+    //    db.findMany('review', query1, function(result){
+
+    //         db.findOne('user', query2, function(result2) {
+    //             res.render('profilereviews', {
+    //                 dp: result,
+    //                 review: result2});
+    //         });
+
+    //    });
     }
 };
 

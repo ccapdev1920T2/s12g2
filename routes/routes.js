@@ -15,11 +15,11 @@ app.get('/editprofile', controller.editProfile);
 
 // execute function getProfile() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username`
-app.get('/:username', controller.getProfile);
+app.get('/user/:username', controller.getProfile);
 
 // execute function getReviews() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username/reviews`
-app.get('/reviews_:username', controller.getReviews);
+app.get('/:username/reviews', controller.getReviews);
 
 // execute function getRegistration() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/register`
