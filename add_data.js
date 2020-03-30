@@ -36,7 +36,7 @@ var user = new User
 
 var client = new Client
 ({
-    // email:              'nemo@puppers.com',
+    email:              'nemo@puppers.com',
     id_num:             11646845,
     username:           'nemumu',
 
