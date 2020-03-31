@@ -64,8 +64,8 @@ const database = {
 
             database.collection(collection).findOne(query, function(err, res) {
                 if(err) throw err;
-                console.log(res);
                 db.close();
+                
                 return callback(res);
             });
         });
