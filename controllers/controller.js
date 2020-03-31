@@ -44,7 +44,7 @@ const controller = {
     },
 
     editProfile: function(req, res) {
-        var name = 'nemumu'; //try lang kung gagana hahaha
+        var name = req.params.username;
 
         var query = {username : name};
         

@@ -9,11 +9,11 @@
 		<div id = "details">
 			<div id = "detailscontent">
 				<div id = "dpdiv">
-					<img id = "dp"src = "{{dp}}">
+					<img id = "dp"src = "{{avatar}}">
 				</div>
 
 				<div id = "name">
-					<p id = "profileusername">{{profileusername}}</p>
+					<p id = "profileusername">{{username}}</p>
 				</div>
 
 				<div id = "review">
@@ -31,24 +31,24 @@
 
 				<div id = "socialmedia">
 					{{#if hasfb}}
-						<a href = "{{fb}}"><img class = "icon" id = "fb"src = "img\facebook.png"></a>
+						<a href = "http://www.facebook.com/{{fb}}"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
 					{{/if}}
 
 					{{#if hastw}}
-						<a href = "{{tw}}"><img class = "icon" id = "tw"src = "img\twitter.png"></a>
+						<a href = "http://www.twitter.com/{{tw}}"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
 					{{/if}}
 
 					{{#if hasig}}
-						<a href = "{{ig}}"><img class = "icon" id = "ig"src = "img\instagram.png"></a>
+						<a href = "http://www.instagram.com/{{ig}}"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
 					{{/if}}
 				</div>
 
 				<div id = "contactdetails">
-					<p>Contact Number: {{contactdetails}}</p>
+					<p>Contact Number: {{number}}</p>
 				</div>
 
 				
-				<a id = "reviews" href= "reviews">
+				<a id = "reviews" href= "/user/{{username}}/reviews">
 					USER REVIEWS
 				</a>
 
