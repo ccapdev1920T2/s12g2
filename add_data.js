@@ -96,10 +96,10 @@ function createCategories(cb) {
         },
         function(callback) {
             categoryCreate("Women's", callback);
-        },,
+        },
         function(callback) {
             categoryCreate("Men's", callback);
-        },,
+        },
         function(callback) {
             categoryCreate("Children's", callback);
         },
@@ -142,16 +142,16 @@ function(err, results)
     }
     else
     {
-        console.log('Finished creating DB. YAY')
+        console.log('Finished creating DB.')
     }
     mongoose.connection.close();
 });
 
-var sample = new User({
-    email: "waluigi",
-    password: "weeee",
-    isClient: true
-});
+// var sample = new User({
+//     email: "waluigi",
+//     password: "weeee",
+//     isClient: true
+// });
 
 db.insertOne(userCollection, sample);
 
