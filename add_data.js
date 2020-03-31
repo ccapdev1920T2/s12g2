@@ -3,6 +3,7 @@
 // import models
 const db = require('./models/db.js');
 
+var async = require('async')
 const Category  = require('./models/category.js');
 const Client    = require('./models/client.js');
 const File      = require('./models/file.js');
@@ -18,47 +19,139 @@ const fileCollection        = 'file';
 const postCollection        = 'post';
 const reportCollection      = 'report';
 const reviewCollection      = 'review';
-const userCollection        = 'user';
+const userCollection        = 'users';
 
 // calls the function createDatabase() defined in the `database` object in `./models/db.js`
-db.createDatabase();
+//db.createDatabase();
 
-/// USERS ///
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true});
+var mongodb = mongoose.connection;
+mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
-var user = new User
-({
-    email:      'nemo@puppers.com',
-    password:   'henlo',
-    isClient:   true
+var categories = []
+var users = []
+
+function userCreate(email, password, isClient, cb)
+{
+    var user = new User({
+            email:email,
+            password:password,
+            isClient:isClient
+        });
+
+    user.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log('New User: ' + user);
+        users.push(user)
+        cb(null, user)
+    });
+}
+
+function categoryCreate(name, cb)
+{
+    var category = new Category({name:name});
+
+    category.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log('New Category: ' + category);
+        categories.push(category)
+        cb(null, category)
+    });
+}
+
+function createUsers(cb) {
+    async.series([
+        function(callback) {
+            userCreate('shargaw@dlsu.edu.ph', 'hatdog', true, callback);
+        },
+        function(callback) {
+            userCreate('kristine@yahoo.com', 'luvunemo', true, callback);
+        },
+        function(callback) {
+            userCreate('robijeanne@gmail.com', '921127', true, callback);
+        },
+        function(callback) {
+            userCreate('nemo@puppers.com', 'henlo', true, callback);
+        },
+        function(callback) {
+            userCreate('bidspp@gmail.com', 'p@ssword', false, callback);
+        },
+    ], cb);
+}
+
+function createCategories(cb) {
+    async.series([
+        function(callback) {
+            categoryCreate("Book", callback);
+        },
+        function(callback) {
+            categoryCreate("For Pet", callback);
+        },
+        function(callback) {
+            categoryCreate("Women's", callback);
+        }
+    ], cb);
+}
+
+async.series([
+    createUsers,
+    createCategories
+],
+function(err, results)
+{
+    if(err)
+    {
+        console.log('ERROR: ' + err);
+    }
+    else
+    {
+        console.log('Finished creating DB. YAY')
+    }
+    mongoose.connection.close();
+})
+
+var sample = new User({
+    email: "waluigi",
+    password: "weeee",
+    isClient: true
 });
+
+db.insertOne(userCollection, sample);
 
 /// CLIENTS ///
 
-var client = new Client
-({
-    email:              'nemo@puppers.com',
-    id_num:             11646845,
-    username:           'nemumu',
+// var client = new Client
+// ({
+//     email:              'nemo@puppers.com',
+//     id_num:             11646845,
+//     username:           'nemumu',
 
-    number:             "09123456789",
-    bio:                'I am an adorable little dog, who will bid for treats.',
-    twitter:            'nemumu',
-    facebook:           'nemumu',
-    isSuspended:        false,
-});
+//     number:             "09123456789",
+//     bio:                'I am an adorable little dog, who will bid for treats.',
+//     twitter:            'nemumu',
+//     facebook:           'nemumu',
+//     isSuspended:        false,
+// });
 
-db.insertOne(clientCollection, client);
+// db.insertOne(clientCollection, client);
 
-var review = new Review ({
-    review_id: 001,
-    num_stars: 4,
-    reviewer_email: 'christine@gmail.com',
-    revieweduser: 'nemumu',
-    review: 'great doggo. Would work with again.'
+// var review = new Review ({
+//     review_id: 001,
+//     num_stars: 4,
+//     reviewer_email: 'christine@gmail.com',
+//     revieweduser: 'nemumu',
+//     review: 'great doggo. Would work with again.'
 
-});
+// });
 
-db.insertOne(reviewCollection, review);
+// db.insertOne(reviewCollection, review);
 
 // var post = {
     
@@ -89,5 +182,3 @@ db.insertOne(reviewCollection, review);
 // };
 
 //  db.insertOne(postCollection, post);
-
-
