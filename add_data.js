@@ -153,7 +153,7 @@ function(err, results)
 //     isClient: true
 // });
 
-db.insertOne(userCollection, sample);
+//db.insertOne(userCollection, sample);
 
 /// CLIENTS ///
 
