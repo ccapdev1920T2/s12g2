@@ -22,8 +22,11 @@ app.get('/editprofile', controller.editProfile);
 // renders `home.hbs`
 // when a client sends an HTTP GET request for `/`
 app.get('/', function(req, res) {
-    res.render('home');
-
+    
+    if(req.session.user == undefined)
+        res.render('home');
+    else
+        controller.getHomepage(req, res);
 });
 
 app.post('/', function(req, res) {
@@ -51,11 +54,11 @@ app.post('/home', function(req, res) {
 // execute function getProfile() as defined in object controller in `../controllers/controller.js`
 // when a client sends an HTTP GET request for `/:username`
 app.get('/user/:username', function(req, res, next) {
-    if(req.body == ""){
+    
+    if(req.session.user == undefined)
         res.render('home');
-    }
     else
-        controller.getProfile;
+        controller.getProfile(req, res);
 
 });
 

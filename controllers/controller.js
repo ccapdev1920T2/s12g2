@@ -24,7 +24,7 @@ const controller = {
                 if(result.avatar == null)
                     result.avatar = "/img/default.png"
 
-                if(!isAdmin)
+                if(req.session.user.isClient)
                     res.render('profile', {
                         title: result.username,
                         profiledetails: result
@@ -42,15 +42,19 @@ const controller = {
     },
 
     editProfile: function(req, res) {
-        var name = req.params.username;
+        if(req.session.user != undefined) {
+            var name = req.params.username;
 
-        var query = {username : name};
-        
-        db.findOne('client', query, function (result){
-            console.log(result);
+            var query = {username : name};
+            
+            db.findOne('client', query, function (result){
 
-            res.render('editprofile', result);
-        })
+                res.render('editprofile', result);
+
+            })
+        }
+        else
+            res.render('home');
         
     },
 
@@ -60,32 +64,46 @@ const controller = {
         BACK TO THE LOGIN PAGE 
     */
    getLogIn : function(req, res) {
-       
+
         var query = {email:     req.body.email,
                      password:  req.body.password};
-
-        db.findOne('client', query, function(err, result) {
+        
+        db.findOne('users', query, function(result) {
             
-            if(err) throw err;
-            else {
-                if(result == null)
-                {
-                    res.status(404).send();
-                }
-                else
-                {
-                    req.session.user = result;
-
-                    if(result.isClient)
-                        res.render('homepage');
-                    else
-                        res.render('admin-posts');
-                }
+            if(result == null)
+            {
+                res.status(404).send();
+                res.redirect('home');
+                //EDIT
             }
+            else
+            {
+                req.session.user = result;
+
+                if(result.isClient)
+                    res.render('homepage') // this.getHomepage(req,res);
+                else
+                    res.render('admin-posts');
+            }
+            
 
         })
     },
     
+    /* LOADS HOMEPAGE */
+    getHomepage: function(req, res) {
+        
+        var query = {email: req.session.user.email};
+
+        db.findOne('users', query, function(result) {
+            var query2 = {_id: result._id};
+
+            db.findOne('clients', query2, function(result2) {
+                // NOT SURE PA KUNG PANO ILALAGAY YUNG SA USER AVATAR HAHAH AND DISPLAY NG POSTS
+            });
+        })
+    },
+
     /* LOADS REGISTRATION */
     getRegistration: function(req, res) {
         res.render('registration');
@@ -93,38 +111,51 @@ const controller = {
 
     /* LOADS A POST */
     getPost: function(req, res) {
-        var post = req.params.postId;
+        if(req.session.user != undefined) {
+            var post = req.params.postId;
 
-        var query = {post_id : post};
+            var query = {post_id : post};
 
-        db.findOne('post', query, function(result) {
-            if(!isAdmin)
-                res.render('viewpost', result);
-            else
-                res.render('admin-viewpost', result);
-        })
+            db.findOne('post', query, function(result) {
+                if(req.session.user.isClient)
+                    res.render('viewpost', result);
+                else
+                    res.render('admin-viewpost', result);
+            })
+        }
+        else
+            res.render('home');
     },
 
     /* LOADS REVIEWS */
     getReviews: function(req, res) {
-        var username = req.params.username;
+        if(req.session.user != undefined) {
 
-        var query1 = {revieweduser: username};
-        var query2 = {username: this.username};
+            var username = req.params.username;
 
-        db.findOne('review', query1, function(result){
-            res.render('profilereviews', result);
-        });
-        
-    //    db.findMany('review', query1, function(result){
+            var query1 = {revieweduser: username};
+            var query2 = {username: this.username};
 
-    //         db.findOne('user', query2, function(result2) {
-    //             res.render('profilereviews', {
-    //                 dp: result,
-    //                 review: result2});
-    //         });
+            db.findOne('review', query1, function(result){
+                if(req.session.user.isClient)
+                    res.render('profilereviews', result);
+                else
+                    res.render('admin-profilereviews', result);
+            });
+            
+        //    db.findMany('review', query1, function(result){
 
-    //    });
+        //         db.findOne('user', query2, function(result2) {
+        //             res.render('profilereviews', {
+        //                 dp: result,
+        //                 review: result2});
+        //         });
+
+        //    });
+            
+        }
+        else
+            res.render('home');
     }
 };
 
