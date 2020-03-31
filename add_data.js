@@ -31,6 +31,7 @@ mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 var categories = []
 var users = []
+var clients = []
 
 function userCreate(email, password, isClient, cb)
 {
@@ -63,6 +64,36 @@ function categoryCreate(name, cb)
         console.log('New Category: ' + category);
         categories.push(category);
         cb(null, category);
+    });
+}
+
+function clientCreate(user, id_num, username, number,
+                      bio, twitter, facebook, instagram, hasfb, hastw, hasig, 
+                      isSuspended, likedPosts, avatar, cb)
+{
+    var client = new Client({user: user,
+                             id_num: id_num,
+                             username: username,
+                             number: number,
+                             bio: bio,
+                             twitter: twitter,
+                             facebook: facebook,
+                             instagram: instagram,
+                             hasfb: hasfb,
+                             hastw: hastw,
+                             hasig: hasig,
+                             isSuspended: isSuspended,
+                             likedPosts: likedPosts,
+                             avatar: avatar});
+
+    client.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log('New Client: ' + client);
+        clients.push(client);
+        cb(null, client);
     });
 }
 
