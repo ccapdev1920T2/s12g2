@@ -46,8 +46,8 @@ function userCreate(email, password, isClient, cb)
             return
         }
         console.log('New User: ' + user);
-        users.push(user)
-        cb(null, user)
+        users.push(user);
+        cb(null, user);
     });
 }
 
@@ -61,8 +61,8 @@ function categoryCreate(name, cb)
             return
         }
         console.log('New Category: ' + category);
-        categories.push(category)
-        cb(null, category)
+        categories.push(category);
+        cb(null, category);
     });
 }
 
@@ -96,6 +96,36 @@ function createCategories(cb) {
         },
         function(callback) {
             categoryCreate("Women's", callback);
+        },,
+        function(callback) {
+            categoryCreate("Men's", callback);
+        },,
+        function(callback) {
+            categoryCreate("Children's", callback);
+        },
+        function(callback) {
+            categoryCreate("Top", callback);
+        },
+        function(callback) {
+            categoryCreate("Bottom", callback);
+        },
+        function(callback) {
+            categoryCreate("Shoes", callback);
+        },
+        function(callback) {
+            categoryCreate("Stationery", callback);
+        },
+        function(callback) {
+            categoryCreate("Food", callback);
+        },
+        function(callback) {
+            categoryCreate("Collectible", callback);
+        },
+        function(callback) {
+            categoryCreate("Accessory", callback);
+        },
+        function(callback) {
+            categoryCreate("Technology", callback);
         }
     ], cb);
 }
@@ -115,7 +145,7 @@ function(err, results)
         console.log('Finished creating DB. YAY')
     }
     mongoose.connection.close();
-})
+});
 
 var sample = new User({
     email: "waluigi",
