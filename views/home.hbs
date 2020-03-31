@@ -24,12 +24,12 @@
     <!-- LOG IN -->
 
     <div id = "form">
-        <form method = "post">
+        <form method = "post" action = "">
             <label for = "email">email</label><br>
-            <input type="email" id="email"><br>
+            <input type="email" id="email" name = "email"><br>
             
             <label for = "password">password</label><br>
-            <input type="password" id="password"><br>
+            <input type="password" id="password" name = "password"><br>
 
             <div id="warning"></div>
             
@@ -44,7 +44,7 @@
 
 <script>
 
-    $(".submit").click(function(){
+  /*  $(".submit").click(function(){
         var email = $("#email").val();
         var pw = $("#password").val();
 
@@ -55,11 +55,11 @@
 
         else if(email == "nemo@puppers.com" && pw == "henlo")
         {
-           // $(this).parent("form").attr("action", "homepage");
+         //  $(this).parent("form").attr("action", "");
         }
         else
         {
             alert("Incorrect email and/or password.");
         }
-    });
+    }); */
 </script>
