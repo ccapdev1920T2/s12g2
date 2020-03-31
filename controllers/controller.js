@@ -1,8 +1,6 @@
 
 const db = require('../models/db.js');
 
-var isAdmin = false; //temp
-
 const controller = {
     
     getFavicon: function (req, res) {
@@ -56,9 +54,36 @@ const controller = {
         
     },
 
-    /* LOADS LOG IN PAGE */
-   getLogInPage : function() {
-        res.render('home');
+    /*  
+        CHECKS IF THE USER LOGGING IN IS VALID. IF THE EMAIL AND PASSWORD MATCHES
+        A DOCUMENT IN THE DATABASE, 'homepage' IS RENDERED, ELSE, USER IS REDIRECTED
+        BACK TO THE LOGIN PAGE 
+    */
+   getLogIn : function(req, res) {
+       
+        var query = {email:     req.body.email,
+                     password:  req.body.password};
+
+        db.findOne('client', query, function(err, result) {
+            
+            if(err) throw err;
+            else {
+                if(result == null)
+                {
+                    res.status(404).send();
+                }
+                else
+                {
+                    req.session.user = result;
+
+                    if(result.isClient)
+                        res.render('homepage');
+                    else
+                        res.render('admin-posts');
+                }
+            }
+
+        })
     },
     
     /* LOADS REGISTRATION */
