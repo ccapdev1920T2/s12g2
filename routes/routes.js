@@ -42,7 +42,7 @@ app.get('/editprofile', function(req, res) {
     else it renders 'home.hbs'
 */
 app.get('/', function(req, res) {
-    
+
     if(req.session.user == undefined) // if the user is not logged in
         res.render('home'); // redirects user back to the log in page
     else
@@ -50,6 +50,8 @@ app.get('/', function(req, res) {
 
 });
 
+
+app.get('/checkLogIn', controller.checkLogIn);
 
 /*
     Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
