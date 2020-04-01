@@ -53,7 +53,7 @@ const controller = {
             }
             else
             {
-                res.send("oof 404 error cannot find user, error page to be implemented hehe")
+                res.render('error', result);
             }
             
 
