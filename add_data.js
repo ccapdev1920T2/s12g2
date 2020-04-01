@@ -161,9 +161,19 @@ function createCategories(cb) {
     ], cb);
 }
 
+function createClients(cb) {
+    async.series([
+        function(callback) {
+            clientCreate(users[3], 1234, "nemumuu", 01234567, "adorable dog who will bid for treats",
+            null, null, null, false, false, false, false, null, null, callback);
+        }
+    ], cb);
+}
+
 async.series([
     createUsers,
-    createCategories
+    createCategories,
+    createClients
 ],
 function(err, results)
 {

@@ -41,20 +41,18 @@ const controller = {
         });
     },
 
+    /* LOADS EDIT PROFILE */
     editProfile: function(req, res) {
-        if(req.session.user != undefined) {
-            var name = req.params.username;
+        
+        var name = req.params.username;
 
-            var query = {username : name};
-            
-            db.findOne('client', query, function (result){
+        var query = {username : name};
+        
+        db.findOne('client', query, function (result){
 
-                res.render('editprofile', result);
+            res.render('editprofile', result);
 
-            })
-        }
-        else
-            res.render('home');
+        })
         
     },
 
@@ -63,7 +61,7 @@ const controller = {
         A DOCUMENT IN THE DATABASE, 'homepage' IS RENDERED, ELSE, USER IS REDIRECTED
         BACK TO THE LOGIN PAGE 
     */
-   getLogIn : function(req, res) {
+    getLogIn : function(req, res) {
 
         var query = {email:     req.body.email,
                      password:  req.body.password};
@@ -98,9 +96,14 @@ const controller = {
         db.findOne('users', query, function(result) {
             var query2 = {_id: result._id};
 
-            db.findOne('clients', query2, function(result2) {
-                // NOT SURE PA KUNG PANO ILALAGAY YUNG SA USER AVATAR HAHAH AND DISPLAY NG POSTS
-            });
+            // db.findOne('clients', query2, function(result2) {
+            //     // NOT SURE PA KUNG PANO ILALAGAY YUNG SA USER AVATAR HAHAH AND DISPLAY NG POSTS
+            // });
+
+            if(req.session.user.isClient)
+                res.render('homepage'); // temp. for now ganyan nalang muna haha
+            else
+                res.render('admin-posts');
         })
     },
 
@@ -111,51 +114,50 @@ const controller = {
 
     /* LOADS A POST */
     getPost: function(req, res) {
-        if(req.session.user != undefined) {
-            var post = req.params.postId;
 
-            var query = {post_id : post};
+        var post = req.params.postId;
 
-            db.findOne('post', query, function(result) {
-                if(req.session.user.isClient)
-                    res.render('viewpost', result);
-                else
-                    res.render('admin-viewpost', result);
-            })
-        }
-        else
-            res.render('home');
+        var query = {post_id : post};
+
+        db.findOne('post', query, function(result) {
+            if(req.session.user.isClient)
+                res.render('viewpost', result);
+            else
+                res.render('admin-viewpost', result);
+        })
+
     },
 
     /* LOADS REVIEWS */
     getReviews: function(req, res) {
-        if(req.session.user != undefined) {
 
-            var username = req.params.username;
+        var username = req.params.username;
 
-            var query1 = {revieweduser: username};
-            var query2 = {username: this.username};
+        var query1 = {revieweduser: username};
+        var query2 = {username: this.username};
 
-            db.findOne('review', query1, function(result){
-                if(req.session.user.isClient)
-                    res.render('profilereviews', result);
-                else
-                    res.render('admin-profilereviews', result);
-            });
+        db.findOne('review', query1, function(result){
+            if(req.session.user.isClient)
+                res.render('profilereviews', result);
+            else
+                res.render('admin-profilereviews', result);
+        });
+        
+    //    db.findMany('review', query1, function(result){
+
+    //         db.findOne('user', query2, function(result2) {
+    //             res.render('profilereviews', {
+    //                 dp: result,
+    //                 review: result2});
+    //         });
+
+    //    });
             
-        //    db.findMany('review', query1, function(result){
+    },
 
-        //         db.findOne('user', query2, function(result2) {
-        //             res.render('profilereviews', {
-        //                 dp: result,
-        //                 review: result2});
-        //         });
-
-        //    });
-            
-        }
-        else
-            res.render('home');
+    /* LOADS FF PAGE */
+    getFFs: function(req, res) {
+        // MUST ADD
     }
 };
 
