@@ -29,12 +29,18 @@ const controller = {
                     // console.log(req.session.user.email);
                     // console.log(result.user.email);
 
-                    if(req.session.user.email == result.user.email)
+                   /* if(req.session.user.email == result.user.email)
                         res.render('self-profile', {
                             title: result.username,
                             profiledetails: result
                         }); // if the user is viewing their own profile
                     else
+                        res.render('profile', {
+                            title: result.username,
+                            profiledetails: result
+                        }); // if the user is viewing another user's profile */
+
+                        //temp
                         res.render('profile', {
                             title: result.username,
                             profiledetails: result
