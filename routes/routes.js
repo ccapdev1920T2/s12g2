@@ -116,6 +116,38 @@ app.get('/logout', function(req, res) {
 
 
 /*
+    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+app.get('/createpost', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else if(req.session.user.isClient)
+        controller.getCreatePost(req, res); // if the user is a client
+    else
+        res.redirect('/') // if the user is admin
+})
+
+
+/*
+    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+// app.get('/editpost', function(req, res) {
+
+//     if(req.session.user == undefined) // if the user is not logged in
+//         res.redirect('/'); // redirects user back to the log in page
+//     else if(req.session.user.isClient)
+//         controller.getEditPost(req, res); // if the user is a client
+//     else
+//         res.redirect('/') // if the user is admin
+// }) remove for now
+
+
+/*
     Executes function getFFs() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/ffs` if the user is logged in
     else it redirects the user back to the log in page
