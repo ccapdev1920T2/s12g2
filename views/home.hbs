@@ -44,22 +44,19 @@
 
 <script>
 
-  /*  $(".submit").click(function(){
+    $(".submit").click(function(){
+
         var email = $("#email").val();
-        var pw = $("#password").val();
+        var password = $("#password").val();
 
-        if(email == "bidspp@gmail.com" && pw == "p@ssword")
-        {
-            //$(this).parent("form").attr("action", "posts");
-        }
+        var query = {email: email, password: password};
 
-        else if(email == "nemo@puppers.com" && pw == "henlo")
-        {
-         //  $(this).parent("form").attr("action", "");
-        }
-        else
-        {
-            alert("Incorrect email and/or password.");
-        }
-    }); */
+        $.get('/checkLogIn', query, function(result) {
+
+            if(result == "") {
+                alert("Incorrect email and/or password");
+            }
+        });
+        
+    }); 
 </script>

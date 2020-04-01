@@ -15,7 +15,7 @@ const controller = {
 
         db.findOne('client', query, function(result) {
 
-            if(result != null)
+            if(result != null && result != undefined)
             {
                 result.hasfb = (result.facebook != null);
                 result.hasig = (result.instagram != null);
@@ -24,11 +24,24 @@ const controller = {
                 if(result.avatar == null)
                     result.avatar = "/img/default.png"
 
-                if(req.session.user.isClient)
-                    res.render('profile', {
-                        title: result.username,
-                        profiledetails: result
-                    });
+                if(req.session.user.isClient) {
+
+                    // console.log(req.session.user.email);
+                    // console.log(result.user.email);
+
+                    if(req.session.user.email == result.user.email)
+                        res.render('self-profile', {
+                            title: result.username,
+                            profiledetails: result
+                        }); // if the user is viewing their own profile
+                    else
+                        res.render('profile', {
+                            title: result.username,
+                            profiledetails: result
+                        }); // if the user is viewing another user's profile
+                    
+                        
+                }
                 else
                     res.render('adminprofile', result);
             }
@@ -137,8 +150,13 @@ const controller = {
         var query2 = {username: this.username};
 
         db.findOne('review', query1, function(result){
-            if(req.session.user.isClient)
-                res.render('profilereviews', result);
+            if(req.session.user.isClient) {
+
+                if(req.session.user.email == result.email)
+                    res.render('self-profilereviews', result); // if the user is viewing their own profile reviews
+                else
+                    res.render('profilereviews', result); // if the user is viewing another user's profile reviews
+            }
             else
                 res.render('admin-profilereviews', result);
         });
@@ -158,6 +176,20 @@ const controller = {
     /* LOADS FF PAGE */
     getFFs: function(req, res) {
         // MUST ADD
+    },
+
+    checkLogIn: function(req, res) {
+        
+        var email = req.query.email;
+        var password = req.query.password;
+
+        var query = {email: email, password: password};
+
+        db.findOne('users', query, function(result) {
+
+            res.send(result);
+
+        })
     }
 };
 
