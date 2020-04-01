@@ -98,64 +98,6 @@
 
 <script type = "text/javascript">
 
-	$("#reportbutton").click(function() 
-	{
-		$("#textcomplaint").val("");
-		var checks = $(".reportchecks:checked");
-		var x;
-		
-		for(x = 0; x < checks.length; x++)
-			checks[x].checked = false;
-
-		$("#reportscreen").css("display", "block");
-	});
-
-	$("#close").click(function() 
-	{
-		$("#errormessage").text("");
-		$("#reportscreen").css("display", "none");
-	});
-
-	$("#profilesubmit").click(function() 
-	{
-		var checks = $(".reportchecks:checked");
-		
-		if(checks.length > 0 && !($("#textcomplaint").val().trim() == ""))
-		{
-			$("#reporterrormessage").text("");
-			$("#reportscreen").css("display", "none");
-		}
-		else
-		{
-			$("#reportscreen").css("display", "block");
-
-			if(checks.length == 0)
-				$("#reporterrormessage").text("Please check at least one of the boxes.");
-			else if($("#textcomplaint").val().trim() == "")
-				$("#reporterrormessage").text("Please write your complaint.");
-
-		}
-
-	});
-
-	$("#submitreview").click(function()
-	{
-		
-		if(!($("#stars option:selected").val() == 'none') && !($("#reviewbox").val().trim() == ""))
-		{
-			$("#reviewerrormessage").text("");
-			$("#reviewbox").val("");
-			$("#stars").val('0');
-			alert("Your review has been submitted.");
-		}
-		else
-		{
-			if($("#stars option:selected").val() == 'none')
-				$("#reviewerrormessage").text("Please choose how many stars you are rating the user.");
-			else
-				$("#reviewerrormessage").text("Please write your review before submitting.");
-		}
-
-	});
+	
 
 </script>

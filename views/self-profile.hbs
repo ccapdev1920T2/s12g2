@@ -60,6 +60,7 @@
 		</div>
 
 		<div id = "posts">
+			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
 			<!-- POSTS -->
 			{{#each post}}
 				<div class="post">
@@ -67,7 +68,8 @@
 						<a href="view-post" class = "posttitle">
 							{{title}}
 						</a>
-						<div class = "ffbutton">♡</div>
+						<a href="" class ="sbbutton" id="filterbutton">X</a>
+						<a href="<!--/editpost-->" class ="sbbutton" id="searchbutton">edit</a>
 					</div>
 
 					<div class="posttags">
@@ -112,45 +114,9 @@
 
 <script type = "text/javascript">
 
-	$("#reportbutton").click(function() 
-	{
-		$("#textcomplaint").val("");
-		var checks = $(".reportchecks:checked");
-		var x;
-		
-		for(x = 0; x < checks.length; x++)
-			checks[x].checked = false;
+	$("#submitbutton").click(function() {
 
-		$("#reportscreen").css("display", "block");
-	});
-
-	$("#close").click(function() 
-	{
-		$("#errormessage").text("");
-		$("#reportscreen").css("display", "none");
-	});
-
-	$("#profilesubmit").click(function() 
-	{
-		var checks = $(".reportchecks:checked");
-		
-		if(checks.length > 0 && !($("#textcomplaint").val().trim() == ""))
-		{
-			$("#errormessage").text("");
-			$("#reportscreen").css("display", "none");
-		}
-		else
-		{
-			$("#reportscreen").css("display", "block");
-
-			if(checks.length == 0)
-				$("#errormessage").text("Please check at least one of the boxes.");
-			else if($("#textcomplaint").val().trim() == "")
-				$("#errormessage").text("Please write your complaint.");
-			
-		}
-
-		
-	});
+		$.load('editpost');
+	})
 
 </script>
