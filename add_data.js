@@ -71,20 +71,22 @@ function clientCreate(user, id_num, username, number,
                       bio, twitter, facebook, instagram, hasfb, hastw, hasig, 
                       isSuspended, likedPosts, avatar, cb)
 {
-    var client = new Client({user: user,
-                             id_num: id_num,
-                             username: username,
-                             number: number,
-                             bio: bio,
-                             twitter: twitter,
-                             facebook: facebook,
-                             instagram: instagram,
-                             hasfb: hasfb,
-                             hastw: hastw,
-                             hasig: hasig,
-                             isSuspended: isSuspended,
-                             likedPosts: likedPosts,
-                             avatar: avatar});
+    var client = new Client({
+        user: user,
+        id_num: id_num,
+        username: username,
+        number: number,
+        bio: bio,
+        twitter: twitter,
+        facebook: facebook,
+        instagram: instagram,
+        hasfb: hasfb,
+        hastw: hastw,
+        hasig: hasig,
+        isSuspended: isSuspended,
+        likedPosts: likedPosts,
+        avatar: avatar
+    });
 
     client.save(function(err){
         if (err) {
@@ -95,6 +97,29 @@ function clientCreate(user, id_num, username, number,
         clients.push(client);
         cb(null, client);
     });
+}
+
+var posts = []
+
+function postCreate(poster/** , name, description, numFFs,
+                    start_price, current_price, increment_price,
+                    highest_bidder, cutoff_date, cutoff_time, payment_mode, meetup_details, categories, post_date, pictures,
+                    isOpen, isApproved, isReviewed*/, cb)
+{
+    var post = new  Post({
+        poster: poster
+    })
+
+    post.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log("New Post: " + post);
+        posts.push(post);
+        cb(null, post);
+    });
+    
 }
 
 function createUsers(cb) {
@@ -161,9 +186,50 @@ function createCategories(cb) {
     ], cb);
 }
 
+function createClients(cb) {
+    async.series([
+        function(callback) {
+            clientCreate(users[0], 123, "sharmainegaw", "09959201000", "decluttering.", null, null, null, false, false, false, false, null, null, callback)
+        },
+        function(callback) {
+            clientCreate(users[1], 123, "christinedtc", "09912345678", "for nemo <3", null, null, null, false, false, false, false, null, null, callback)
+        }
+    ], cb);
+}
+
+function createPosts(cb) {
+    async.series([
+        function(callback) {
+            postCreate(clients[0], callback);
+        },
+        function(callback) {
+            postCreate(clients[0], callback);
+        },
+        function(callback) {
+            postCreate(clients[1], callback);
+        }
+    ], cb);
+}
+
+function update(cb) {
+    async.series([
+        function(callback) {
+            clients[0].likedPosts = [posts[2]]
+            clients[0].save(callback)
+        },
+        function(callback) {
+            clients[1].likedPosts = [posts[0], posts[1]]
+            clients[1].save(callback)
+        }
+    ], cb);
+}
+
 async.series([
     createUsers,
-    createCategories
+    createCategories,
+    createClients,
+    createPosts,
+    update
 ],
 function(err, results)
 {
