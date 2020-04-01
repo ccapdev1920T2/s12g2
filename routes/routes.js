@@ -12,67 +12,175 @@ app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
 app.use(session({secret: " randomstring123", resave: false, saveUninitialized: true}));
 
-// execute function getFavicon() as defined in object controller in `../controllers/controller.js`
-// when a client sends an HTTP GET request for `/favicon.ico`
+
+/* 
+    Executes function getFavicon() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/favicon.ico`
+*/
 app.get('/favicon.ico', controller.getFavicon);
 
-// when a client sends an HTTP GET request for `/editprofile`
-app.get('/editprofile', controller.editProfile);
 
-// renders `home.hbs`
-// when a client sends an HTTP GET request for `/`
+/*
+    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/editprofile` if the user is logged in
+*/
+app.get('/editprofile', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in 
+        res.redirect('/'); // redirects user back to the log in page 
+    else if(req.session.user.isClient)
+        controller.editProfile(req, res); // if the user is a client
+    else
+        res.redirect('/'); // if the user is admin
+
+});
+
+
+/*
+    Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/` if the user is logged in
+    else it renders 'home.hbs'
+*/
 app.get('/', function(req, res) {
     
-    if(req.session.user == undefined)
-        res.render('home');
+    if(req.session.user == undefined) // if the user is not logged in
+        res.render('home'); // redirects user back to the log in page
     else
         controller.getHomepage(req, res);
+
 });
 
+
+/*
+    Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/` if the user is logged in
+    else it executes function getLogIn() as defined in the object controller
+*/
 app.post('/', function(req, res) {
 
-    controller.getLogIn(req, res);
-
-})
-
-// renders `home.hbs`
-// when a client sends an HTTP GET request for `/home`
-app.get('/home', function(req, res) {
-    
-    res.render('home');
+    if(req.session.user == undefined) // if the user is not logged in
+        controller.getLogIn(req, res); // redirects user back to the log in page
+    else
+        controller.getHomepage(req, res);
 
 });
 
-// renders `home.hbs`
-// when a client sends an HTTP GET request for `/home`
+
+/*
+    Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/` if the user is logged in
+    else it renders 'home.hbs'
+*/
+app.get('/home', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.render('home');// redirects user back to the log in page
+    else
+        controller.getHomepage(req, res);
+    
+});
+
+
+/*
+    Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/` if the user is logged in
+    else it executes function getLogIn() as defined in the object controller
+*/
 app.post('/home', function(req, res) {
     
-    controller.getLogIn(req, res);
+    if(req.session.user == undefined) // if the user is not logged in
+        controller.getLogIn(req, res); // redirects user back to the log in page
+    else
+        controller.getHomepage(req, res);
     
-})
+});
 
-// execute function getProfile() as defined in object controller in `../controllers/controller.js`
-// when a client sends an HTTP GET request for `/:username`
-app.get('/user/:username', function(req, res, next) {
+
+/*
+    When the user clicks logout, the session is destroyed
+    and the user is redirected back to the log in page
+*/
+app.get('/logout', function(req, res) {
     
-    if(req.session.user == undefined)
-        res.render('home');
+    // destroys the session
+    req.session.destroy(function(err) {
+        if(err)
+            console.log(err);
+        else
+            res.redirect('/');
+    })
+
+});
+
+
+/*
+    Executes function getFFs() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/ffs` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/ffs', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else if(req.session.user.isClient)
+        controller.getFFs(req, res); // if the user is a client
+    else
+        res.redirect('/'); // if the user is admin
+
+});
+
+
+/*
+    Executes function getProfile() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/user/:username` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/user/:username', function(req, res) {
+    
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
     else
         controller.getProfile(req, res);
 
 });
 
-// execute function getReviews() as defined in object controller in `../controllers/controller.js`
-// when a client sends an HTTP GET request for `/:username/reviews`
-app.get('/user/:username/reviews', controller.getReviews);
 
-// execute function getRegistration() as defined in object controller in `../controllers/controller.js`
-// when a client sends an HTTP GET request for `/register`
+/*
+    Executes function getReviews() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/user/:username/reviews` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/user/:username/reviews', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getReviews(req, res);
+
+});
+
+
+/*
+    Executes function getRegistration() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/register`
+*/
 app.get('/register', controller.getRegistration);
 
-// execute function getPost() as defined in object controller in `../controllers/controller.js`
-// when a client sends an HTTP GET request for `/:postId`
-app.get('/posts/:postId', controller.getPost);
 
-// exports the object `app` (defined above) when another script exports from this file
+/*
+    Executes function getPost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/:postId` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/posts/:postId', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getPost(req, res);
+
+});
+
+
+/* Exports the object `app` (defined above) when another script exports from this file */
 module.exports = app;
