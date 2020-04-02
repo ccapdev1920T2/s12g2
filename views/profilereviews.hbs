@@ -52,6 +52,7 @@
 	<!-- HEADER -->
 	{{> userheader ua = useravatar}}
 
+	{{#profiledetails}}
 	<!-- PROFILE -->
 	<div id = "profile">
 
@@ -163,6 +164,7 @@
 		</div>
 
 	</div>	
+	{{/profiledetails}}
 
 	<div id = "iconattribute">
 		Icons made by
@@ -234,6 +236,6 @@
 				$("#reviewerrormessage").text("Please write your review before submitting.");
 		}
 
-	});
+	}); 
 
 </script>

@@ -51,7 +51,7 @@ app.get('/', function(req, res) {
 });
 
 
-app.get('/checkLogIn', controller.checkLogIn);
+app.post('/checkLogIn', controller.checkLogIn);
 
 /*
     Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
@@ -125,10 +125,20 @@ app.get('/createpost', function(req, res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
-        controller.getCreatePost(req, res); // if the user is a client
+        res.render('createpost'); // if the user is a client
     else
         res.redirect('/') // if the user is admin
 })
+
+/*app.post('/createpost', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else if(req.session.user.isClient)
+        controller.getCreatePost(req, res); // if the user is a client
+    else
+        res.redirect('/') // if the user is admin
+}) */
 
 
 /*
