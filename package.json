@@ -1,0 +1,33 @@
+{
+  "name": "s12g2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-hbs": "^2.3.1",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.7.3",
+    "hbs": "^4.1.0",
+    "locus": "^2.0.4",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccapdev1920T2/s12g2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccapdev1920T2/s12g2/issues"
+  },
+  "homepage": "https://github.com/ccapdev1920T2/s12g2#readme"
+}

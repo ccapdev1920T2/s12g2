@@ -1,0 +1,229 @@
+<div id = "reportscreen">
+	<div id = "reportcontent">
+		<button id = "close">X</button>
+		<h1 style = "text-align: center; margin-left: 80px">FILTER AND SORT</h1>
+		<br>
+		<div id = "filtersortsubmit">
+				<div id = "filtersort">
+					<div id = "filtertitleoptions">
+						<h3 style = "text-align: center; color: black;">FILTER TAGS</h3>
+						<div id = "filter">
+							
+								<div class = "filteroptions">
+									<form method = "get" name = "filter">
+									<div>
+										<input type = "checkbox" id = "book">
+										<label for = "book" style = "color: black">Book</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "forpet">
+										<label for = "forpet" style = "color: black">For Pet</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "womens">
+										<label for = "womens" style = "color: black">Women's</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "top">
+										<label for = "top" style = "color: black">Top</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "bottom">
+										<label for = "bottom" style = "color: black">Bottom</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "mens">
+										<label for = "mens" style = "color: black">Men's</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "stationery">
+										<label for = "stationery" style = "color: black">Stationery</label>
+									</div>
+								</div>
+
+								<div class = "filteroptions">
+									<div>
+										<input type = "checkbox" id = "food">
+										<label for = "food" style = "color: black">Food</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "collectible">
+										<label for = "collectible" style = "color: black">Collectible</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "childrens">
+										<label for = "childrens" style = "color: black">Children's</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "shoes">
+										<label for = "shoes" style = "color: black">Shoes</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "accessory">
+										<label for = "accessory" style = "color: black">Accessory</label>
+									</div>
+
+									<div>
+										<input type = "checkbox" id = "technology">
+										<label for = "technology" style = "color: black">Technology</label>
+									</div>
+								</div>
+
+								</form>
+						</div>
+					</div>
+
+					<div id = "sorttitleoptions">
+						<h3 style = "text-align: center; color: black;">SORT BY</h3>
+						<div id = "sort">
+							<form name = "sort">
+								<div class = "sortoptions">
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "date">
+										<label for = "date" style = "color: black">Date</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "ffs">
+										<label for = "ffs" style = "color: black">Number of FFs</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "bids">
+										<label for = "bids" style = "color: black">Number of Bids</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "stealprice">
+										<label for = "stealprice" style = "color: black">Steal Price</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "currentprice">
+										<label for = "currentprice" style = "color: black">Current Price</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "sort" id = "title">
+										<label for = "title" style = "color: black">Title</label>
+									</div>
+
+
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+				
+				<div id = "submitbutton">
+					<button id = "profilesubmit">SUBMIT</button>
+				</div>
+			
+		</div>
+	</div>
+</div>
+
+<div id = "wrapper1">
+	{{> userheader ua = useravatar}}
+
+	<!-- SEARCHBAR-->
+	<div id="searchbar">
+		<span>
+			<form name="searchform" action="search" method="GET">
+				<input type="text" placeholder="search" id="search" name = "search">
+				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
+				<span class ="sbbutton" id="filterbutton">filter</span>
+			</form>
+		</span>
+	</div>
+	<!-- POSTS -->
+
+    <h2>Search Results</h2>
+	{{#each post}}
+
+		<div class="post">
+			<div class="postheader">
+				<a href="view-post" class = "posttitle">
+					{{title}}
+				</a>
+				<div class = "ffbutton">♡</div>
+			</div>
+
+			<div class="posttags">
+				{{#each tag}}
+					<a href="{{taglink}}" class="tag">{{tagname}}</a>
+				{{/each}}
+			</div>
+
+			<div class="postedby">
+				<img class="avatar" src="{{posteravatar}}">
+				<a href="/user/{{postername}}" class="username">{{postername}}</a>
+			
+				<div class="stealprice">
+					P{{stealprice}}
+				</div>
+				<div class="currentprice">
+					P{{currentprice}}
+				</div>
+				
+			</div>
+
+			<img class="itemimage" src="{{itemimg}}">
+			
+			<div class="dateposted">
+				{{date}} | {{time}}
+			</div>
+		</div>
+	{{/each}}
+
+</div>
+
+
+
+<script type="text/javascript">
+
+		$(".ffbutton").click(function(){
+		//if not clicked
+		if($(this).css("color") == 'rgb(0, 0, 0)')
+		{
+			$(this).css("background-color", "black");
+			$(this).css("color", "white");
+		}
+
+		//if already clicked
+		else
+		{
+			$(this).css("background-color", "white");
+			$(this).css("color", "black");
+		}
+	});
+
+	$("#filterbutton").click(function() 
+	{
+		$("#reportscreen").css("display", "block");
+	});
+
+	$("#close").click(function() 
+	{
+		$("#reportscreen").css("display", "none");
+	});
+
+	$("#profilesubmit").click(function() 
+	{
+		$("#reportscreen").css("display", "none");
+	});
+
+
+</script>
