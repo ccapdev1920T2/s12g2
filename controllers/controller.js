@@ -97,33 +97,60 @@ const controller = {
             {
                 req.session.user = result;
 
-                if(result.isClient)
-                    res.render('homepage') // this.getHomepage(req,res);
+                // if(result.isClient)
+                //     res.render('homepage') // this.getHomepage(req,res);
+                // else
+                //     res.render('admin-posts');
+
+                var posts;
+
+                if(req.session.user.isClient){
+                    db.findMany('posts', {}, null, null, function(result){
+                        posts = result;
+                        res.render('homepage', {
+                            post: posts
+                        });
+                    });
+                }
                 else
                     res.render('admin-posts');
             }
-            
-
         })
     },
     
     /* LOADS HOMEPAGE */
     getHomepage: function(req, res) {
         
-        var query = {email: req.session.user.email};
+        var posts;
 
-        db.findOne('users', query, function(result) {
-            var query2 = {_id: result._id};
+        if(req.session.user.isClient){
+            db.findMany('posts', {}, null, null, function(result){
+                posts = result;
+                res.render('homepage', {
+                    post: posts
+                });
+            });
+        }
+        else
+            res.render('admin-posts');
 
-            // db.findOne('clients', query2, function(result2) {
-            //     // NOT SURE PA KUNG PANO ILALAGAY YUNG SA USER AVATAR HAHAH AND DISPLAY NG POSTS
-            // });
-
-            if(req.session.user.isClient)
-                res.render('homepage'); // temp. for now ganyan nalang muna haha
-            else
-                res.render('admin-posts');
-        })
+        // async.series([
+        //     function(callback)
+        //     {
+        //         db.findMany('posts', {}, null, null, function(result){
+        //             posts = result;
+        //         });
+        //         callback(null, result)
+        //     }
+        // ], function(err){
+        //     if (err) return callback(err);
+        //     if(req.session.user.isClient)
+        //         res.render('homepage', {
+        //             post: posts
+        //         });
+        //     else
+        //         res.render('admin-posts');
+        // });
     },
 
     /* LOADS REGISTRATION */
