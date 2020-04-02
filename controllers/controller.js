@@ -17,9 +17,9 @@ const controller = {
 
             if(result != null && result != undefined)
             {
-                result.hasfb = (result.facebook != null);
-                result.hasig = (result.instagram != null);
-                result.hastw = (result.twitter != null);
+                result.hasfb = (result.facebook);
+                result.hasig = (result.instagram);
+                result.hastw = (result.twitter);
 
                 if(result.avatar == null)
                     result.avatar = "/img/default.png"
