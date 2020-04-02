@@ -723,6 +723,74 @@ input[type=email], input[type=password], input[type=text]
 
 /* FFPAGE END */
 
+/* SEARCH START */
+#profile2
+{
+	min-width: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+	height: xx;
+	vertical-align: center;
+}
+
+#details2
+{
+	width: 400px;
+	height: 400px;
+	padding: 10px;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: white;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#detailscontent2
+{
+	width: 400px;
+	height: 400px;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#dp2
+{
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin: 10px;
+}
+
+#name2
+{
+	margin: 20px;
+	float: center;
+	text-align: center;
+}
+
+#toprofile
+{
+	text-decoration: none;
+	color: #2e3e3e;
+}
+
+#profileusername2
+{
+	margin: 0px;
+	font-size: 30px;
+}
+
+
+/* SEARCH END*/
+
 
 /* PROFILE START */
 #profile
@@ -733,6 +801,7 @@ input[type=email], input[type=password], input[type=text]
 	display: flex;
 	justify-content: space-between;
 }
+
 
 .createbutton
 {
@@ -768,6 +837,7 @@ input[type=email], input[type=password], input[type=text]
 	margin-right: 20px;
 }
 
+
 #detailscontent
 {
 	width: 400px;
@@ -785,7 +855,6 @@ input[type=email], input[type=password], input[type=text]
 	object-fit: cover;
 	border-radius: 50%;
 	margin: 10px;
-
 }
 
 #name
@@ -793,6 +862,12 @@ input[type=email], input[type=password], input[type=text]
 	margin: 20px;
 	float: center;
 	text-align: center;
+}
+
+#toprofile
+{
+	text-decoration: none;
+	color: #2e3e3e;
 }
 
 #profileusername
@@ -1283,6 +1358,52 @@ input[type=email], input[type=password], input[type=text]
 }
 /* REVIEWS END*/
 
+/* ERROR PAGE*/
+
+#wrapper2
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#errorbox
+{
+	margin-top: 15%;
+	display: table-cell;
+	vertical-align: middle;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	width: 700px;
+	box-sizing: border-box;
+	background-color:white;
+}
+
+#error
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#errortext
+{
+	font-size: 16px;
+}
+
+#goback
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;
+}
+
+/* ERROR END*/
 
 /**SCROLLBAR TAKEN FROM https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b */
 

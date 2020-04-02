@@ -146,6 +146,29 @@
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
 	</div>
+    <h1>SEARCH RESULTS</h1><br>
+
+    {{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile2">
+
+		<!-- PROFILE DETAILS -->
+		<div id = "details2">
+			<div id = "detailscontent2">
+				<div id = "dpdiv">
+					<img id = "dp2" src = "{{avatar}}">
+				</div>
+
+				<div id = "name2">
+					<a href="/user/{{username}}" id="toprofile"><p id = "profileusername2">{{username}}</p></a>
+				</div>
+
+		    </div>
+        </div>
+    </div>
+    {{/profiledetails}}
+
+
 	<!-- POSTS -->
 
 	{{#each post}}
