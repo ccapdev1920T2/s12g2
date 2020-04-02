@@ -26,10 +26,7 @@ const controller = {
 
                 if(req.session.user.isClient) {
 
-                    // console.log(req.session.user.email);
-                    // console.log(result.user.email);
-
-                   /* if(req.session.user.email == result.user.email)
+                    if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user))
                         res.render('self-profile', {
                             title: result.username,
                             profiledetails: result
@@ -38,14 +35,7 @@ const controller = {
                         res.render('profile', {
                             title: result.username,
                             profiledetails: result
-                        }); // if the user is viewing another user's profile */
-
-                        //temp
-                        res.render('profile', {
-                            title: result.username,
-                            profiledetails: result
-                        }); // if the user is viewing another user's profile
-                    
+                        }); // if the user is viewing another user's profile 
                         
                 }
                 else
@@ -90,7 +80,7 @@ const controller = {
             if(result == null)
             {
                 res.status(404).send();
-                res.redirect('home');
+                res.redirect('/');
                 //EDIT
             }
             else
@@ -150,21 +140,38 @@ const controller = {
     /* LOADS REVIEWS */
     getReviews: function(req, res) {
 
-        var username = req.params.username;
+        var name = req.params.username;
 
-        var query1 = {revieweduser: username};
-        var query2 = {username: this.username};
+        var query = {username: name};
 
-        db.findOne('review', query1, function(result){
-            if(req.session.user.isClient) {
+        db.findOne('clients', query, function(result){
+            
+            if(result != null && result != undefined){
+            
+                if(req.session.user.isClient) {
 
-                if(req.session.user.email == result.email)
-                    res.render('self-profilereviews', result); // if the user is viewing their own profile reviews
+                    if(req.session.user.isClient) {
+
+                        if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user))
+                            res.render('self-profilereviews',  {
+                                title: result.username,
+                                profiledetails: result
+                            }); // if the user is viewing their own profile reviews
+                        else
+                            res.render('profilereviews',  {
+                                title: result.username,
+                                profiledetails: result
+                            }); // if the user is viewing another user's profile reviews
+                            
+                    }
+
+                }
                 else
-                    res.render('profilereviews', result); // if the user is viewing another user's profile reviews
+                    res.render('admin-profilereviews', result);
+
             }
             else
-                res.render('admin-profilereviews', result);
+                res.send("USER NOT FOUND");
         });
         
     //    db.findMany('review', query1, function(result){
@@ -197,17 +204,57 @@ const controller = {
     /* VALIDATES INFORMATION ENTERED AT LOG IN PAGE*/
     checkLogIn: function(req, res) {
         
-        var email = req.query.email;
-        var password = req.query.password;
+        var email = req.body.email;
+        var password = req.body.password;
 
         var query = {email: email, password: password};
 
         db.findOne('users', query, function(result) {
-
+            console.log("RESULT: " + result);
             res.send(result);
 
         })
-    }
+    },
+
+ /*   getCreatePost: function(req, res) {
+
+        var itemname = req.query.itemname;
+        var description = req.query.description;
+        var sprice = req.query.sprice;
+        var priceinc = req.query.priceinc;
+        var stealp = req.query.stealp;
+        var cutoffdt = req.query.cutoffdt;
+        var modep = req.query.modep; // must check
+        var meetup = req.query.meetup;
+        var categories = req.query.categ; // must check
+        var pic = req.query.pic; // must check
+        
+        var doc = {
+            poster: req.session.user,
+            name: itemname,
+            description: description,
+            numFFs: 0,
+
+            start_price: sprice,
+            current_price: sprice,
+            increment_price: priceinc,
+
+            highest_bidder: null,
+            cutoff_date: cutoffdt,
+            cutoff_time: cutoffdt,
+            payment_mode: modep,
+            categories: categories,
+            post_date: Date.now(),
+            pictures: pic,
+            
+            isOpen: true,
+            isApproved: false,
+            isReviewed: false
+        }
+
+        db.insertOne("posts", doc);
+
+    } */
 };
 
 module.exports = controller;

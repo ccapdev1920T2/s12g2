@@ -51,8 +51,8 @@
 
         var query = {email: email, password: password};
 
-        $.get('/checkLogIn', query, function(result) {
-
+        $.post('/checkLogIn', query, function(result) {
+            
             if(result == "") {
                 alert("Incorrect email and/or password");
             }
