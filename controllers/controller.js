@@ -1,5 +1,6 @@
 
 const db = require('../models/db.js');
+var ObjectId = require('mongodb').ObjectID;
 
 const controller = {
     
@@ -11,11 +12,6 @@ const controller = {
     getProfile: function(req, res) {
         var name = req.params.username;
         var query = {username : name};
-
-        // var bio = req.query.
-        // db.updateOne('clients', query, function(result){
-
-        // });
 
         db.findOne('clients', query, function(result) {
 
@@ -30,11 +26,12 @@ const controller = {
 
                 if(req.session.user.isClient) {
 
-                    if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user))
+                    if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user)){
                         res.render('self-profile', {
                             title: result.username,
                             profiledetails: result
                         }); // if the user is viewing their own profile
+                    }
                     else
                         res.render('profile', {
                             title: result.username,
@@ -54,18 +51,100 @@ const controller = {
         });
     },
 
+    postProfile: function(req, res, next) {
+
+        var newvalues;
+        var filter = {user: ObjectId(req.session.user._id)};
+
+        if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
+        {
+            newvalues =  {$set: {
+                password: req.body.password}
+            };
+            db.updateOne('users', filter, newvalues);
+        }    
+        
+        if(req.body.tw)
+        {
+            newvalues =  {$set: {
+                twitter: req.body.tw, hastw: true}};
+            db.updateOne('clients', filter, newvalues);
+        }
+        else
+        {
+            newvalues =  {$set: {
+                twitter: req.body.tw, hastw: false}};
+            db.updateOne('clients', filter, newvalues);
+        }
+
+        if(req.body.fb)
+        {
+            newvalues =  {$set: {
+                facebook: req.body.fb, hasfb: true}};
+            db.updateOne('clients', filter, newvalues);
+        }
+        else
+        {
+            newvalues =  {$set: {
+                facebook: req.body.fb, hasfb: false}};
+            db.updateOne('clients', filter, newvalues);
+        }
+
+        if(req.body.ig)
+        {
+            newvalues =  {$set: {
+                instagram: req.body.ig, hasig: true}};
+            db.updateOne('clients', filter, newvalues);
+        }
+        else
+        {
+            newvalues =  {$set: {
+                instagram: req.body.ig, hasig: false}};
+            db.updateOne('clients', filter, newvalues);
+        }
+
+        if(req.body.bio)
+        {
+            newvalues = {$set: {
+                bio: req.body.bio
+            }};
+            db.updateOne('clients', filter, newvalues);
+        }
+
+        if(req.body.contactd)
+        {
+            newvalues = {$set: {
+                number: req.body.contactd
+            }};
+            db.updateOne('clients', filter, newvalues);
+        }
+
+        var query = filter;
+
+        db.findOne('clients', query, function(result) {
+            if(result.avatar == null)
+            result.avatar = "/img/default.png"
+
+            res.render('self-profile', {
+                title: result.username,
+                profiledetails: result
+            }); 
+        });
+    },
+
     /* LOADS EDIT PROFILE */
     editProfile: function(req, res) {
         
-        var name = req.params.username;
-
-        var query = {username : name};
+        var id = req.session.user._id;
+        var query = {user :  ObjectId(id)};
         
-        db.findOne('client', query, function (result){
-
-            res.render('editprofile', result);
-
-        })
+        db.findOne('clients', query, function (result){
+            if(result.avatar == null)
+                result.avatar = "/img/default.png"
+            res.render('editprofile', {
+                profiledetails: result
+            });
+        });
         
     },
 
@@ -290,37 +369,44 @@ const controller = {
     getSearch: function(req, res){
         var posts;
 
-        if (req.query.search)
+        if(req.session.user.isClient){
+            if (req.query.search)
             {
                 var input = req.query.search;
                 var query = {username: input};
                 db.findOne('clients', query, function(result){
                     if(result != null && result != undefined){
+
+                        if(result.avatar == null)
+                        result.avatar = "/img/default.png"
+
                         res.render('search', {
-                            profiledetails: result
-                        });
+                                profiledetails: result
+                        }); 
+                            
                     }
                     else
                     {
-                        console.log("error");
+                        res.render('error', result);
                     }
                 });
 
-                query = {name: input}
-                db.findMany('posts', query, null, null, function(result){
-                    if (result != null && result != undefined)
-                    {
-                        res.render('search', {
-                            post: result
-                        });
-                    }
-                    else
-                    {
-                        console.log("error");
-                    }
-                });
+                // query = {name: input}
+                // db.findMany('posts', query, null, null, function(result){
+                //     if (result != null && result != undefined)
+                //     {
+                //         res.render('search', {
+                //             post: result
+                //         });
+                //     }
+                //     else
+                //     {
+                //         res.render('error', result);
+                //     }
+                // });
             }
-        else
+
+            else
             {
                 
                 db.findMany('posts', {}, null, null, function(result){
@@ -330,6 +416,10 @@ const controller = {
                     });
                 });
             }
+        }
+        else{
+            res.render('error', result);
+        }
 
     },
 

@@ -99,7 +99,8 @@ const database = {
 
             database.collection(collection).updateOne(filter, update, function (err, res){
                 if(err) throw err;
-
+                console.log("filter: " + filter);
+                console.log("update: " + update);
                 console.log('document updated in ' + collection);
                 db.close();
             });
