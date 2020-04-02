@@ -13,7 +13,7 @@ const controller = {
 
         var query = {username : name};
 
-        db.findOne('client', query, function(result) {
+        db.findOne('clients', query, function(result) {
 
             if(result != null && result != undefined)
             {
@@ -53,7 +53,7 @@ const controller = {
             }
             else
             {
-                res.send("oof 404 error cannot find user, error page to be implemented hehe")
+                res.render('error', result);
             }
             
 
@@ -211,6 +211,17 @@ const controller = {
         // MUST ADD
     },
 
+    /* LOADS CREATE POST */
+    getCreatePost: function(req, res) {
+        res.render('createpost');
+    },
+
+    /* LOADS EDIT POST */
+    // getEditPost: function(req, res) {
+    //     res.render('editpost');
+    // }, remove for now
+
+    /* VALIDATES INFORMATION ENTERED AT LOG IN PAGE*/
     checkLogIn: function(req, res) {
         
         var email = req.query.email;

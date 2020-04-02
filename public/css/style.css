@@ -1285,6 +1285,52 @@ input[type=email], input[type=password], input[type=text]
 }
 /* REVIEWS END*/
 
+/* ERROR PAGE*/
+
+#wrapper2
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#errorbox
+{
+	margin-top: 15%;
+	display: table-cell;
+	vertical-align: middle;
+	border-radius: 30px;
+	box-shadow: 10px 10px 20px #e0e0e0;
+	padding: 30px;
+	width: 700px;
+	box-sizing: border-box;
+	background-color:white;
+}
+
+#error
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#errortext
+{
+	font-size: 16px;
+}
+
+#goback
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;
+}
+
+/* ERROR END*/
 
 /**SCROLLBAR TAKEN FROM https://gist.github.com/spemer/a0e218bbb45433bd611e68446523a00b */
 
