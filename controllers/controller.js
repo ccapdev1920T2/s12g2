@@ -210,13 +210,13 @@ const controller = {
         var query = {email: email, password: password};
 
         db.findOne('users', query, function(result) {
-            console.log("RESULT: " + result);
+
             res.send(result);
 
         })
     },
 
- /*   getCreatePost: function(req, res) {
+    getCreatePost: function(req, res) {
 
         var itemname = req.query.itemname;
         var description = req.query.description;
@@ -229,32 +229,39 @@ const controller = {
         var categories = req.query.categ; // must check
         var pic = req.query.pic; // must check
         
-        var doc = {
-            poster: req.session.user,
-            name: itemname,
-            description: description,
-            numFFs: 0,
+        console.log(req.query.modep);
+        if( itemname != undefined && description != undefined && sprice != undefined && priceinc != undefined &&
+            stealp != undefined &&  cutoffdt != undefined && modep != undefined && categories != undefined &&  pic != undefined) {
 
-            start_price: sprice,
-            current_price: sprice,
-            increment_price: priceinc,
+            var doc = {
+                poster: req.session.user,
+                name: itemname,
+                description: description,
+                numFFs: 0,
 
-            highest_bidder: null,
-            cutoff_date: cutoffdt,
-            cutoff_time: cutoffdt,
-            payment_mode: modep,
-            categories: categories,
-            post_date: Date.now(),
-            pictures: pic,
-            
-            isOpen: true,
-            isApproved: false,
-            isReviewed: false
+                start_price: sprice,
+                current_price: sprice,
+                increment_price: priceinc,
+
+                highest_bidder: null,
+                cutoff_date: cutoffdt,
+                cutoff_time: cutoffdt,
+                payment_mode: modep,
+                categories: categories,
+                post_date: new Date(),
+                pictures: pic,
+                
+                isOpen: true,
+                isApproved: false,
+                isReviewed: false
+            }
+
+            db.insertOne("posts", doc);
+
+            res.redirect('/');
         }
 
-        db.insertOne("posts", doc);
-
-    } */
+    } 
 };
 
 module.exports = controller;

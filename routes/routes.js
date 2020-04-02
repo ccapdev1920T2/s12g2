@@ -59,7 +59,7 @@ app.post('/checkLogIn', controller.checkLogIn);
     else it executes function getLogIn() as defined in the object controller
 */
 app.post('/', function(req, res) {
-
+    
     if(req.session.user == undefined) // if the user is not logged in
         controller.getLogIn(req, res); // redirects user back to the log in page
     else
@@ -116,12 +116,12 @@ app.get('/logout', function(req, res) {
 
 
 /*
-    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    Renders `createpost.hbs` as defined in the views folder in `../views/createpost.js`
     when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
     else it redirects the user back to the log in page
 */
 app.get('/createpost', function(req, res) {
-
+    
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
@@ -130,15 +130,22 @@ app.get('/createpost', function(req, res) {
         res.redirect('/') // if the user is admin
 })
 
-/*app.post('/createpost', function(req, res) {
 
+/*
+    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+app.post('/createpost', function(req, res) {
+    
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
         controller.getCreatePost(req, res); // if the user is a client
     else
         res.redirect('/') // if the user is admin
-}) */
+
+});
 
 
 /*
