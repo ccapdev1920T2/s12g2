@@ -10,8 +10,12 @@ const controller = {
     /* LOADS A USER'S PROFILE */
     getProfile: function(req, res) {
         var name = req.params.username;
-
         var query = {username : name};
+
+        // var bio = req.query.
+        // db.updateOne('clients', query, function(result){
+
+        // });
 
         db.findOne('clients', query, function(result) {
 
@@ -282,6 +286,53 @@ const controller = {
         db.insertOne("posts", doc);
 
     } */
+
+    getSearch: function(req, res){
+        var posts;
+
+        if (req.query.search)
+            {
+                var input = req.query.search;
+                var query = {username: input};
+                db.findOne('clients', query, function(result){
+                    if(result != null && result != undefined){
+                        res.render('search', {
+                            profiledetails: result
+                        });
+                    }
+                    else
+                    {
+                        console.log("error");
+                    }
+                });
+
+                query = {name: input}
+                db.findMany('posts', query, null, null, function(result){
+                    if (result != null && result != undefined)
+                    {
+                        res.render('search', {
+                            post: result
+                        });
+                    }
+                    else
+                    {
+                        console.log("error");
+                    }
+                });
+            }
+        else
+            {
+                
+                db.findMany('posts', {}, null, null, function(result){
+                    posts = result;
+                    res.render('homepage', {
+                        post: posts
+                    });
+                });
+            }
+
+    },
+
 };
 
 module.exports = controller;

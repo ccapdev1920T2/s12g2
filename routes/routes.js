@@ -225,6 +225,15 @@ app.get('/posts/:postId', function(req, res) {
 
 });
 
+/*
+    Executes function getSearch() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/search` if the user is logged in
+*/
+app.get('/search', function(req, res) {
+        controller.getSearch(req, res);
+});
+
+
 
 /* Exports the object `app` (defined above) when another script exports from this file */
 module.exports = app;
