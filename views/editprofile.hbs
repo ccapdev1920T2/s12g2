@@ -1,0 +1,61 @@
+<div id = "wrapper1">
+
+	{{> userheader ua=useravatar}}
+
+	<!-- PROFILE -->
+	<div id = "profile">
+		<div id = "editpic">
+				<img id ="dp" src="{{dp}}" alt="image">
+				<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
+		</div>
+
+		<div class = "editprofile">
+			<div id = "editdetails">
+				<form name = "profile" action="user/{{username}}">
+					<div class = "edit">
+						<p>user details</p><br>
+						<label id="bio">description</label>
+						<textarea id="bio" name="bio" form="profile">{{bio}}</textarea><br>
+						<label id="pw">Password</label><br>
+						<input type="password" id="pw" name="pw" minlength=8 m><br>
+						<label id="cpw">Confirm Password</label>
+						<input type="password" id="cpw" name="cpw" minlength=8><br>
+
+						
+						<p>contact details</p><br>
+						<label id="contact">phone number</label>
+						<input type="text" id="contactd" name="contactd" placeholder="{{number}}"><br>
+
+						<p>social media</p><br>
+						<label id="twt">Twitter</label><br>
+						<input type="text" id="twt" name="twt" placeholder="http://www.twitter.com/{{twitter}}"><br>
+						<label id="fb">FaceBook</label><br>
+						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}"><br>
+						<label id="ig">Instagram</label><br>
+						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}"><br>
+						
+						<button type="submit" form="createpost" value="Submit" onclick = "profile.submit()">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#dp').attr('src', e.target.result);
+			};
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+
+
+</script>
