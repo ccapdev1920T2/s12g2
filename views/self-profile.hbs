@@ -1,6 +1,6 @@
 <div id = "wrapper1">
 	<!-- HEADER -->
-	{{> userheader ua = useravatar}}
+	{{> userheader username = username}}
 
 	{{#profiledetails}}
 	<!-- PROFILE -->
@@ -58,6 +58,7 @@
 				</a>
 			</div>
 		</div>
+{{/profiledetails}}
 
 		<div id = "posts">
 			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
@@ -100,7 +101,7 @@
 
 		</div>
 	</div>
-	{{/profiledetails}}
+	
 
 	<div id = "iconattribute">
 		Icons made by

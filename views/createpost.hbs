@@ -1,32 +1,40 @@
 <div id = "wrapper1">
 
-    {{> userheader ua=useravatar}}
+    {{> userheader username = username}}
 
 
     <!-- CREATE POSTS -->
     <div class="post">
 
-            <form action="profile" class="createpost"id="createpost" name = "create">
+            <form action = "/createpost" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
                     <p>create a post</p><br>
+                    <p style = "font-size: 10px">please choose at least one category and upload at least one photo. don't leave any fields blank.</p>
+                    <br>
                     <!-- ITEM NAME -->
                     <label for="itemname">Item Name</label><br>
                     <input type="text" id="itemname" name="itemname" maxlength=50><br>
+                    
                     <!-- DESCRIPTION -->
                     <label for="description">Description</label><br>
-                    <textarea name="description" form="createpost" placeholder="Enter a description of your item..."></textarea><br>
+                    <textarea id = "description" name="description" form="createpost" placeholder="Enter a description of your item..."></textarea><br>
+                    
                     <!-- STARTING PRICE -->
                     <label for="sprice">Starting Price</label><br>
-                    <input type="text" id="price" name="sprice" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    <input type="text" id="sprice" name="sprice" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    
                     <!-- PRICE INCREMENT -->
                     <label for="priceinc">Price Increment</label><br>
-                    <input type="text" id="price" name="priceinc" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    <input type="text" id="priceinc" name="priceinc" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    
                     <!-- STEAL PRICE -->
                     <label for="stealp">Steal Price</label><br>
-                    <input type="text" id="price" name="stealp" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    <input type="text" id="stealprice" name="stealp" maxlength=7 placeholder="10.00" onkeypress="return isNumber(event)"><br>
+                    
                     <!-- CUT-OFF -->
                     <label for="cutoffdt">Cut-Off Date & Time</label><br>
                     <input type="datetime-local" id="cutoffdt" name="cutoffdt"><br>
+                    
                     <!-- MODE OF PAYMENT -->
                     <label for="modep">Mode of Payment</label><br>
                     <select name="modep">
@@ -34,29 +42,33 @@
                         <option value="gcash">G-Cash</option>
                         <option value="bank">Bank Transfer</option>
                     </select><br>
+                   
                     <!-- MEET-UP DETAILS -->
                     <label for="meetup">Meet-up Details</label><br>
                     <input type="text" id="meetup" name="meetup"><br>
+                   
                     <!-- CATEGORIES -->
-                    <label for="categ">Categories</label><br>
-                    <input type="checkbox" id="book" name="book" value="Book">Book<br>
-                    <input type="checkbox" id="forpet" name="forpet" value="For Pet">For Pet<br>
-                    <input type="checkbox" id="womens" name="womens" value="Women's">Women's<br>
-                    <input type="checkbox" id="top" name="top" value="Top">Top<br>
-                    <input type="checkbox" id="bottom" name="bottom" value="Bottom">Bottom<br>
-                    <input type="checkbox" id="mens" name="mens" value="Men's">Men's<br>
-                    <input type="checkbox" id="stationery" name="stationery" value="Stationery">Stationery<br>
-                    <input type="checkbox" id="food" name="food" value="Food">Food<br>
-                    <input type="checkbox" id="collectible" name="collectible" value="Collectible">Collectible<br>
-                    <input type="checkbox" id="childrens" name="childrens" value="Children's">Children's<br>
-                    <input type="checkbox" id="shoes" name="shoes" value="Shoes">Shoes<br>
-                    <input type="checkbox" id="accessory" name="accessory" value="Accessory">Accessory<br>
-                    <input type="checkbox" id="technology" name="technology" value="Technology">Technology<br>
+                    <label for="categ" id = "categ">Categories (Choose at least one)</label><br>
+                    <input type="checkbox" class = "categ" id="book" name="book" value="Book">Book<br>
+                    <input type="checkbox" class = "categ" id="forpet" name="forpet" value="For Pet">For Pet<br>
+                    <input type="checkbox" class = "categ" id="womens" name="womens" value="Women's">Women's<br>
+                    <input type="checkbox" class = "categ" id="top" name="top" value="Top">Top<br>
+                    <input type="checkbox" class = "categ" id="bottom" name="bottom" value="Bottom">Bottom<br>
+                    <input type="checkbox" class = "categ" id="mens" name="mens" value="Men's">Men's<br>
+                    <input type="checkbox" class = "categ" id="stationery" name="stationery" value="Stationery">Stationery<br>
+                    <input type="checkbox" class = "categ" id="food" name="food" value="Food">Food<br>
+                    <input type="checkbox" class = "categ" id="collectible" name="collectible" value="Collectible">Collectible<br>
+                    <input type="checkbox" class = "categ" id="childrens" name="childrens" value="Children's">Children's<br>
+                    <input type="checkbox" class = "categ" id="shoes" name="shoes" value="Shoes">Shoes<br>
+                    <input type="checkbox" class = "categ" id="accessory" name="accessory" value="Accessory">Accessory<br>
+                    <input type="checkbox" class = "categ" id="technology" name="technology" value="Technology">Technology<br>
+                   
                     <!-- UPLOAD -->
-                    <label for="pic">Upload Picture</label><br>
-                    <input type="file" name="pic" accept="image/*" multiple><br>
+                    <label for="pic">Upload Picture/s</label><br>
+                    <input type="file" id = "pic" name="pic" accept="image/*" multiple><br>
+                   
                     <!-- SUBMIT -->
-                    <button type="submit" form="createpost" value="Submit" onclick="return validate()">Submit</button>
+                    <button type="submit" id = "submit" form="createpost" value="Submit">Submit</button>
                 </div>
             </form>
     </div>
@@ -72,31 +84,83 @@
 
         return true;
     }
-    /*function validate()
-    {
-        valid = 0;
-        var itemname = document.forms["create"]["itemname"];
+
+    $("#submit").click(function() {
+
+        var valid = true;
+
+        // RESETS BACKGROUND COLOR OF FIELDS
+        $("#itemname").css("background-color", "white");
+        $("#description").css("background-color", "white");
+        $("#sprice").css("background-color", "white");
+        $("#priceinc").css("background-color", "white");
+        $("#stealprice").css("background-color", "white");
+        $("#cutoffdt").css("background-color", "white");
+        $("#meetups").css("background-color", "white");
+        $("#categ").css("color", "black");
+        $("#pic").css("background-color", "white");
+
+        if($.trim($("#itemname").val()) == "") // VALIDATION FOR ITEM NAME
+        {
+            $("#itemname").css("background-color", "lightcoral");
+            valid = false;
+        }
         
-        var price = document.forms["create"]["price"]; 
-
-        itemname.style.backgroundcolor = "";
-        price.style.backgroundColor = "";
-
-        if (itemname.value == "")
+        if($.trim($("#description").val()) == "") // VALIDATION FOR DESCRIPTION
         {
-            alert("Please enter a name for the item.");
-            itemname.style.backgroundColor="gray";
-            valid = 1;
+            $("#description").css("background-color", "lightcoral");
+            valid = false;
+        }
+        
+        if($.trim($("#sprice").val()) == "") // VALIDATION FOR STARTING PRICE
+        {
+            $("#sprice").css("background-color", "lightcoral");
+            valid = false;
         }
 
-        if (price.value == "")
+        if($.trim($("#priceinc").val()) == "") // VALIDATION FOR PRICE INCREMENT
         {
-            alert("Please enter a price.");
-            price.style.backgroundColor = "gray";
-            valid = 1;
+            $("#priceinc").css("background-color", "lightcoral");
+            valid = false;
+        }
+        
+        if($.trim($("#stealprice").val()) == "") // VALIDATION FOR STEAL PRICE
+        {
+            $("#stealprice").css("background-color", "lightcoral");
+            valid = false;
+        }
+        
+        if($.trim($("#cutoffdt").val()) == "") // MUST MODIFY
+        {
+            $("#cutoffdt").css("background-color", "lightcoral");
+            valid = false;
+        }
+        
+        if($.trim($("#meetup").val()) == "") // VALIDATION FOR MEETUPS
+        {
+            $("#meetup").css("background-color", "lightcoral");
+            valid = false;
+        }
+        
+        if($(".categ:checked").length == 0) // VALIDATION FOR CATEGORIES
+        {
+            $("#categ").css("color", "lightcoral");
+            categorychosen = false;
+            valid = false;
+        }
+        
+        if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
+        {
+            $("#pic").css("background-color", "lightcoral");
+            picuploaded = false;
+            valid = false;
         }
 
+        if(!valid)
+        {
+                alert("Please fill in all the missing fields.");
+        }
 
-        return valid;
-    }*/
+    })
+    
 </script>

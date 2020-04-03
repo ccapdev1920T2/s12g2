@@ -50,7 +50,7 @@
 
 <div id = "wrapper1">
 	<!-- HEADER -->
-	{{> userheader ua = useravatar}}
+	{{> userheader username = username}}
 
 	{{#profiledetails}}
 	<!-- PROFILE -->
@@ -108,6 +108,7 @@
 				</a>
 			</div>
 		</div>
+{{/profiledetails}}
 
 		<div id = "posts">
 			<!-- POSTS -->
@@ -148,7 +149,7 @@
 
 		</div>
 	</div>
-	{{/profiledetails}}
+	
 
 	<div id = "iconattribute">
 		Icons made by

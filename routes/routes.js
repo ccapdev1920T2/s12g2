@@ -51,7 +51,12 @@ app.get('/', function(req, res) {
 });
 
 
+/*
+    Executes function checkLogIn() as defined in the object controller in `../controllers/controller.js`
+    when a client tries to log in.
+*/
 app.post('/checkLogIn', controller.checkLogIn);
+
 
 /*
     Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
@@ -59,7 +64,7 @@ app.post('/checkLogIn', controller.checkLogIn);
     else it executes function getLogIn() as defined in the object controller
 */
 app.post('/', function(req, res) {
-
+    
     if(req.session.user == undefined) // if the user is not logged in
         controller.getLogIn(req, res); // redirects user back to the log in page
     else
@@ -116,12 +121,12 @@ app.get('/logout', function(req, res) {
 
 
 /*
-    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    Renders `createpost.hbs` as defined in the views folder in `../views/createpost.js`
     when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
     else it redirects the user back to the log in page
 */
 app.get('/createpost', function(req, res) {
-
+    
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
@@ -130,15 +135,22 @@ app.get('/createpost', function(req, res) {
         res.redirect('/') // if the user is admin
 })
 
-/*app.post('/createpost', function(req, res) {
 
+/*
+    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+app.post('/createpost', function(req, res) {
+    
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
         controller.getCreatePost(req, res); // if the user is a client
     else
         res.redirect('/') // if the user is admin
-}) */
+
+});
 
 
 /*
@@ -188,13 +200,6 @@ app.get('/user/:username', function(req, res) {
 
 });
 
-app.post('/user/:username', function(req, res, next){
-    if(req.session.user == undefined) // if the user is not logged in
-        res.redirect('/'); // redirects user back to the log in page
-    else
-        controller.postProfile(req, res, next);
-})
-
 
 /*
     Executes function getReviews() as defined in object controller in `../controllers/controller.js`
@@ -232,6 +237,7 @@ app.get('/posts/:postId', function(req, res) {
 
 });
 
+
 /*
     Executes function getSearch() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/search` if the user is logged in
@@ -239,7 +245,6 @@ app.get('/posts/:postId', function(req, res) {
 app.get('/search', function(req, res) {
         controller.getSearch(req, res);
 });
-
 
 
 /* Exports the object `app` (defined above) when another script exports from this file */
