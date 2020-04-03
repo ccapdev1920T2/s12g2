@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 var mongodb = mongoose.connection;
 mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 

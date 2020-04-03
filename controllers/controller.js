@@ -1,6 +1,5 @@
 
 const db = require('../models/db.js');
-const temp = require('../models/temp.js');
 var ObjectId = require('mongodb').ObjectID;
 
 const controller = {
@@ -200,14 +199,10 @@ const controller = {
 
         if(req.session.user.isClient){
 
-            temp.getPosts(function(results){
+            db.findMany('posts', {}, null, null, function(result){
 
-                posts = results;
-
-                for(i = 0; i < posts.length; i++){
-                    posts[i].postername = posts[i].poster.username;
-                }
-
+                posts = result;
+                
                 var query = {user: ObjectId(req.session.user._id)};
 
                 db.findOne('clients', query, function(result) {
@@ -217,7 +212,7 @@ const controller = {
                         post: posts
                     });
 
-                });
+                })
 
             });
         }
@@ -277,15 +272,18 @@ const controller = {
                 var posts;
 
                 if(req.session.user.isClient){
+        
+                    db.findMany('posts', {}, null, null, function(result){
+        
+                        posts = result;
 
-                    temp.getPosts(function(results){
-        
-                        posts = results;
-        
-                        for(i = 0; i < posts.length; i++){
-                            posts[i].postername = posts[i].poster.username;
+                        for(i = 0; i < posts.length; i++)
+                        {
+                            db.findOne('clients', {_id: posts[i].poster}, function(result){
+                                console.log(result.username)
+                            })
                         }
-        
+                        
                         var query = {user: ObjectId(req.session.user._id)};
         
                         db.findOne('clients', query, function(result) {
@@ -294,8 +292,9 @@ const controller = {
                                 username: result.username,
                                 post: posts
                             });
-        
-                        });
+
+                        })
+                        
         
                     });
                 }

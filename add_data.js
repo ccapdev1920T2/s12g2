@@ -101,13 +101,13 @@ function clientCreate(user, id_num, username, number,
 
 var posts = []
 
-function postCreate(poster/** , name, description, numFFs,
-                    start_price, current_price, increment_price,
-                    highest_bidder, cutoff_date, cutoff_time, payment_mode, meetup_details, categories, post_date, pictures,
-                    isOpen, isApproved, isReviewed*/, cb)
+function postCreate(poster, title, currentprice, stealprice, cb)
 {
-    var post = new  Post({
-        poster: poster
+    var post = new Post({
+        poster: poster,
+        title: title,
+        currentprice: currentprice,
+        stealprice: stealprice,
     })
 
     post.save(function(err){
@@ -138,6 +138,24 @@ function createUsers(cb) {
         },
         function(callback) {
             userCreate('bidspp@gmail.com', 'p@ssword', false, callback);
+        },
+        function(callback) {
+            userCreate('princessariel@gmail.com', 'thingamabob', true, callback);
+        },
+        function(callback) {
+            userCreate('mulan_hua@dlsu.edu.ph', 'reflection1998', true, callback);
+        },
+        function(callback) {
+            userCreate('annaofarendelle@gmail.com', 'nextrightthing', true, callback);
+        },
+        function(callback) {
+            userCreate('littlebeauty@gmail.com', 'andthebeast', true, callback);
+        },
+        function(callback) {
+            userCreate('snowwhite@gmail.com', 'andthe7dwarfs', true, callback);
+        },
+        function(callback) {
+            userCreate('merida_ofdunbroch@gmail.com', 'bebrave', true, callback);
         },
     ], cb);
 }
@@ -200,13 +218,13 @@ function createClients(cb) {
 function createPosts(cb) {
     async.series([
         function(callback) {
-            postCreate(clients[0], callback);
+            postCreate(clients[0], "post 1 test", 120, 200, callback);
         },
         function(callback) {
-            postCreate(clients[0], callback);
+            postCreate(clients[0], "post 2 test", 400, 550, callback);
         },
         function(callback) {
-            postCreate(clients[1], callback);
+            postCreate(clients[1], "hay", 300, 500, callback);
         }
     ], cb);
 }
