@@ -110,41 +110,41 @@
 		</div>
 {{/profiledetails}}
 
-	{{#each post}}
-		<div class="post">
-			<div class="postheader">
-				<a href="/posts/{{_id}}" class = "posttitle">
-					{{title}}
-				</a>
-				<div class = "ffbutton">♡</div>
-			</div>
-
-			<div class="posttags">
-				{{#each tag}}
-					<a href="{{taglink}}" class="tag">{{tagname}}</a>
-				{{/each}}
-			</div>
-
-			<div class="postedby">
-				<img class="avatar" src="{{posteravatar}}">
-				<a href="/user/{{postername}}" class="username">{{postername}}</a>
-			
-				<div class="stealprice">
-					P{{stealprice}}
+		{{#each post}}
+			<div class="post">
+				<div class="postheader">
+					<a href="/posts/{{_id}}" class = "posttitle">
+						{{title}}
+					</a>
+					<div class = "ffbutton">♡</div>
 				</div>
-				<div class="currentprice">
-					P{{currentprice}}
+
+				<div class="posttags">
+					{{#each tag}}
+						<a href="{{taglink}}" class="tag">{{tagname}}</a>
+					{{/each}}
 				</div>
+
+				<div class="postedby">
+					<img class="avatar" src="{{posteravatar}}">
+					<a href="/user/{{postername}}" class="username">{{postername}}</a>
 				
-			</div>
+					<div class="stealprice">
+						P{{stealprice}}
+					</div>
+					<div class="currentprice">
+						P{{currentprice}}
+					</div>
+					
+				</div>
 
-			<img class="itemimage" src="{{itemimg}}">
-			
-			<div class="dateposted">
-				{{date}} | {{time}}
+				<img class="itemimage" src="{{itemimg}}">
+				
+				<div class="dateposted">
+					{{date}} | {{time}}
+				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/each}}
 
 		</div>
 </div>

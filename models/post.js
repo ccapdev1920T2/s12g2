@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     poster:         {type: Schema.Types.ObjectId, ref: Client, required: true},
-    title:          {type: String, /*max: ,*/ required: true},
-    description:    {type: String, /*max: ,*/ required: true},
+    title:          {type: String, /*max: ,*/ required: true, text: true},
+    description:    {type: String, /*max: ,*/ required: true, text: true},
     // numFFs:         {type: Number, default: 0},
 
     startprice:     {type: Number, /*max: ,*/ required: true},
