@@ -3,12 +3,12 @@
     {{> userheader ua = uservatar}}
 
     <!-- POSTS -->
-    
+    {{#post}}
     <div class="postmain">
         
         <div class="postheader">
             <p class = "posttitle">
-                {{posttitle}}
+                {{title}}
             </p>
             <div class="ffbutton">♡</div><div class="ffnum">{{ffnum}}</div>
         </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="sidebarlabels">increment</div>
         <div class="pricemain increment" style="background-color: rgb(80, 80, 80);">
-            P{{increment}}
+            P{{incrementprice}}
         </div>
         <div class="sidebarlabels">steal price</div>
         <div class="pricemain stealprice">
@@ -73,6 +73,7 @@
         </div>
 
     </div>
+    {{/post}}
 
 </div>
 
