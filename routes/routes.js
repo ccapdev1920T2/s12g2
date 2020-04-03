@@ -200,13 +200,18 @@ app.get('/user/:username', function(req, res) {
 
 });
 
+
+/*
+    Executes function getProfile() as defined in the object controller in `../controllers/controller.js`
+    after a user edits their profile.
+*/
 app.post('user/:username/', function(req, res) {
 
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
-        controller.getProfile(req, res);
-        
+        controller.postProfile(req, res);
+
 })
 /*
     Executes function getReviews() as defined in object controller in `../controllers/controller.js`
@@ -223,13 +228,48 @@ app.get('/user/:username/reviews', function(req, res) {
 });
 
 
+/*
+    Renders `registration.hbs` as defined in the object controller in `../views/registration.hbs`
+    when a client sends an HTTP GET request for `/register`
+*/
+app.get('/register', function(req, res) {
+    
+    res.render('registration');
+
+});
 
 
 /*
     Executes function getRegistration() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/register`
 */
-app.get('/register', controller.getRegistration);
+app.post('/register', function(req, res) {
+    
+    req.session.destroy(function(err) { // logs out the user, before registration
+        controller.getRegistration(req, res);
+    })
+
+});
+
+/*
+    Executes function checkEmail() as defined in the object controller in `../controllers/controller.js`
+    to check if the email being used to register is already taken.
+*/
+app.post('/checkEmail', function(req, res) {
+
+    controller.checkEmail(req, res);
+});
+
+
+/*
+    Executes function checkUsername() as defined in the object controller in `../controllers/controller.js`
+    to check if the username being used to register is already taken.
+*/
+app.post('/checkUsername', function(req, res) {
+
+    controller.checkUsername(req, res);
+
+});
 
 
 /*

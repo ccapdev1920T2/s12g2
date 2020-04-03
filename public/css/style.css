@@ -96,10 +96,11 @@ img
 	text-align: center;
 }
 
-#passworderror
+.registrationerror
 {
-	font-size: 10px;
+	font-size: 11px;
 	color: red;
+	margin: 0px;
 }
 
 #form

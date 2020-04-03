@@ -257,7 +257,7 @@ const controller = {
 
         var query = {email:     req.body.email,
                      password:  req.body.password};
-        
+                     console.log("GET LOGIN")
         db.findOne('users', query, function(result) {
             
             if(result == null)
@@ -278,9 +278,9 @@ const controller = {
                         posts = result;
                         
                         var query = {user: ObjectId(req.session.user._id)};
-        
+                        console.log(req.session.user);
                         db.findOne('clients', query, function(result) {
-                            
+                            console.log(result);
                             res.render('homepage', {
                                 username: result.username,
                                 post: posts
@@ -309,7 +309,88 @@ const controller = {
 
     /* LOADS REGISTRATION */
     getRegistration: function(req, res) {
-        res.render('registration');
+        
+        var idnum = req.body.idnum;
+        var email = req.body.email;
+        var username = req.body.username;
+        var phone = req.body.phone;
+        var pw = req.body.password;
+        var cpw = req.body.confirmpassword;
+
+        // console.log(idnum);
+        // console.log(email);
+        // console.log(username);
+        // console.log(phone);
+        // console.log(pw);
+        // console.log(cpw);
+
+        if( idnum != "" && idnum.length == 8 && idnum.match(/^-{0,1}\d+$/) &&
+            email != "" &&
+            phone != "" && phone.length == 11 && phone.match(/^-{0,1}\d+$/) &&
+            pw != "" && cpw != "" && pw == cpw) {
+                console.log("HELLO");
+            var doc = {
+                email: email,
+                password: pw,
+                isClient: true
+            };
+
+            db.insertOne('users', doc);
+
+            db.findOne('users', {email: email, password: pw}, function(result) {
+                console.log("HERE")
+                doc = {
+
+                    user: result,
+                    idnum: idnum,
+                    username: username,
+                    number: parseInt(phone),
+                    bio: null,
+                    twitter: null,
+                    facebook: null,
+                    instagram: null,
+                    hasfb: null,
+                    hasig: null,
+                    hastw: null,
+                    isSuspended: false,
+                    likedposts: null,
+                    avatar: null
+
+                };
+                
+                db.insertOne('clients', doc);
+                
+            })
+
+            res.render('welcome');
+        }
+        else
+        {
+        }
+    },
+
+    checkEmail: function(req, res) {
+
+        var query = {email: req.body.email};
+        
+        db.findOne('users', query, function(result) {
+
+            res.send(result);
+
+        })
+         
+    },
+
+    checkUsername: function(req, res) {
+
+        var query = {username: req.body.username};
+        
+        db.findOne('clients', query, function(result) {
+            
+            res.send(result);
+
+        })
+         
     },
 
     /* LOADS A POST */
@@ -412,11 +493,6 @@ const controller = {
         // MUST ADD
     },
 
-    /* LOADS CREATE POST */
-    getCreatePost: function(req, res) {
-        res.render('createpost');
-    },
-
     /* LOADS EDIT POST */
     // getEditPost: function(req, res) {
     //     res.render('editpost');
@@ -424,7 +500,7 @@ const controller = {
 
     /* VALIDATES INFORMATION ENTERED AT LOG IN PAGE*/
     checkLogIn: function(req, res) {
-        
+        console.log("CHECKLOGIN")
         var email = req.body.email;
         var password = req.body.password;
 
