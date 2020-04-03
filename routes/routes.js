@@ -195,6 +195,13 @@ app.get('/user/:username', function(req, res) {
 
 });
 
+app.post('/user/:username', function(req, res, next){
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.postProfile(req, res, next);
+})
+
 
 /*
     Executes function getReviews() as defined in object controller in `../controllers/controller.js`

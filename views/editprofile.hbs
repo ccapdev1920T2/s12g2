@@ -2,20 +2,21 @@
 
 	{{> userheader ua=useravatar}}
 
+	{{#profiledetails}}
 	<!-- PROFILE -->
 	<div id = "profile">
 		<div id = "editpic">
-				<img id ="dp" src="{{dp}}" alt="image">
+				<img id ="dp" src="{{avatar}}" alt="image">
 				<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
 		</div>
-		
+
 		<div class = "editprofile">
 			<div id = "editdetails">
-				<form name = "profile">
+				<form name = "profile" action = "user/{{username}}" method="POST">
 					<div class = "edit">
 						<p>user details</p><br>
 						<label id="bio">description</label>
-						<textarea id="bio" name="bio" form="profile">{{bio}}</textarea><br>
+						<textarea id="bio" name="bio">{{bio}}</textarea><br>
 						<label id="pw">Password</label><br>
 						<input type="password" id="pw" name="pw" minlength=8 m><br>
 						<label id="cpw">Confirm Password</label>
@@ -28,18 +29,19 @@
 
 						<p>social media</p><br>
 						<label id="twt">Twitter</label><br>
-						<input type="text" id="twt" name="twt" placeholder="http://www.twitter.com/{{twitter}}"><br>
+						<input type="text" id="twt" name="tw" placeholder="http://www.twitter.com/{{twitter}}" value="{{twitter}}"><br>
 						<label id="fb">FaceBook</label><br>
-						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}"><br>
+						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}" value="{{facebook}}"><br>
 						<label id="ig">Instagram</label><br>
-						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}"><br>
+						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
 						
-						<a href="profile"><button type="submit" form="createpost" value="Submit">Submit</button></a>
+						<button type="submit" form="profile" value="Submit" onclick="profile.submit()">Submit</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	{{/profiledetails}}
 </div>
 
 <script type="text/javascript">
