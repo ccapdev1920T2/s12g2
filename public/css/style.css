@@ -96,7 +96,11 @@ img
 	text-align: center;
 }
 
-
+#passworderror
+{
+	font-size: 10px;
+	color: red;
+}
 
 #form
 {

@@ -6,23 +6,24 @@
     <a href="" class = "title">REGISTER</a>
     
     <div id = "form">
-        <form action="/" method="post">
+        <form>
         
             <label for = "idnum">id number</label><br>
-            <input type="text" id="idnum" name="idnum"><br>
+            <input type="text" id="idnum" name="idnum" placeholder = "ex. 11812345"><br>
             
             <label for = "email">email</label><br>
-            <input type="email" id="email" name="email"><br>
+            <input type="email" id="email" name="email" placeholder = "ex. hello@gmail.com"><br>
 
             <label for = "phone">phone number</label><br>
-            <input type="text" id="phone" name="phone"><br>
+            <input type="text" id="phone" name="phone" placeholder = "ex. 012345678901"><br>
             
             <label for = "password">password</label><br>
             <input type="password" id="password" name="password"><br>
 
             <label for = "confirmpassword">confirm password</label><br>
-            <input type="password" id="confirmpassword" name="confirmpassword"><br><br><br>
+            <input type="password" id="confirmpassword" name="confirmpassword"><br>
             
+            <p id = "passworderror"></p><br>
             
             
             <input class="submit" type="submit" id="submit" name="submit" value="register">
@@ -33,3 +34,61 @@
         <a href="/" class="link">already a user? log-in here.</a>
     </div>
 </div>
+
+<script type = "text/javascript">
+
+    $("#submit").click(function() {
+        console.log("HELLo");
+        var valid = true;
+
+        $("#idnum").css("background-color", "white");
+        $("#email").css("background-color", "white");
+        $("#phone").css("background-color", "white");
+        $("#password").css("background-color", "white");
+        $("#confirmpassword").css("background-color", "white");
+
+        $("#passworderror").text("");
+
+        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
+        {
+            $("#idnum").css("background-color", "lightcoral");
+            valid = false;
+        };
+
+        if($.trim($("#email").val()) == "")
+        {
+            $("#email").css("background-color", "lightcoral");
+            valid = false;
+        };
+
+        if($.trim($("#phone").val()) == "" || !$("#phone").val().match(/^-{0,1}\d+$/) || $("#phone").val().length != 11)
+        {
+            $("#phone").css("background-color", "lightcoral");
+            valid = false;
+        };
+
+        if($.trim($("#password").val()) == "")
+        {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            valid = false;
+        };
+
+        if($.trim($("#confirmpassword").val()) == "" ||  $("#confirmpassword").val() != $("#password").val())
+        {
+            $("#confirmpassword").css("background-color", "lightcoral");
+            valid = false;
+
+            if($("#confirmpassword").val() != $("#password").val())
+                $("#passworderror").text("Password and confirm password do not match.");
+        };
+
+        if(!valid)
+        {
+            alert("Please complete missing/incorrect fields.");
+        };
+
+
+
+    })
+</script>
