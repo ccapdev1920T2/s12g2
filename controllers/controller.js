@@ -501,42 +501,54 @@ const controller = {
             if (req.query.search)
             {
                 var input = req.query.search;
-                var query = {username: input};
-                db.findOne('clients', query, function(result){
-                    if(result != null && result != undefined){
+                var query = {$text: {$search: input}};
+                
+                db.findOne('clients', query, function(result1){
 
-                        if(result.avatar == null)
-                        result.avatar = "/img/default.png"
+                    db.findMany('posts', query, null, null, function(result2){
+                        
+                        if(!result1 && result2 == [])
+                        {
+                            res.render('search', {
+                                query: input,
+                                profileresults: "No users found.",
+                                postresults: "No posts found."
+                            });
 
-                        res.render('search', {
-                                profiledetails: result
-                        }); 
-                            
-                    }
-                    else
-                    {
-                        res.render('error', result);
-                    }
+                        }
+                        else if(!result1)
+                        {
+                            res.render('search', {
+                                query: input,
+                                profileresults: "No users found.",
+                                post: result2,
+                            });
+                        }
+                        else if(result2 == [])
+                        {
+                            res.render('search', {
+                                query: input,
+                                profiledetails: result1,
+                                postresults: "No posts found."
+                            });
+                        }
+                        else
+                        {
+                            if(result1.avatar == null)
+                                result1.avatar = "/img/default.png"
+                                
+                            res.render('search', {
+                                query: input,
+                                profiledetails: result1,
+                                post: result2,
+                            });
+                        }
+                    });
+                        
                 });
-
-                // query = {name: input}
-                // db.findMany('posts', query, null, null, function(result){
-                //     if (result != null && result != undefined)
-                //     {
-                //         res.render('search', {
-                //             post: result
-                //         });
-                //     }
-                //     else
-                //     {
-                //         res.render('error', result);
-                //     }
-                // });
             }
-
             else
             {
-                
                 db.findMany('posts', {}, null, null, function(result){
                     posts = result;
                     res.render('homepage', {
@@ -546,7 +558,7 @@ const controller = {
             }
         }
         else{
-            res.render('error', result);
+            res.redirect('/');
         }
 
     },

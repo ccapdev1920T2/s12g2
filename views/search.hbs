@@ -146,8 +146,10 @@
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
 	</div>
-    <h1>SEARCH RESULTS</h1><br>
+    <h1>Search Results for "{{query}}"</h1><br>
 
+	<h2>{{profileresults}}</h2>
+	<h2>{{postresults}}</h2>
     {{#profiledetails}}
 	<!-- PROFILE -->
 	<div id = "profile2">
@@ -170,7 +172,7 @@
 
 
 	<!-- POSTS -->
-
+	
 	{{#each post}}
 
 		<div class="post">
