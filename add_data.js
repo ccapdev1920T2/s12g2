@@ -2,6 +2,7 @@
 
 // import models
 const db = require('./models/db.js');
+var ObjectId = require('mongodb').ObjectID;
 
 var async = require('async')
 const Category  = require('./models/category.js');
@@ -329,31 +330,36 @@ function(err, results)
     }
     mongoose.connection.close();
 });
+/*
+var sample = new User({
+    email: "waluigi@a.com",
+    password: "weeee",
+    isClient: true
+});
 
-// var sample = new User({
-//     email: "waluigi",
-//     password: "weeee",
-//     isClient: true
-// });
+db.insertOne(userCollection, sample);
 
-//db.insertOne(userCollection, sample);
+//CLIENTS ///
 
-/// CLIENTS ///
+db.findOne('users', {email: "waluigi"}, function(result) {
 
-// var client = new Client
-// ({
-//     email:              'nemo@puppers.com',
-//     id_num:             11646845,
-//     username:           'nemumu',
+    var client = new Client
+({
+    user:               result,
+    id_num:             11111111,
+    username:           "waluigi",
 
-//     number:             "09123456789",
-//     bio:                'I am an adorable little dog, who will bid for treats.',
-//     twitter:            'nemumu',
-//     facebook:           'nemumu',
-//     isSuspended:        false,
-// });
+    number:             123
+});
 
-// db.insertOne(clientCollection, client);
+db.insertOne(clientCollection, client);
+
+})
+
+
+
+
+
 
 // var review = new Review ({
 //     review_id: 001,
