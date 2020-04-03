@@ -80,7 +80,7 @@ const database = {
             database.collection(collection).find(query, {projection: projection})
             .sort(sort).toArray(function(err, res) {
                 if(err) throw err;
-                console.log(res);
+                //console.log(res);
                 db.close();
                 return callback(res);
             });

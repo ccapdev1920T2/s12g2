@@ -27,16 +27,48 @@ const controller = {
                 if(req.session.user.isClient) {
 
                     if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user)){
-                        res.render('self-profile', {
-                            title: result.username,
-                            profiledetails: result
-                        }); // if the user is viewing their own profile
+                        
+                        var client = result;
+
+                        query = {poster: ObjectId(result._id)};
+
+                        db.findMany('posts', query, null, null, function(result) {
+
+                            res.render('self-profile', {
+                                title: client.username,
+                                username: client.username,
+                                profiledetails: client,
+                                post: result
+                            }); // if the user is viewing their own profile
+                        })
+                        
                     }
-                    else
-                        res.render('profile', {
-                            title: result.username,
-                            profiledetails: result
-                        }); // if the user is viewing another user's profile 
+                    else {
+
+                        var profiledeets = result;
+
+                        var query = {user: ObjectId(req.session.user._id)};
+
+                        db.findOne('clients', query, function(result) {
+
+                            var username = result.username;
+
+                            query = {poster: ObjectId(profiledeets._id)};
+
+                            db.findMany('posts', query, null, null, function(result) {
+
+                                res.render('profile', {
+                                    title: profiledeets.username,
+                                    username: username,
+                                    profiledetails: profiledeets,
+                                    post: result
+                                }); // if the user is viewing another user's profile
+
+                            })
+                             
+                        })
+                        
+                    }
                         
                 }
                 else
@@ -139,73 +171,63 @@ const controller = {
         var query = {user :  ObjectId(id)};
         
         db.findOne('clients', query, function (result){
-            if(result.avatar == null)
-                result.avatar = "/img/default.png"
-            res.render('editprofile', {
-                profiledetails: result
-            });
+
+            var profiledeets = result;
+
+            var query = {user: ObjectId(req.session.user._id)};
+
+            db.findOne('clients', query, function(result) {
+
+                if(profiledeets.avatar == null)
+                    profiledeets.avatar = "/img/default.png"
+
+                res.render('editprofile', {
+                    username: result.username,
+                    profiledetails: profiledeets
+                });
+
+            })
+            
         });
         
     },
 
-    /*  
-        CHECKS IF THE USER LOGGING IN IS VALID. IF THE EMAIL AND PASSWORD MATCHES
-        A DOCUMENT IN THE DATABASE, 'homepage' IS RENDERED, ELSE, USER IS REDIRECTED
-        BACK TO THE LOGIN PAGE 
-    */
-    getLogIn : function(req, res) {
-
-        var query = {email:     req.body.email,
-                     password:  req.body.password};
-        
-        db.findOne('users', query, function(result) {
-            
-            if(result == null)
-            {
-                res.status(404).send();
-                res.redirect('/');
-                //EDIT
-            }
-            else
-            {
-                req.session.user = result;
-
-                // if(result.isClient)
-                //     res.render('homepage') // this.getHomepage(req,res);
-                // else
-                //     res.render('admin-posts');
-
-                var posts;
-
-                if(req.session.user.isClient){
-                    db.findMany('posts', {}, null, null, function(result){
-                        posts = result;
-                        res.render('homepage', {
-                            post: posts
-                        });
-                    });
-                }
-                else
-                    res.render('admin-posts');
-            }
-        })
-    },
-    
     /* LOADS HOMEPAGE */
     getHomepage: function(req, res) {
         
         var posts;
 
         if(req.session.user.isClient){
+
             db.findMany('posts', {}, null, null, function(result){
+
                 posts = result;
-                res.render('homepage', {
-                    post: posts
-                });
+                
+                var query = {user: ObjectId(req.session.user._id)};
+
+                db.findOne('clients', query, function(result) {
+                    
+                    res.render('homepage', {
+                        username: result.username,
+                        post: posts
+                    });
+
+                })
+
             });
         }
-        else
-            res.render('admin-posts');
+        else {
+
+            db.findMany('posts', {isApproved: false, isReviewed: false}, null, null, function(result) {
+                
+                posts = result;
+                
+                res.render('admin-posts', {
+                    post: posts
+                });
+            
+            });
+        }
 
         // async.series([
         //     function(callback)
@@ -226,6 +248,65 @@ const controller = {
         // });
     },
 
+    /*  
+        CHECKS IF THE USER LOGGING IN IS VALID. IF THE EMAIL AND PASSWORD MATCHES
+        A DOCUMENT IN THE DATABASE, 'homepage' IS RENDERED, ELSE, USER IS REDIRECTED
+        BACK TO THE LOGIN PAGE 
+    */
+    getLogIn : function(req, res) {
+
+        var query = {email:     req.body.email,
+                     password:  req.body.password};
+        
+        db.findOne('users', query, function(result) {
+            
+            if(result == null)
+            {
+                res.status(404).send();
+                res.redirect('/');
+            }
+            else
+            {
+                req.session.user = result;
+
+                var posts;
+
+                if(req.session.user.isClient){
+        
+                    db.findMany('posts', {}, null, null, function(result){
+        
+                        posts = result;
+                        
+                        var query = {user: ObjectId(req.session.user._id)};
+        
+                        db.findOne('clients', query, function(result) {
+                            
+                            res.render('homepage', {
+                                username: result.username,
+                                post: posts
+                            });
+
+                        })
+                        
+        
+                    });
+                }
+                else {
+        
+                    db.findMany('posts', {isApproved: false, isReviewed: false}, null, null, function(result) {
+                        
+                        posts = result;
+                        
+                        res.render('admin-posts', {
+                            post: posts
+                        });
+                    
+                    });
+                }
+            }
+        })
+    },
+
     /* LOADS REGISTRATION */
     getRegistration: function(req, res) {
         res.render('registration');
@@ -234,13 +315,27 @@ const controller = {
     /* LOADS A POST */
     getPost: function(req, res) {
 
-        var post = req.params.postId;
+        var post;
 
-        var query = {post_id : post};
+        var query = {post_id : req.params.postId};
 
         db.findOne('post', query, function(result) {
-            if(req.session.user.isClient)
-                res.render('viewpost', result);
+
+            if(req.session.user.isClient) {
+
+                post = result;
+
+                query = {user: ObjectId(req.session.user._id)};
+
+                db.findOne('clients', query, function(result) {
+                
+                    res.render('viewpost', {
+                        username: result.username,
+                        post: post // have to update and check
+                    });
+                })
+
+            }   
             else
                 res.render('admin-viewpost', result);
         })
@@ -262,16 +357,32 @@ const controller = {
 
                     if(req.session.user.isClient) {
 
-                        if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user))
+                        if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user)) {
+
                             res.render('self-profilereviews',  {
                                 title: result.username,
+                                username: result.username,
                                 profiledetails: result
                             }); // if the user is viewing their own profile reviews
-                        else
-                            res.render('profilereviews',  {
-                                title: result.username,
-                                profiledetails: result
-                            }); // if the user is viewing another user's profile reviews
+
+                        }
+                        else {
+                            var profiledeets = result;
+
+                            query = {user: ObjectId(req.session.user._id)};
+
+                            db.findOne('clients', query, function(result) {
+
+                                res.render('profilereviews',  {
+                                    title: profiledeets.username,
+                                    username: result.username,
+                                    profiledetails: profiledeets
+                                }); // if the user is viewing another user's profile reviews
+
+                            })
+                            
+
+                        }
                             
                     }
 
@@ -324,8 +435,10 @@ const controller = {
             res.send(result);
 
         })
+         
     },
 
+    /* ADDS NEW POST INTO DATABASE */
     getCreatePost: function(req, res) {
 
         var itemname = req.query.itemname;
