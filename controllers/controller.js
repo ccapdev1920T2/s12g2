@@ -307,27 +307,46 @@ const controller = {
 
         var post;
 
-        var query = {post_id : req.params.postId};
+        var query = {_id : ObjectId(req.params.postId)};
 
-        db.findOne('post', query, function(result) {
+        db.findOne('posts', query, function(result) {
+            
+            post = result;
 
-            if(req.session.user.isClient) {
+            post.cutofftime = post.cutoff.toTimeString();
+            post.cutoffdate = post.cutoff.toDateString();
+            post.time = post.postdate.toTimeString();
+            post.date = post.postdate.toDateString();
 
-                post = result;
+            db.findOne('clients', {_id: post.poster}, function(result){
+                post.postername = result.username;
 
                 query = {user: ObjectId(req.session.user._id)};
 
                 db.findOne('clients', query, function(result) {
-                
-                    res.render('viewpost', {
-                        username: result.username,
-                        post: post // have to update and check
-                    });
+
+                    if(req.session.user.isClient) {
+
+                        db.findOne('clients', {_id: post.highestbidder}, function(result){
+                            
+                            post.biddername = result.username;
+                            console.log(result);
+
+                            res.render('viewpost', {
+                                username: result.username,
+                                post: post
+                            });
+                        });
+                    }
+                    else
+                    {
+                        console.log(post);
+                        res.render('admin-viewpost', post);
+                    }
                 })
 
-            }   
-            else
-                res.render('admin-viewpost', result);
+            });
+            
         })
 
     },

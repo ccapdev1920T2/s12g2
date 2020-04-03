@@ -101,13 +101,29 @@ function clientCreate(user, id_num, username, number,
 
 var posts = []
 
-function postCreate(poster, title, currentprice, stealprice, cb)
+function postCreate(poster, title, description,
+    startprice, currentprice, stealprice, incrementprice,
+    highestbidder, paymentmode, details, categories,
+    isOpen, isApproved, isReviewed, cb)
 {
     var post = new Post({
         poster: poster,
         title: title,
+        description: description,
+        
+        startprice: startprice,
         currentprice: currentprice,
         stealprice: stealprice,
+        incrementprice: incrementprice,
+        
+        highestbidder: highestbidder,
+        paymentmode: paymentmode,
+        details: details,
+        categories: categories,
+
+        isOpen: isOpen,
+        isApproved: isApproved,
+        isReviewed: isReviewed
     })
 
     post.save(function(err){
@@ -269,27 +285,28 @@ function createClients(cb) {
 function createPosts(cb) {
     async.series([
         function(callback) {
-            postCreate(clients[0], "post 1 test", 120, 200, callback);
+            postCreate(clients[0], "post 1 test", "here is my post. hello home!",
+                120, 150, 200, 10, clients[3], "Cash", "Goks", [categories[0], categories[1],],
+                true, true, false, callback);
         },
         function(callback) {
-            postCreate(clients[0], "post 2 test", 400, 550, callback);
+            postCreate(clients[2], "post 2 test", "here is my second post. hello!!!",
+                400, 420, 550, 20, clients[3], "GCash", "DLSU", [categories[2], categories[3],],
+                true, false, false, callback);
         },
-        function(callback) {
-            postCreate(clients[1], "hay", 300, 500, callback);
-        }
     ], cb);
 }
 
 function update(cb) {
     async.series([
         function(callback) {
-            clients[0].likedPosts = [posts[2]]
+            clients[0].likedPosts = [posts[1]]
             clients[0].save(callback)
         },
-        function(callback) {
-            clients[1].likedPosts = [posts[0], posts[1]]
-            clients[1].save(callback)
-        }
+        // function(callback) {
+        //     clients[1].likedPosts = [posts[0], posts[1]]
+        //     clients[1].save(callback)
+        // }
     ], cb);
 }
 
