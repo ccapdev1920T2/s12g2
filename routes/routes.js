@@ -143,14 +143,14 @@ app.get('/createpost', function(req, res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
-        res.render('createpost'); // if the user is a client
+        controller.getCreatePost(req, res); // if the user is a client
     else
         res.redirect('/') // if the user is admin
 })
 
 
 /*
-    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    Executes function postCreatePost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
     else it redirects the user back to the log in page
 */
@@ -159,11 +159,44 @@ app.post('/createpost', function(req, res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
-        controller.getCreatePost(req, res); // if the user is a client
+        controller.postCreatePost(req, res); // if the user is a client
     else
         res.redirect('/') // if the user is admin
 
 });
+
+/*
+    Executes function postCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/sucess` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+app.get('/success', function(req, res) {
+    
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else if(req.session.user.isClient)
+        controller.getSuccess(req, res); // if the user is a client
+    else
+        res.redirect('/') // if the user is admin
+
+});
+
+/*
+    Executes function postCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/sucess` if the user is logged in as a client
+    else it redirects the user back to the log in page
+*/
+app.post('/success', function(req, res) {
+    
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else if(req.session.user.isClient)
+        controller.postCreatePost(req, res); // if the user is a client
+    else
+        res.redirect('/') // if the user is admin
+
+});
+
 
 
 /*
@@ -301,6 +334,21 @@ app.get('/posts/:postId', function(req, res) {
         controller.getPost(req, res);
 
 });
+
+/*
+    Executes function getPost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/:postId` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.post('/posts/:postId', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.postCreatePost(req, res);
+
+});
+
 
 
 /*

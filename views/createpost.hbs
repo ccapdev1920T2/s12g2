@@ -6,7 +6,7 @@
     <!-- CREATE POSTS -->
     <div class="post">
 
-            <form action = "/createpost" class = "createpost" id = "createpost" name = "create" method = "post">
+            <form action = "/success" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
                     <p>create a post</p><br>
                     <p style = "font-size: 10px">please choose at least one category and upload at least one photo. don't leave any fields blank.</p>
@@ -38,7 +38,7 @@
                     <!-- MODE OF PAYMENT -->
                     <label for="modep">Mode of Payment</label><br>
                     <select name="modep">
-                        <option value="cash">Cash</option>
+                        <option selected value="cash">Cash</option>
                         <option value="gcash">G-Cash</option>
                         <option value="bank">Bank Transfer</option>
                     </select><br>
@@ -48,7 +48,23 @@
                     <input type="text" id="meetup" name="meetup"><br>
                    
                     <!-- CATEGORIES -->
-                    <label for="categ" id = "categ">Categories (Choose at least one)</label><br>
+                    <label for="categ">Categories</label><br>
+                    <select name="categ">
+                        <option selected value="Book">Book</option>
+                        <option value="For Pet">For Pet</option>
+                        <option value="Women's">Women's</option>
+                        <option value="Men's">Men's</option>
+                        <option value="Children's">Children's</option>
+                        <option value="Top">Top</option>
+                        <option value="Bottom">Bottom</option>
+                        <option value="Shoes">Shoes</option>
+                        <option value="Stationery">Stationery</option>
+                        <option value="Food">Food</option>
+                        <option value="Collectible">Collectible</option>
+                        <option value="Accessory">Accessory</option>
+                        <option value="Technology">Technology</option>
+                    </select><br>
+                    {{!-- <label for="categ" id = "categ">Categories (Choose at least one)</label><br>
                     <input type="checkbox" class = "categ" id="book" name="book" value="Book">Book<br>
                     <input type="checkbox" class = "categ" id="forpet" name="forpet" value="For Pet">For Pet<br>
                     <input type="checkbox" class = "categ" id="womens" name="womens" value="Women's">Women's<br>
@@ -61,14 +77,14 @@
                     <input type="checkbox" class = "categ" id="childrens" name="childrens" value="Children's">Children's<br>
                     <input type="checkbox" class = "categ" id="shoes" name="shoes" value="Shoes">Shoes<br>
                     <input type="checkbox" class = "categ" id="accessory" name="accessory" value="Accessory">Accessory<br>
-                    <input type="checkbox" class = "categ" id="technology" name="technology" value="Technology">Technology<br>
+                    <input type="checkbox" class = "categ" id="technology" name="technology" value="Technology">Technology<br> --}}
                    
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
                     <input type="file" id = "pic" name="pic" accept="image/*" multiple><br>
                    
                     <!-- SUBMIT -->
-                    <button type="submit" id = "submit" form="createpost" value="Submit">Submit</button>
+                    <button type="submit" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
                 </div>
             </form>
     </div>

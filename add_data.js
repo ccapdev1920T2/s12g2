@@ -26,13 +26,15 @@ const userCollection        = 'users';
 //db.createDatabase();
 
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/bids", {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true});
 var mongodb = mongoose.connection;
 mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 var categories = []
 var users = []
 var clients = []
+
+
 
 function userCreate(email, password, isClient, cb)
 {
@@ -286,12 +288,12 @@ function createClients(cb) {
 function createPosts(cb) {
     async.series([
         function(callback) {
-            postCreate(clients[0], "post 1 test", "here is my post. hello home!",
+            postCreate(clients[0]._id, "post 1 test", "here is my post. hello home!",
                 120, 150, 200, 10, clients[3], "Cash", "Goks", [categories[0], categories[1],],
                 true, true, false, callback);
         },
         function(callback) {
-            postCreate(clients[2], "post 2 test", "here is my second post. hello!!!",
+            postCreate(clients[2]._id, "post 2 test", "here is my second post. hello!!!",
                 400, 420, 550, 20, clients[3], "GCash", "DLSU", [categories[2], categories[3],],
                 true, false, false, callback);
         },
@@ -318,6 +320,7 @@ async.series([
     createPosts,
     update
 ],
+
 function(err, results)
 {
     if(err)
@@ -330,6 +333,7 @@ function(err, results)
     }
     mongoose.connection.close();
 });
+
 /*
 var sample = new User({
     email: "waluigi@a.com",
@@ -401,3 +405,4 @@ db.insertOne(clientCollection, client);
 // };
 
 //  db.insertOne(postCollection, post);
+// */

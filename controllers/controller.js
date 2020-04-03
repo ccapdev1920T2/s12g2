@@ -394,27 +394,27 @@ const controller = {
             
             post = result;
 
-            post.cutofftime = post.cutoff.toTimeString();
-            post.cutoffdate = post.cutoff.toDateString();
-            post.time = post.postdate.toTimeString();
-            post.date = post.postdate.toDateString();
-
+            // post.cutofftime = post.cutoff.toTimeString();
+            // post.cutoffdate = post.cutoff.toDateString();
+            // post.time = post.postdate.toTimeString();
+            // post.date = post.postdate.toDateString();
+            console.log(post.poster);
             db.findOne('clients', {_id: post.poster}, function(result){
                 post.postername = result.username;
 
                 query = {user: ObjectId(req.session.user._id)};
 
-                db.findOne('clients', query, function(result) {
+                db.findOne('clients', query, function(result1) {
 
                     if(req.session.user.isClient) {
 
                         db.findOne('clients', {_id: post.highestbidder}, function(result){
                             
-                            post.biddername = result.username;
+                            // post.biddername = result.username;
                             console.log(result);
 
                             res.render('viewpost', {
-                                username: result.username,
+                                username: result1.username,
                                 post: post
                             });
                         });
@@ -523,52 +523,89 @@ const controller = {
          
     },
 
-    /* ADDS NEW POST INTO DATABASE */
+    /* LOADS CREATE POST */
     getCreatePost: function(req, res) {
-
-        var itemname = req.query.itemname;
-        var description = req.query.description;
-        var sprice = req.query.sprice;
-        var priceinc = req.query.priceinc;
-        var stealp = req.query.stealp;
-        var cutoffdt = req.query.cutoffdt;
-        var modep = req.query.modep; // must check
-        var meetup = req.query.meetup;
-        var categories = req.query.categ; // must check
-        var pic = req.query.pic; // must check
         
-        console.log(req.query.modep);
-        if( itemname != undefined && description != undefined && sprice != undefined && priceinc != undefined &&
-            stealp != undefined &&  cutoffdt != undefined && modep != undefined && categories != undefined &&  pic != undefined) {
+        var query = {user: ObjectId(req.session.user._id)};
+        
+        db.findOne('clients', query, function(result) {
 
-            var doc = {
-                poster: req.session.user,
-                name: itemname,
-                description: description,
-                numFFs: 0,
+            res.render('createpost', {
+                username: result.username
+            });
 
-                start_price: sprice,
-                current_price: sprice,
-                increment_price: priceinc,
+        });
 
-                highest_bidder: null,
-                cutoff_date: cutoffdt,
-                cutoff_time: cutoffdt,
-                payment_mode: modep,
-                categories: categories,
-                post_date: new Date(),
-                pictures: pic,
-                
-                isOpen: true,
-                isApproved: false,
-                isReviewed: false
+    },
+
+
+    /* ADDS NEW POST INTO DATABASE */
+    postCreatePost: function(req, res) {
+        var itemname = req.body.itemname;
+        var description = req.body.description;
+        var sprice = req.body.sprice;
+        var priceinc = req.body.priceinc;
+        var stealp = req.body.stealp;
+        // var cutoffdt = req.body.cutoffdt.getDate();
+        var modep = req.body.modep; // must check
+        var meetup = req.body.meetup;
+        var category = req.body.categ; // must check
+        var pic = req.body.pic; // must check
+        
+        if( itemname && description && sprice & priceinc &&
+            stealp  /*&&  cutoffdt*/ && modep && meetup && category /*&&  pic*/ ) {
+            
+                db.findOne('clients', {user: ObjectId(req.session.user._id)}, function(result){
+                    var doc = {
+                        poster: result._id,
+                        title: itemname,
+                        description: description,
+        
+                        startprice: sprice,
+                        currentprice: sprice,
+                        stealprice: stealp,
+                        incrementprice: priceinc,
+        
+                        highestbidder: null,
+                        // cutoff_date: cutoffdt,
+                        // cutoff_time: cutoffdt,
+                        paymentmode: modep,
+                        details: meetup,
+                        categories: category,
+                        // post_date: new Date.now(),
+                        //pictures: pic,
+                        
+                        isOpen: true,
+                        isApproved: false,
+                        isReviewed: false
+                    }
+
+                    var id = req.session.user._id;
+                    db.insertOne('posts', doc);
+                    res.redirect('/success?title=' + itemname +'&user=' + id);
+                });
             }
 
-            db.insertOne("posts", doc);
-
-            res.redirect('/');
-        }
     },
+
+    getSuccess: function(req, res){
+
+        var query = {user: ObjectId(req.query.user)};
+        var query2 = {title: req.query.title}
+        
+        db.findOne('clients', query, function(result1) {
+
+            db.findOne('posts', query2, function(result2){
+                res.render('postsuccess', {
+                    username: result1.username,
+                    _id: result2._id
+                });
+            });
+
+        });
+  
+    },
+
 
     getSearch: function(req, res){
         var posts;
