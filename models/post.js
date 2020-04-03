@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
+const Client = require('./client.js');
 
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     //post_id:      {type: Number, required: true},
-    poster:         {type: Schema.Types.ObjectId, ref: 'Client', required: true},
+    poster:         {type: Schema.Types.ObjectId, ref: Client, required: true},
     // name:           {type: String, /*max: ,*/ required: true},
     // description:    {type: String, /*max: ,*/ required: true},
     // numFFs:         {type: Number, default: 0},
