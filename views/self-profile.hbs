@@ -63,42 +63,42 @@
 		<div id = "posts">
 			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
 			<!-- POSTS -->
-			{{#each post}}
-				<div class="post">
-					<div class="postheader">
-						<a href="view-post" class = "posttitle">
-							{{title}}
-						</a>
-						<a href="" class ="sbbutton" id="filterbutton">X</a>
-						<a href="<!--/editpost-->" class ="sbbutton" id="searchbutton">edit</a>
-					</div>
+		{{#each post}}
 
-					<div class="posttags">
-						{{#each tag}}
-							<a href="{{taglink}}" class="tag">{{tagname}}</a>
-						{{/each}}
-					</div>
-
-					<div class="postedby">
-						<img class="avatar" src="{{posteravatar}}">
-						<a href="profile" class="username">{{postername}}</a>
-
-						<div class="stealprice">
-							P{{stealprice}}
-						</div>
-						<div class="currentprice">
-							P{{currentprice}}
-						</div>
-					</div>
-
-					<img class="itemimage" src="{{itemimg}}">
-					
-					<div class="dateposted">
-						{{date}} | {{time}}
-					</div>
+			<div class="post">
+				<div class="postheader">
+					<a href="/posts/{{_id}}" class = "posttitle">
+						{{title}}
+					</a>
+					<div class = "ffbutton">♡</div>
 				</div>
-			{{/each}}
 
+				<div class="posttags">
+					{{#each tag}}
+						<a href="{{taglink}}" class="tag">{{tagname}}</a>
+					{{/each}}
+				</div>
+
+				<div class="postedby">
+					<img class="avatar" src="{{posteravatar}}">
+					<a href="/user/{{postername}}" class="username">{{postername}}</a>
+				
+					<div class="stealprice">
+						P{{stealprice}}
+					</div>
+					<div class="currentprice">
+						P{{currentprice}}
+					</div>
+					
+				</div>
+
+				<img class="itemimage" src="{{itemimg}}">
+				
+				<div class="dateposted">
+					{{date}} | {{time}}
+				</div>
+			</div>
+		{{/each}}
 		</div>
 	</div>
 	
