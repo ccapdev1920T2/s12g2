@@ -35,6 +35,19 @@ app.get('/editprofile', function(req, res) {
 
 });
 
+/*
+    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/editprofile` if the user is logged in
+*/
+app.post('/editProfile', function(req, res, next){
+    if(req.session.user == undefined) // if the user is not logged in 
+        res.redirect('/'); // redirects user back to the log in page 
+    else if(req.session.user.isClient)
+        controller.postProfile(req, res, next); // if the user is a client
+    else
+        res.redirect('/'); // if the user is admin
+});
+
 
 /*
     Executes function getHomepage() as defined in the object controller in `../controllers/controller.js`
@@ -200,14 +213,20 @@ app.get('/user/:username', function(req, res) {
 
 });
 
-app.post('user/:username/', function(req, res) {
-
+/*
+    Executes function getProfile() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/user/:username` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.post('/user/:username', function(req, res) {
+    
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
-        controller.getProfile(req, res);
-        
-})
+        controller.postProfile(req, res);
+
+});
+
 /*
     Executes function getReviews() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/user/:username/reviews` if the user is logged in

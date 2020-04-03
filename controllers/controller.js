@@ -150,18 +150,8 @@ const controller = {
             }};
             db.updateOne('clients', filter, newvalues);
         }
-
-        var query = filter;
-
-        db.findOne('clients', query, function(result) {
-            if(result.avatar == null)
-            result.avatar = "/img/default.png"
-
-            res.render('self-profile', {
-                title: result.username,
-                profiledetails: result
-            }); 
-        });
+        
+        this.getProfile(req, res);
     },
 
     /* LOADS EDIT PROFILE */
