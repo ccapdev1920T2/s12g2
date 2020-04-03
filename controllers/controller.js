@@ -276,13 +276,6 @@ const controller = {
                     db.findMany('posts', {}, null, null, function(result){
         
                         posts = result;
-
-                        for(i = 0; i < posts.length; i++)
-                        {
-                            db.findOne('clients', {_id: posts[i].poster}, function(result){
-                                console.log(result.username)
-                            })
-                        }
                         
                         var query = {user: ObjectId(req.session.user._id)};
         
