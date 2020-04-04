@@ -646,11 +646,6 @@ const controller = {
             res.send("MISSING FIELDS");
     },
 
-    /* LOADS EDIT POST */
-    // getEditPost: function(req, res) {
-    //     res.render('editpost');
-    // }, remove for now
-
     /* VALIDATES INFORMATION ENTERED AT LOG IN PAGE*/
     checkLogIn: function(req, res) {
         console.log("@ checkLogIn");
@@ -740,7 +735,7 @@ const controller = {
         }
     },
 
-    /* LOADS POSTSUCCESS */
+    /* LOADS SUCCESS PAGE FOR CREATING A POST */
     getSuccess: function(req, res){
         console.log("@ getSuccess");
 
@@ -761,62 +756,100 @@ const controller = {
         });  
     },
 
-    
+    /* LOADS EDITPOST PAGE */
+    getEditPost: function(req, res){
+
+        console.log("@ getEditPost");
+
+        var clientQuery = {user: req.session.user};
+        var postQuery = {_id: req.params.postId};
+
+        Client.findOne(clientQuery, function(err, client){
+
+            client = client.toObject();
+
+            Post.findOne(postQuery, function(err, post){
+
+                post = post.toObject();
+                
+                res.render('editpost', {
+                    username: client.username,
+                    postdetails: post
+                })
+            });
+        });  
+    },
+
+    /* SENDS DATA FOR EDIT POST */
+    editPost: function(req, res){
+
+        console.log("@ editPost");
+
+        Post.findOne({_id: req.params.postId}, function(err, post){
+
+            if(req.body.description)
+                post.description = req.body.description;
+
+            if(req.body.details)
+                post.details = req.body.details;
+
+            post.save(function(err){
+                if (err) throw err;
+                console.log("Updated post: " + post);
+                res.redirect('/posts/' + post._id);
+            });
+        })
+    },
+
+
     getSearch: function(req, res){
         console.log("@ getSearch");
         
         var posts;
 
-        if(req.session.user.isClient){
             if (req.query.search)
             {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
                 //TODO use models
-                
-                db.findOne('clients', query, function(result1){
+                Post.find(query).populate('poster').populate('categories').sort({postdate : -1}).exec(function(err, results){
+                    if (err) throw err;
+                    
+                    var posts = []
 
-                    db.findMany('posts', query, null, null, function(result2){
-                        
-                        if(!result1 && result2 == [])
-                        {
-                            res.render('search', {
-                                query: input,
-                                profileresults: "No users found.",
-                                postresults: "No posts found."
-                            });
-
-                        }
-                        else if(!result1)
-                        {
-                            res.render('search', {
-                                query: input,
-                                profileresults: "No users found.",
-                                post: result2,
-                            });
-                        }
-                        else if(result2 == [])
-                        {
-                            res.render('search', {
-                                query: input,
-                                profiledetails: result1,
-                                postresults: "No posts found."
-                            });
-                        }
-                        else
-                        {
-                            if(result1.avatar == null)
-                                result1.avatar = "/img/default.png"
-                                
-                            res.render('search', {
-                                query: input,
-                                profiledetails: result1,
-                                post: result2,
-                            });
-                        }
+                    if (results != null)
+                        posts = multipleMongooseToObj(results);
+                    
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+                        post.tagname = post.category.name;
+        
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
                     });
-                        
+                    
+                    Client.find(query).sort({username: 1}).exec(function(err, result2){
+                        if (err) throw err;
+
+                        var users = []
+
+                        if (result2 != null)
+                            users = multipleMongooseToObj(result2);
+
+                        Client.findOne({user: req.session.user}, function(err, result1){
+                            res.render('search', {
+                                query: input,
+                                username: result1.username,
+                                profiledetails: users, 
+                                post: posts
+                            });
+                        }); 
+
+                    });
+
                 });
             }
             else
@@ -836,7 +869,7 @@ const controller = {
     
                         post.date = timestamp.toDateString();
                         post.time = timestamp.toTimeString();
-                    })
+                    });
     
                     Client.findOne({user: req.session.user}, function(err, result){
                         res.render('homepage', {
@@ -844,13 +877,8 @@ const controller = {
                             post: posts
                         });
                     });
-                })
+                });
             }
-        }
-        else{
-            res.redirect('/');
-        }
-
     },
 
 };

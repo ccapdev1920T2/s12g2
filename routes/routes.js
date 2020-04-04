@@ -207,7 +207,6 @@ app.post('/success', function(req, res) {
     else it redirects the user back to the log in page
 */
 app.get('/editpost', function(req, res) {
-
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
@@ -324,7 +323,7 @@ app.post('/checkUsername', function(req, res) {
 
 /*
     Executes function getPost() as defined in the object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/:postId` if the user is logged in
+    when a client sends an HTTP GET request for `/posts/:postId` if the user is logged in
     else it redirects the user back to the log in page
 */
 app.get('/posts/:postId', function(req, res) {
@@ -338,8 +337,8 @@ app.get('/posts/:postId', function(req, res) {
 
 
 /*
-    Executes function getPost() as defined in the object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/:postId` if the user is logged in
+    Executes function editPost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/posts/:postId` if the user is logged in
     else it redirects the user back to the log in page
 */
 app.post('/posts/:postId', function(req, res) {
@@ -347,10 +346,21 @@ app.post('/posts/:postId', function(req, res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
-        controller.postCreatePost(req, res);
-
+        controller.editPost(req, res);
 });
 
+/*
+    Executes function getEditPost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/posts/:postId/edit` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/posts/:postId/edit', function(req, res){
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getEditPost(req, res);
+});
 
 /*
     Executes function getSearch() as defined in object controller in `../controllers/controller.js`
