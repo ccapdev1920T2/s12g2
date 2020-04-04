@@ -489,54 +489,163 @@ const controller = {
     getReviews: function(req, res) {
         console.log("@ getReviews");
 
-        var name = req.params.username;
+        Client.findOne({username: req.params.username}, function(err, viewedclient){
 
-        var query = {username: name};
-
-        Client.findOne(query, function(err, result)
-        {
-            result = result.toObject();
-
-            if(result != null && result != undefined)
+            // if profile exists
+            if (viewedclient != null && viewedclient != undefined)
             {
-                result.avatar = (result.avatar == null) ? "/img/default.png" : result.avatar;
 
-                // if the user is viewing their own profile reviews
-                if(JSON.stringify(req.session.user._id) == JSON.stringify(result.user))
+                viewedclient = viewedclient.toObject();
+
+                viewedclient.hasfb = (viewedclient.facebook);
+                viewedclient.hasig = (viewedclient.instagram);
+                viewedclient.hastw = (viewedclient.twitter);
+
+                viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
+                
+                if(req.session.user.isClient)
                 {
-                    res.render('self-profilereviews', {
-                        title: result.username,
-                        username: result.username,
-                        profiledetails: result
-                    });
-                }
+                    // if user is viewing their own profile
+                    if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
 
-                // if the user is viewing another user's profile reviews
+                        Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                            var reviews = [];
+
+                            if(results != null)
+                                reviews = multipleMongooseToObj(results);
+                            
+                                console.log("HERE");
+                                reviews.forEach(function (review) {
+
+                                review.checkedStars = parseInt(review.num_stars);
+                                review.uncheckedStars = 5 - parseInt(review.num_stars);
+                                review.username = review.reviewer.username;
+                                review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
+                                review.text = review.review;
+                                
+                            })
+
+                            res.render('self-profilereviews', {
+                                title: viewedclient.username,
+                                username: viewedclient.username,
+                                profiledetails: viewedclient,
+                                review: reviews
+                            });
+                        });                      
+                    }
+                    else {
+                        // find current session user
+
+                        Client.findOne({user: req.session.user}, function(err, currentclient){
+
+                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                                
+                                var reviews = [];
+                                
+                                if(results != null)
+                                    reviews = multipleMongooseToObj(results);
+
+                                reviews.forEach(function (review) {
+                                    
+                                    review.checkedstars = parseInt(review.num_stars);
+                                    review.uncheckedstars = 5 - parseInt(review.num_stars);
+                                    review.username = review.reviewer.username;
+                                    review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
+                                    review.text = review.review;
+
+                                })
+    
+                                res.render('profilereviews', {
+                                    title: viewedclient.username,
+                                    username: currentclient.username,
+                                    profiledetails: viewedclient,
+                                    review: reviews
+                                });
+                            });
+                        });
+                    }   
+                }
                 else
                 {
-                    var viewedprofile = result;
+                    Client.find({username: req.params.username}).exec(function(err, reviewed){
+                    
+                        reviewed = reviewed.toObject();
 
-                    query = {user: req.session.user};
+                        Review.find({revieweduser: reviewed._id}).populate('reviewer').exec(function(err, results){
+                                
+                            var reviews = [];
+                            
+                            if(results != null)
+                                reviews = multipleMongooseToObj(results);
+    
+                            reviews.forEach(function (review) {
+                                
+                                review.checkedStars = parseInt(review.num_stars);
+                                review.uncheckedStars = 5 - parseInt(review.num_stars);
+                                review.username = review.reviewer.username;
+                                review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
+                                review.text = review.review;
 
-                    //look for current session user
-                    Client.findOne(query, function(err, result){
-
-                        res.render('profilereviews',  {
-                            title: viewedprofile.username,
-                            username: result.username,
-                            profiledetails: viewedprofile
-                        }); 
-                    });
-                } 
+                            })
+    
+                            res.render('admin-profilereviews', {
+                                title: viewedclient.username,
+                                profiledetails: viewedclient,
+                                review: reviews
+                            });
+                        });
+                    
+                    
+                    })
+                    
+                }
             }
+            
+            // if profile does not exist
             else
-                res.send("USER NOT FOUND");
-        })
+            {
+                //TODO ano dapat to HAHAHAH
+                res.render('error', viewedclient);
+            }
+        });
+
     },
 
-    /* LOADS FF PAGE */
-    getFFs: function(req, res) {
-        res.send("delete this page HAHAHAHA");
+    /* CREATES THE REVIEW */
+    sendReview: function(req, res) {
+        console.log("@sendReview");
+
+        var stars = req.body.stars;
+        var reviewtext = req.body.reviewbox;
+
+        if((reviewtext != null || reviewtext != undefined || reviewtext != " ") && stars != "none")
+        {
+            Client.findOne({user: req.session.user}, function(err, poster){
+
+                Client.findOne({username: req.params.username}, function(err, reviewed) {
+
+                    var review = new Review({
+                        
+                        num_stars: stars,
+                        reviewer: poster,
+                        revieweduser: reviewed,
+                        review: reviewtext
+                    })
+
+                    review.save(function(err) {
+                        if(err) throw err;
+                        console.log("New Review: " + review);
+
+                        res.redirect(req.get('referer'));
+
+                    })
+                })
+            });
+
+           
+        }
+        else
+            res.send("MISSING FIELDS");
     },
 
     /* LOADS EDIT POST */

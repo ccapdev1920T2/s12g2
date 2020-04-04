@@ -25,7 +25,7 @@ app.use(express.static('public'));
 
 handlebars.registerHelper('loop', function(n) {
     var a = [];
-
+    
     for(var i = 0; i < n; i++)
         a.push(' ');
 
