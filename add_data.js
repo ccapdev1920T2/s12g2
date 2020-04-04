@@ -1,8 +1,8 @@
 // Dummy Data
 
 // import models
-const db = require('./models/db.js');
-var ObjectId = require('mongodb').ObjectID;
+// const db = require('./models/db.js');
+// var ObjectId = require('mongodb').ObjectID;
 
 var async = require('async')
 const Category  = require('./models/category.js');
@@ -13,18 +13,6 @@ const Report    = require('./models/report.js');
 const Review    = require('./models/review.js');
 const User      = require('./models/user.js');
 
-// declaration of collections
-const categoryCollection    = 'category';
-const clientCollection      = 'client';
-const fileCollection        = 'file';
-const postCollection        = 'post';
-const reportCollection      = 'report';
-const reviewCollection      = 'review';
-const userCollection        = 'users';
-
-// calls the function createDatabase() defined in the `database` object in `./models/db.js`
-//db.createDatabase();
-
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/bids", {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true});
 var mongodb = mongoose.connection;
@@ -33,6 +21,7 @@ mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 var categories = []
 var users = []
 var clients = []
+var posts = []
 
 
 
@@ -102,11 +91,9 @@ function clientCreate(user, id_num, username, number,
     });
 }
 
-var posts = []
-
 function postCreate(poster, title, description,
     startprice, currentprice, stealprice, incrementprice,
-    highestbidder, paymentmode, details, categories,
+    highestbidder, paymentmode, details, category,
     isOpen, isApproved, isReviewed, cb)
 {
     var post = new Post({
@@ -122,7 +109,7 @@ function postCreate(poster, title, description,
         highestbidder: highestbidder,
         paymentmode: paymentmode,
         details: details,
-        categories: categories,
+        category: category,
 
         isOpen: isOpen,
         isApproved: isApproved,
@@ -289,12 +276,12 @@ function createPosts(cb) {
     async.series([
         function(callback) {
             postCreate(clients[0]._id, "post 1 test", "here is my post. hello home!",
-                120, 150, 200, 10, clients[3], "Cash", "Goks", [categories[0], categories[1],],
+                120, 150, 200, 10, clients[3], "Cash", "Goks", categories[0],
                 true, true, false, callback);
         },
         function(callback) {
             postCreate(clients[2]._id, "post 2 test", "here is my second post. hello!!!",
-                400, 420, 550, 20, clients[3], "GCash", "DLSU", [categories[2], categories[3],],
+                400, 420, 550, 20, clients[3], "GCash", "DLSU", categories[2],
                 true, false, false, callback);
         },
     ], cb);
