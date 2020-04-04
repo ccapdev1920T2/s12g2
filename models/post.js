@@ -16,7 +16,7 @@ var postSchema = new Schema({
     incrementprice: {type: Number, /*max: ,*/ required: true},
 
     highestbidder:  {type: Schema.Types.ObjectId, ref: Client, default: null},
-    paymentmode:    {type: String, required: true, enum: ['GCash', 'Cash', 'PayMaya']},
+    paymentmode:    {type: String, required: true, enum: ['GCash', 'Cash', 'Bank Transfer', 'Paymaya']},
     cutoff:         {type: Date, default: Date.now, required: true},
     details:        {type: String, /*max: ,*/ required: true},
     category:       {type: Schema.Types.ObjectId, ref: Categories, /*max: ,*/ required: true},

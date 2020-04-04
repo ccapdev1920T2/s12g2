@@ -714,7 +714,7 @@ const controller = {
                         incrementprice: priceinc,
         
                         cutoff: datecutoff,
-                        paymentmode: "Cash",//TO DO: ayaw gumana using modep
+                        paymentmode: modep,
                         details: meetup,
                         category: result,
                         postdate: dateposted
