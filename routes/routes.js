@@ -35,6 +35,7 @@ app.get('/editprofile', function(req, res) {
 
 });
 
+
 /*
     Executes function editProfile() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP POST request for `/editprofile` if the user is logged in
@@ -165,6 +166,7 @@ app.post('/createpost', function(req, res) {
 
 });
 
+
 /*
     Executes function postCreatePost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP POST request for `/sucess` if the user is logged in as a client
@@ -181,6 +183,7 @@ app.get('/success', function(req, res) {
 
 });
 
+
 /*
     Executes function postCreatePost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP POST request for `/sucess` if the user is logged in as a client
@@ -196,7 +199,6 @@ app.post('/success', function(req, res) {
         res.redirect('/') // if the user is admin
 
 });
-
 
 
 /*
@@ -259,6 +261,7 @@ app.get('/user/:username/reviews', function(req, res) {
 
 });
 
+
 /*
     Executes function sendReview() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/submitreview` when the user writes a review if the user is logged in
@@ -297,6 +300,7 @@ app.post('/register', function(req, res) {
 
 });
 
+
 /*
     Executes function checkEmail() as defined in the object controller in `../controllers/controller.js`
     to check if the email being used to register is already taken.
@@ -332,6 +336,7 @@ app.get('/posts/:postId', function(req, res) {
 
 });
 
+
 /*
     Executes function getPost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/:postId` if the user is logged in
@@ -345,7 +350,6 @@ app.post('/posts/:postId', function(req, res) {
         controller.postCreatePost(req, res);
 
 });
-
 
 
 /*

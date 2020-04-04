@@ -59,7 +59,7 @@ const controller = {
 
                 viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
 
-                if(req.session.user.isClient)
+                if(req.session.user.isClient) // if the user is a client
                 {
                     // if user is viewing their own profile
                     if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
@@ -86,7 +86,9 @@ const controller = {
                                 profiledetails: viewedclient,
                                 post: posts
                             });
-                        });                      
+
+                        }); 
+
                     }
                     else {
                         // find current session user
@@ -120,8 +122,7 @@ const controller = {
                         });
                     }   
                 }
-
-                else
+                else // if the user is admin
                 {
                     Post.find({poster: viewedclient}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                                 
@@ -148,18 +149,15 @@ const controller = {
                     });
                 }
             }
-            
-            // if profile does not exist
-            else
+            else  // if profile does not exist
             {
-                //TODO ano dapat to HAHAHAH
-                res.render('error', viewedclient);
+                res.render('error');
             }
         });
     },
 
+    /* UPDATES PROFILE */
     postProfile: function(req, res, next) {
-
         console.log("@ postProfile");
 
         //TODO may error ba if passwords do not match
@@ -211,8 +209,7 @@ const controller = {
     },
 
     /* LOADS EDIT PROFILE */
-    editProfile: function(req, res) {
-        
+    editProfile: function(req, res) { 
         console.log("@ editProfile");
         
         query = {user: req.session.user}
@@ -226,6 +223,7 @@ const controller = {
                 username: result.username,
                 profiledetails: result
             });
+
         });
     },
 
@@ -260,6 +258,7 @@ const controller = {
                     });
                 });
             })
+
         }
         else {
 
@@ -301,7 +300,7 @@ const controller = {
             if (result == null)
             {
                 res.status(404).send();
-                res.redirect('/');
+                res.redirect('/#getstarted');
             }
             else
             {
@@ -428,6 +427,7 @@ const controller = {
         }
     },
 
+    /* CHECKS IF THE EMAIL IS ALREADY TAKEN. */
     checkEmail: function(req, res) {
         console.log("@ checkEmail");
 
@@ -438,6 +438,7 @@ const controller = {
         });
     },
 
+    /* CHECKS IF THE USERNAME IS ALREADY TAKEN. */
     checkUsername: function(req, res) {
         console.log("@ checkUsername");
 
@@ -600,18 +601,15 @@ const controller = {
                     
                 }
             }
-            
-            // if profile does not exist
-            else
+            else // if profile does not exist
             {
-                //TODO ano dapat to HAHAHAH
-                res.render('error', viewedclient);
+                res.render('error');
             }
         });
 
     },
 
-    /* CREATES THE REVIEW */
+    /* ADDS THE REVIEW TO THE DATABASE */
     sendReview: function(req, res) {
         console.log("@sendReview");
 
@@ -742,6 +740,7 @@ const controller = {
         }
     },
 
+    /* LOADS POSTSUCCESS */
     getSuccess: function(req, res){
         console.log("@ getSuccess");
 
@@ -762,7 +761,7 @@ const controller = {
         });  
     },
 
-
+    
     getSearch: function(req, res){
         console.log("@ getSearch");
         
