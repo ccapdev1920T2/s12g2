@@ -199,20 +199,18 @@ app.post('/success', function(req, res) {
 
 
 /*
-    Executes function getFFs() as defined in the object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/ffs` if the user is logged in
+    Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
     else it redirects the user back to the log in page
 */
-app.get('/ffs', function(req, res) {
-
+app.get('/editpost', function(req, res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else if(req.session.user.isClient)
-        controller.getFFs(req, res); // if the user is a client
+        controller.getEditPost(req, res); // if the user is a client
     else
-        res.redirect('/'); // if the user is admin
-
-});
+        res.redirect('/') // if the user is admin
+})
 
 
 /*
@@ -258,6 +256,20 @@ app.get('/user/:username/reviews', function(req, res) {
         controller.getReviews(req, res);
 
 });
+
+/*
+    Executes function sendReview() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/submitreview` when the user writes a review if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.post('/user/:username/reviews', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.sendReview(req, res);
+
+})
 
 
 /*

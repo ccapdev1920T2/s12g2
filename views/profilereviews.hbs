@@ -112,12 +112,12 @@
 		<div id = "posts">
 			<div class=" reviews">
 				<h1> Leave a Review</h1>
-				<form name = "review">
+				<form action = "/user/{{username}}/reviews" name = "review" method = "post">
 					<p class = "reviewtext">
 						Stars:
 					</p>
 					<div id = "writereviewstars">
-						<select id = "stars">
+						<select id = "stars" name = "stars">
 							<option value = "none">select number of stars</option>
 							<option value = "1">☆</option>
 							<option value = "2">☆☆</option>
@@ -130,14 +130,16 @@
 					<p class = "reviewtext">
 						Review:
 					</p>
-					<textarea id = "reviewbox" for = "writereview"></textarea>
+					<textarea id = "reviewbox" name = "reviewbox" for = "writereview"></textarea>
 					<p class = "errormessage" id = "reviewerrormessage"></p>
 					<div id = "submitbutton">
-						<button type = "button" id = "submitreview">SUBMIT</button>
+						<input class = "submit" type = "submit" id = "submitreview" value = "Submit" onclick = "review.submit()">
+						
 					</div>
 
 				</form>
 			</div>
+	{{/profiledetails}}
 
 			<!-- REVIEWS -->
 			{{#each review}}
@@ -164,7 +166,7 @@
 		</div>
 
 	</div>	
-	{{/profiledetails}}
+	
 
 	<div id = "iconattribute">
 		Icons made by
@@ -223,10 +225,7 @@
 		
 		if(!($("#stars option:selected").val() == 'none') && !($("#reviewbox").val().trim() == ""))
 		{
-			$("#reviewerrormessage").text("");
-			$("#reviewbox").val("");
-			$("#stars").val('0');
-			alert("Your review has been submitted.");
+			alert("Your review has been submitted.");	
 		}
 		else
 		{
