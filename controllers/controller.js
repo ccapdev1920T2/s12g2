@@ -384,7 +384,6 @@ const controller = {
             email != "" &&
             phone != "" && phone.length == 11 && phone.match(/^-{0,1}\d+$/) &&
             pw != "" && cpw != "" && pw == cpw) {
-                console.log("HELLO");
 
             var user = new User({
                 email: email,
@@ -469,9 +468,14 @@ const controller = {
             post.cutofftime = cutoff.toTimeString();
             post.date = postdate.toDateString();
             post.time = postdate.toTimeString();
+            
+            post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+            post.isBidding = !post.isStolen;
 
             //find current session client
             Client.findOne({user: req.session.user}, function(err, result){
+
+                post.isNotPoster = (JSON.stringify(post.poster) != JSON.stringify(result)) ? true : false;
 
                 if(req.session.user.isClient) {
                     res.render('viewpost', {
@@ -516,7 +520,6 @@ const controller = {
                             if(results != null)
                                 reviews = multipleMongooseToObj(results);
                             
-                                console.log("HERE");
                                 reviews.forEach(function (review) {
 
                                 review.checkedStars = parseInt(review.num_stars);
@@ -889,7 +892,6 @@ const controller = {
             if (err) throw err;
 
             var reports = []
-            
             if (reports != null)
                 reports = multipleMongooseToObj(results);
 
@@ -921,6 +923,10 @@ const controller = {
 
         var reason = req.body.reason;
         var complaint = req.body.textcomplaint;
+
+        console.log("REASON: " + req.body.reason);
+        console.log("COMPLAINT: " + req.body.textcomplaint);
+        console.log("USERNAME: " + req.params.username);
         
         if((complaint != undefined || complaint != " ") && reason != undefined)
         {
@@ -1012,8 +1018,45 @@ const controller = {
         {
             //TODO add error page? idk
         }
-        
+    },
+
+    getClientAction: function(req, res){
+    
+        Client.findOne({user: req.session.user}, function(err, client){
+
+            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, result){
+
+                result.highestbidder = client;
+                if(req.params.action == "bid")
+                    result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                else if (req.params.action == "steal")
+                    result.currentprice = result.stealprice;
+
+                result.save(function(err){
+                    if (err) throw err;
+                    console.log("Updated post: " + result);
+
+                    var post = result.toObject();
+                    post.postername = result.poster.username;
+                    post.biddername = result.highestbidder.username;
+
+                    var cutoff = new Date(post.cutoff);
+                    var postdate = new Date(post.postdate);
+
+                    post.tagname = post.category.name;
+                    post.cutoffdate = cutoff.toDateString();
+                    post.cutofftime = cutoff.toTimeString();
+                    post.date = postdate.toDateString();
+                    post.time = postdate.toTimeString();
+
+                    post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+                    post.isBidding = !post.isStolen;
+
+                    res.redirect('/posts/' + req.params.postId);
+                });               
+            });
+        });
     }
- };
+};
 
 module.exports = controller;
