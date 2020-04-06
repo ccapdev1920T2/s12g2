@@ -401,7 +401,7 @@ app.get('/users/:id/:action', function(req, res) {
         controller.getAdminUserAction(req, res);
     }
 
-})
+});
 
 app.get('/:id/:action', function(req, res) {
     
@@ -411,7 +411,7 @@ app.get('/:id/:action', function(req, res) {
     else
         controller.getAdminPostAction(req, res);
 
-})
+});
 
 /*
     Executes function getReportedUsers() as defined in object controller in `../controllers/controller.js`
@@ -425,7 +425,7 @@ app.get('/users', function(req, res) {
     else
         controller.getReportedUsers(req, res);
 
-})
+});
 
 
 app.get('/user/:username/reportuser', function(req, res) {
@@ -436,7 +436,7 @@ app.get('/user/:username/reportuser', function(req, res) {
     else
         controller.loadReportUser(req, res);
 
-})
+});
 
 
 app.post('/user/:username/reportuser', function(req, res) {
@@ -447,6 +447,13 @@ app.post('/user/:username/reportuser', function(req, res) {
     else
         controller.getReportUser(req, res);
 
+});
+
+app.get('/user/:username/:postId/delete/:number', function(req,res) {
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getDeletePost(req, res);
 })
 
 
