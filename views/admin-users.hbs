@@ -1,0 +1,74 @@
+<div id = "wrapper1">
+    {{> adminheader}}
+
+    <!-- POSTS -->
+
+    {{#each complaint}}
+        <div class="post">
+            <div class="repuser">
+                <img src="{{avatar}}" class="repavatar">
+                
+                <a href="profile" class = "reptitle">
+                    {{reported}}
+                </a>
+                <div class = "deletebutton">✕</div>
+                <div class = "acceptbutton">✓</div>
+            </div>
+
+            <div class="repreason">
+                <h3>Reason</h3>
+                <p>{{reason}}</p>
+            </div>
+
+            <div class="repcomplaint">
+                <h3>Complaint</h3>
+                <p>{{complaint}}</p>
+            </div>
+
+            <div class="dateposted">
+                {{date}} | {{time}} | reported by {{reporter}}
+            </div>
+        </div>
+    {{/each}}
+
+</div>
+
+<script type="text/javascript">
+    $(".acceptbutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+    
+    $(".deletebutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+
+    $(".acceptbutton").mouseenter(function(){
+        $(this).css("background-color", "green");
+        $(this).css("border-color", "green");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+    });
+
+    $(".acceptbutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+    $(".deletebutton").mouseenter(function(){
+        $(this).css("background-color", "maroon");
+        $(this).css("border-color", "maroon");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+        
+    });
+
+    $(".deletebutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+</script>

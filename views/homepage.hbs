@@ -136,25 +136,37 @@
 </div>
 
 <div id = "wrapper1">
+<<<<<<< HEAD
 	{{> userheader ua = useravatar}}
 
 	<!-- SEARCHBAR-->
 	<div id="searchbar">
 		<span>
+=======
+	{{> userheader username = username}}
+
+	<!-- SEARCHBAR-->
+	<div id="searchbar">
+>>>>>>> master
 			<form name="searchform" action="search" method="GET">
 				<input type="text" placeholder="search" id="search" name = "search">
 				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
+<<<<<<< HEAD
 		</span>
 	</div>
 
+=======
+	</div>
+>>>>>>> master
 	<!-- POSTS -->
 
 	{{#each post}}
 
 		<div class="post">
 			<div class="postheader">
+<<<<<<< HEAD
 				<a href="view-post" class = "posttitle">
 					{{title}}
 				</a>
@@ -166,6 +178,16 @@
 					<a href="{{taglink}}" class="tag">{{tagname}}</a>
 				{{/each}}
 			</div>
+=======
+				<a href="/posts/{{_id}}" class = "posttitle">
+					{{title}}
+				</a>
+			</div>
+
+			<div class="posttags">
+                <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+            </div>
+>>>>>>> master
 
 			<div class="postedby">
 				<img class="avatar" src="{{posteravatar}}">

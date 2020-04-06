@@ -1,21 +1,39 @@
 <div id = "wrapper1">
 
+<<<<<<< HEAD
 	{{> userheader ua=useravatar}}
 
 	<!-- PROFILE -->
 	<div id = "profile">
 		<div id = "editpic">
 				<img id ="dp" src="{{dp}}" alt="image">
+=======
+	{{> userheader username = username}}
+
+	{{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile">
+		<div id = "editpic">
+				<img id ="dp" src="{{avatar}}" alt="image">
+>>>>>>> master
 				<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
 		</div>
 
 		<div class = "editprofile">
 			<div id = "editdetails">
+<<<<<<< HEAD
 				<form name = "profile" action="user/{{username}}">
 					<div class = "edit">
 						<p>user details</p><br>
 						<label id="bio">description</label>
 						<textarea id="bio" name="bio" form="profile">{{bio}}</textarea><br>
+=======
+				<form name = "profile" action = "/user/{{username}}" method="POST">
+					<div class = "edit">
+						<p>user details</p><br>
+						<label id="bio">description</label>
+						<textarea id="bio" name="bio">{{bio}}</textarea><br>
+>>>>>>> master
 						<label id="pw">Password</label><br>
 						<input type="password" id="pw" name="pw" minlength=8 m><br>
 						<label id="cpw">Confirm Password</label>
@@ -28,6 +46,7 @@
 
 						<p>social media</p><br>
 						<label id="twt">Twitter</label><br>
+<<<<<<< HEAD
 						<input type="text" id="twt" name="twt" placeholder="http://www.twitter.com/{{twitter}}"><br>
 						<label id="fb">FaceBook</label><br>
 						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}"><br>
@@ -35,11 +54,24 @@
 						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}"><br>
 						
 						<button type="submit" form="createpost" value="Submit" onclick = "profile.submit()">Submit</button>
+=======
+						<input type="text" id="twt" name="tw" placeholder="http://www.twitter.com/{{twitter}}" value="{{twitter}}"><br>
+						<label id="fb">FaceBook</label><br>
+						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}" value="{{facebook}}"><br>
+						<label id="ig">Instagram</label><br>
+						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
+						
+						<button type="submit" form="profile" value="Submit" onclick="profile.submit()">Submit</button>
+>>>>>>> master
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+<<<<<<< HEAD
+=======
+	{{/profiledetails}}
+>>>>>>> master
 </div>
 
 <script type="text/javascript">

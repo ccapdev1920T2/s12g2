@@ -1,0 +1,159 @@
+<!--<div id = "reportscreen">
+	<div id = "reportcontent">
+		<button id = "close">X</button>
+		<h1 style = "text-align: center; margin-left: 80px">REPORT USER</h1>
+		<br>
+		<div id = "report">
+			<form action = "/user/{{usern}}/reportuser" name = "report" method = "post" >
+				<h3 style = "text-align: center; color: black">REASON/S</h3>
+				<div class = "reportreasons" id = "rr1">
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "offensive">
+					<label for = "offensive" style = "color: black">Offensive/Abusive Behavior</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "flaking">
+					<label for = "flaking" style = "color: black">Flaking</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "defamation">
+					<label for = "defamation" style = "color: black">Defamation</label>
+					</div>
+					
+				</div>
+				<div class = "reportreasons" id = "rr2">
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "slander">
+					<label for = "slander" style = "color: black">Slander</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "spam">
+					<label for = "spam" style = "color: black">Spam</label>
+					</div>
+				</div>
+
+				<br>
+				<h3 style = "text-align: center; color: black">COMPLAINT</h3>
+				<div id = "reportcomplaint">
+					<textarea form = "report" name = "textcomplaint" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
+
+				</div>
+				<p class = "errormessage" id = "reporterrormessage"></p>
+				<div id = "submitbutton">
+					
+					<input class = "submit" type = "submit" id = "profilesubmit" value = "Submit" onclick = "report.submit()">
+				</div>
+			
+			</form>
+		</div>
+	</div>
+</div> -->
+
+<div id = "wrapper1">
+	<!-- HEADER -->
+	{{> userheader username = username}}
+
+	{{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile">
+
+		<!-- PROFILE DETAILS -->
+		<div id = "details">
+			<div id = "detailscontent">
+				<div id = "dpdiv">
+					<img id = "dp" src = "{{avatar}}">
+				</div>
+
+				<div id = "name">
+					<p id = "profileusername">{{username}}</p>
+				</div>
+
+				<div id = "review">
+					{{#each (loop checkedstars)}}
+						<span class="fa fa-star checked"></span>
+					{{/each}}
+					{{#each (loop uncheckedstars)}}
+						<span class="fa fa-star"></span>
+					{{/each}}
+				</div>
+
+				<div id = "bio">
+					<p id = "biotext">{{bio}}</p>
+				</div>
+
+				<div id = "socialmedia">
+					{{#if hasfb}}
+						<a href = "http://www.facebook.com/{{facebook}}"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
+					{{/if}}
+
+					{{#if hastw}}
+						<a href = "http://www.twitter.com/{{twitter}}"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
+					{{/if}}
+
+					{{#if hasig}}
+						<a href = "http://www.instagram.com/{{instagram}}"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
+					{{/if}}
+				</div>
+
+				<div id = "contactdetails">
+					<p>Contact Number: {{number}}</p>
+				</div>
+
+				
+				<a id = "reviews" href= "/user/{{username}}/reviews">
+					USER REVIEWS
+				</a>
+
+				<a id = "reportbutton" href = "/user/{{username}}/reportuser">
+					REPORT USER
+				</a>
+			</div>
+		</div>
+{{/profiledetails}}
+
+		{{#each post}}
+			<div class="post">
+				<div class="postheader">
+					<a href="/posts/{{_id}}" class = "posttitle">
+						{{title}}
+					</a>
+				</div>
+
+			<div class="posttags">
+                <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+            </div>
+
+				<div class="postedby">
+					<img class="avatar" src="{{posteravatar}}">
+					<a href="/user/{{postername}}" class="username">{{postername}}</a>
+				
+					<div class="stealprice">
+						P{{stealprice}}
+					</div>
+					<div class="currentprice">
+						P{{currentprice}}
+					</div>
+					
+				</div>
+
+				<img class="itemimage" src="{{itemimg}}">
+				
+				<div class="dateposted">
+					{{date}} | {{time}}
+				</div>
+			</div>
+		{{/each}}
+
+		</div>
+</div>
+	
+
+	<div id = "iconattribute">
+		Icons made by
+		<a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> 
+		from
+		<a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+	</div>
+	
+
+</div>	

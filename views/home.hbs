@@ -1,0 +1,63 @@
+<div id = "wrapper1">
+    <!-- HEADER -->
+    <div id = "header">
+        <img src="/img/icon2.png" id="logo" alt="bids++ logo" width=150>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div id = "desc">
+        <p>
+        <b>Built by Lasallians, for Lasallians.</b>
+        <br><br>
+        Bids to Pick, made easier. Bid, steal, and sell within the Lasallian community.
+        </p>
+    </div>
+
+    <a href="#getstarted" class = "title">↓ GET STARTED ↓</a>
+
+</div>
+		
+<div id = "getstarted">
+
+    <a href="" class = "title">LOG IN</a>
+                
+    <!-- LOG IN -->
+
+    <div id = "form">
+        <form method = "post" action = "">
+            <label for = "email">email</label><br>
+            <input type="email" id="email" name = "email"><br>
+            
+            <label for = "password">password</label><br>
+            <input type="password" id="password" name = "password"><br>
+
+            <div id="warning"></div>
+            
+            <input class = "submit" type = "submit" id = "submit" value = "log in">
+        </form>
+        
+        <br><br>
+        
+        <a href="/register" class="link">not yet registered? register here.</a>
+    </div>
+</div>
+
+<script>
+
+    $(".submit").click(function(){
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        var query = {email: email, password: password};
+
+        $.post('/checkLogIn', query, function(result) {
+            
+            if(result == "") {
+                alert("Incorrect email and/or password");
+            }
+            
+        });
+        
+    }); 
+</script>

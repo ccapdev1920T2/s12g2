@@ -12,7 +12,10 @@
     "express-session": "^1.17.0",
     "handlebars": "^4.7.3",
     "hbs": "^4.1.0",
+<<<<<<< HEAD
     "locus": "^2.0.4",
+=======
+>>>>>>> master
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.5"
   },

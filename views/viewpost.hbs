@@ -1,0 +1,130 @@
+<div id = "wrapperflex">
+
+    {{> userheader username = username}}
+
+    <!-- POSTS -->
+    {{#post}}
+    <div class="postmain">
+        
+        <div class="postheader">
+            <p class = "posttitle">
+                {{title}}
+            </p>
+        </div>
+
+        <div class="posttags">
+            <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+        </div>
+
+        <div class="postedby">
+            <img class="avatar" src="{{posteravatar}}">
+            <a href="/user/{{postername}}" class="username">{{postername}}</a>
+        </div>
+
+        <p class = "postdesc">
+            {{description}}
+        </p>
+
+        <div class="adtldetails">
+            <p class =  "payment">
+                <b>mode of payment:</b> {{paymentmode}}
+            </p>
+            <p class = "cutoff">
+                <b>cut-off:</b> {{cutoffdate}} | {{cutofftime}}
+            </p>
+            <p class = "details">
+                <b>meet-up details:</b> {{details}}
+            </p>
+        </div>
+
+        <div class = "pics">
+            {{#each pic}}
+                <img class="itemimage" src="{{img}}">
+            {{/each}}
+        </div>
+        
+        <div class="dateposted">
+            {{date}} | {{time}}
+        </div>
+    </div>
+
+    <div class="sidebar">
+        {{#if isBidding}}
+        <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
+        {{/if}}
+
+        {{#if isStolen}}
+        <div class="sidebarlabels" style="font-size: 18px;">sold to</div>
+        {{/if}}
+
+            <img class="bidderavatar" src="{{bidderavatar}}">
+        <div class="biddername">{{biddername}}</div>
+        <div class="pricemain currentprice">
+            P{{currentprice}}
+        </div>
+        <div class="sidebarlabels">increment</div>
+        <div class="pricemain increment" style="background-color: rgb(80, 80, 80);">
+            P{{incrementprice}}
+        </div>
+        <div class="sidebarlabels">steal price</div>
+        <div class="pricemain stealprice">
+            P{{stealprice}}
+        </div>
+
+        {{#if isNotPoster}}
+        {{#if isBidding}}
+        <div class="actions">
+            <span class="actionbutton" id="bidbutton">bid</span>
+            <span class="actionbutton" id="stealbutton">steal</span>
+        </div>
+        {{/if}}
+        {{/if}}
+
+    </div>
+    {{/post}}
+
+</div>
+
+<script type="text/javascript">
+    
+    var url = window.location.href;
+    var postId = url.substring(url.lastIndexOf('/') + 1);
+
+    $("#bidbutton").click(function(){
+        window.location.replace("/posts/" + postId + "/bid");
+    });
+
+    $("#stealbutton").click(function(){
+        window.location.replace("/posts/" + postId + "/steal")
+    })
+
+    $("#bidbutton").mouseenter(function(){
+        $(this).css("background-color", "green");
+        $(this).css("border-color", "green");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+    });
+
+    $("#bidbutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+    $("#stealbutton").mouseenter(function(){
+        $(this).css("background-color", "#e0a03e");
+        $(this).css("border-color", "#e0a03e");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+        
+    });
+
+    $("#stealbutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+</script>

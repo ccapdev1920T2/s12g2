@@ -1,0 +1,23 @@
+<div id = "wrapper1">
+
+    {{> userheader username = username}}
+
+    <!-- EDIT POSTS -->
+    <div class="post">
+            {{#postdetails}}
+            <form action="/posts/{{_id}}" class="createpost" action="#" id="createpost" name = "edit" method = "POST">
+                <div class="postdetails">
+                    <p>edit post</p><br>
+                    <label for="description">Description</label><br>
+                    <textarea name="description" form="createpost">{{description}}</textarea><br>
+                    <label for="meetup">Meet-up Details</label><br>
+                    <input type="text" id="meetup" name="meetup" value="{{details}}"><br>
+                    <button type="submit" form="createpost" value="Submit" onclick = "edit.submit()">Submit</button>
+                </div>
+
+            </form>
+            {{/postdetails}}
+        
+    </div>
+
+</div>

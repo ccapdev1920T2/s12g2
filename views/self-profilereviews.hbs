@@ -1,0 +1,105 @@
+<div id = "wrapper1">
+	<!-- HEADER -->
+	{{> userheader username = username}}
+
+	{{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile">
+
+		<!-- PROFILE DETAILS -->
+		<div id = "details">
+			<div id = "detailscontent">
+				<div id = "dpdiv">
+					<img id = "dp"src = "{{avatar}}">
+				</div>
+
+				<div id = "name">
+					<p id = "profileusername">{{username}}</p>
+				</div>
+
+				<div id = "review">
+					{{#each (loop checkedstars)}}
+						<span class="fa fa-star checked"></span>
+					{{/each}}
+					{{#each (loop uncheckedstars)}}
+						<span class="fa fa-star"></span>
+					{{/each}}
+				</div>
+
+				<div id = "bio">
+					<p id = "biotext">{{bio}}</p>
+				</div>
+
+				<div id = "socialmedia">
+					{{#if hasfb}}
+						<a href = "http://www.facebook.com/{{facebook}}"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
+					{{/if}}
+
+					{{#if hastw}}
+						<a href = "http://www.twitter.com/{{twitter}}"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
+					{{/if}}
+
+					{{#if hasig}}
+						<a href = "http://www.instagram.com/{{instagram}}"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
+					{{/if}}
+				</div>
+
+				<div id = "contactdetails">
+					<p>Contact Number: {{number}}</p>
+				</div>
+
+				
+				<a id = "reviews" href= "/user/{{username}}">
+					POSTS
+				</a>
+
+				<a id = "reportbutton" href = "/editprofile" >
+					EDIT PROFILE
+				</a>
+			</div>
+		</div>
+{{/profiledetails}}
+
+		<div id = "posts">
+			<!-- REVIEWS -->
+			{{#each review}}
+				<div class="reviews">
+					<div id = "reviewstars">
+						{{#each (loop checkedstars)}}
+							<span class="fa fa-star checked"></span>
+						{{/each}}
+						{{#each (loop uncheckedstars)}}
+							<span class="fa fa-star"></span>
+						{{/each}}
+					</div>
+					<div class="reviewer">
+							<img class="avatar" src="{{avatar}}">
+							<a href="profile" class="username">{{username}}</a>
+					
+					</div>
+					<p class = "reviewdesc">
+						{{text}}
+					</p>
+				</div>
+			{{/each}}
+
+		</div>
+
+	</div>	
+	
+
+	<div id = "iconattribute">
+		Icons made by
+		<a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> 
+		from
+		<a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+	</div>
+
+</div>
+
+
+<script type = "text/javascript">
+
+	
+
+</script>

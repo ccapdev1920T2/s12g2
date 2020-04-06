@@ -1,0 +1,122 @@
+<div id = "wrapper1">
+	<!-- HEADER -->
+	{{> userheader username = username}}
+
+	{{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile">
+
+		<!-- PROFILE DETAILS -->
+		<div id = "details">
+			<div id = "detailscontent">
+				<div id = "dpdiv">
+					<img id = "dp" src = "{{avatar}}">
+				</div>
+
+				<div id = "name">
+					<p id = "profileusername">{{username}}</p>
+				</div>
+
+				<div id = "review">
+					{{#each (loop checkedstars)}}
+						<span class="fa fa-star checked"></span>
+					{{/each}}
+					{{#each (loop uncheckedstars)}}
+						<span class="fa fa-star"></span>
+					{{/each}}
+				</div>
+
+				<div id = "bio">
+					<p id = "biotext">{{bio}}</p>
+				</div>
+
+				<div id = "socialmedia">
+					{{#if hasfb}}
+						<a href = "http://www.facebook.com/{{facebook}}"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
+					{{/if}}
+
+					{{#if hastw}}
+						<a href = "http://www.twitter.com/{{twitter}}"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
+					{{/if}}
+
+					{{#if hasig}}
+						<a href = "http://www.instagram.com/{{instagram}}"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
+					{{/if}}
+				</div>
+
+				<div id = "contactdetails">
+					<p>Contact Number: {{number}}</p>
+				</div>
+
+				
+				<a id = "reviews" href= "/user/{{username}}/reviews">
+					USER REVIEWS
+				</a>
+
+				<a id = "reportbutton" href = "/editprofile">
+					EDIT PROFILE
+				</a>
+			</div>
+		</div>
+{{/profiledetails}}
+
+		<div id = "posts">
+			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
+			<!-- POSTS -->
+		{{#each post}}
+
+			<div class="post">
+				<div class="postheader">
+					<a href="/posts/{{_id}}" class = "posttitle">
+						{{title}}
+					</a>
+						<a href="" class ="sbbutton" id="filterbutton">X</a>
+						<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
+				</div>
+
+				<div class="posttags">
+					<a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+				</div>
+
+				<div class="postedby">
+					<img class="avatar" src="{{posteravatar}}">
+					<a href="/user/{{postername}}" class="username">{{postername}}</a>
+				
+					<div class="stealprice">
+						P{{stealprice}}
+					</div>
+					<div class="currentprice">
+						P{{currentprice}}
+					</div>
+					
+				</div>
+
+				<img class="itemimage" src="{{itemimg}}">
+				
+				<div class="dateposted">
+					{{date}} | {{time}}
+				</div>
+			</div>
+		{{/each}}
+		</div>
+	</div>
+	
+
+	<div id = "iconattribute">
+		Icons made by
+		<a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> 
+		from
+		<a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+	</div>
+	
+
+</div>	
+
+<script type = "text/javascript">
+
+	$("#submitbutton").click(function() {
+
+		$.load('editpost');
+	})
+
+</script>

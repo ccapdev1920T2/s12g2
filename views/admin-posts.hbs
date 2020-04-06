@@ -1,0 +1,80 @@
+<div id = "wrapper1">
+    {{> adminheader}}
+
+    <!-- POSTS -->
+
+    {{#each post}}
+        <div class="post">
+            <div class="postheader">
+                <a href="/posts/{{_id}}" class = "posttitle">
+                    {{title}}
+                </a>
+                <div class = "deletebutton">✕</div>
+                <div class = "acceptbutton">✓</div>
+            </div>
+
+            <div class="posttags">
+                <span class="tag">{{tagname}}</span>
+            </div>
+
+            <div class="postedby">
+                <img class="avatar" src="{{posteravatar}}">
+                <a href="/user/{{postername}}" class="username">{{postername}}</a>
+            
+                <div class="adminprice stealprice">
+                    {{stealprice}}
+                </div>
+                <div class="adminprice currentprice">
+                    {{currentprice}}
+                </div>
+                
+            </div>
+            
+
+            <img class="itemimage" src="{{itemimg}}">
+            
+            <div class="dateposted">
+                {{date}} | {{time}}
+            </div>
+        </div>
+    {{/each}}
+
+<script type="text/javascript">
+    $(".acceptbutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+    
+    $(".deletebutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+
+    $(".acceptbutton").mouseenter(function(){
+        $(this).css("background-color", "green");
+        $(this).css("border-color", "green");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+    });
+
+    $(".acceptbutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+    $(".deletebutton").mouseenter(function(){
+        $(this).css("background-color", "maroon");
+        $(this).css("border-color", "maroon");
+        $(this).css("color", "white");
+        $(this).css("transition", "0.1s");
+        
+    });
+
+    $(".deletebutton").mouseleave(function(){
+        $(this).css("background-color", "white");
+        $(this).css("border-color", "black");
+        $(this).css("color", "black");
+        $(this).css("transition", "0.1s");
+    });
+
+</script>

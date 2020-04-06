@@ -1,0 +1,83 @@
+<div id = "wrapper1">
+
+    {{> userheader username = username}}
+
+    <div>
+	<div id = "reportcontent2">
+		<h1 style = "text-align: center; margin-left: 80px">REPORT USER</h1>
+		<br>
+		<div id = "report">
+			<form action = "/user/{{usern}}/reportuser" name = "report" method = "post" >
+				<h3 style = "text-align: center; color: black">REASON/S</h3>
+				<div class = "reportreasons" id = "rr1">
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "offensive" value = "offensive">
+					<label for = "offensive" style = "color: black">Offensive/Abusive Behavior</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "flaking" value = "flaking">
+					<label for = "flaking" style = "color: black">Flaking</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "defamation" value = "defamation">
+					<label for = "defamation" style = "color: black">Defamation</label>
+					</div>
+					
+				</div>
+				<div class = "reportreasons" id = "rr2">
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "slander" value = "slander">
+					<label for = "slander" style = "color: black">Slander</label>
+					</div>
+					<div>
+					<input name = "reason" type = "radio" class = "reportchecks" id = "spam" value = "spam">
+					<label for = "spam" style = "color: black">Spam</label>
+					</div>
+				</div>
+
+				<br>
+				<h3 style = "text-align: center; color: black">COMPLAINT</h3>
+				<div id = "reportcomplaint">
+					<textarea name = "textcomplaint" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
+                    
+				</div>
+				<p class = "errormessage" id = "reporterrormessage"></p>
+				<div id = "submitbutton">
+					
+					<input class = "submit" type = "submit" id = "profilesubmit" value = "Submit" onclick = "report.submit()">
+				</div>
+			
+			</form>
+		</div>
+	</div>
+</div>
+
+</div>
+
+<script type = "text/javascript">
+
+	$("#profilesubmit").click(function() 
+	{
+		var check = $(".reportchecks:checked");
+		
+		if(check.length == 1 && !($("#textcomplaint").val().trim() == ""))
+		{
+			//$("#reporterrormessage").text("");
+			//$("#reportscreen").css("display", "none");
+			alert("Your report has been submitted.");
+		}
+		else
+		{
+			$("#reportscreen").css("display", "block");
+
+			if(check.length == 0)
+				$("#reporterrormessage").text("Please choose one reason for your report.");
+			else if($("#textcomplaint").val().trim() == "")
+				$("#reporterrormessage").text("Please write your complaint.");
+			
+		}
+
+		
+	});
+
+</script>

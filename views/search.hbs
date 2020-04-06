@@ -136,35 +136,85 @@
 </div>
 
 <div id = "wrapper1">
+<<<<<<< HEAD
 	{{> userheader ua = useravatar}}
 
 	<!-- SEARCHBAR-->
 	<div id="searchbar">
 		<span>
+=======
+	{{> userheader username = username}}
+
+	<!-- SEARCHBAR-->
+	<div id="searchbar">
+>>>>>>> master
 			<form name="searchform" action="search" method="GET">
 				<input type="text" placeholder="search" id="search" name = "search">
 				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
+<<<<<<< HEAD
 		</span>
 	</div>
 	<!-- POSTS -->
 
     <h2>Search Results</h2>
+=======
+	</div>
+	{{#if isSearch}}
+    <h1>Search Results for "{{query}}"</h1><br>
+	{{/if}}
+
+	{{#if isTag}}
+    <h1>Posts tagged with "{{query}}"</h1><br>
+	{{/if}}
+
+    {{#profiledetails}}
+	<!-- PROFILE -->
+	<div id = "profile2">
+
+		<!-- PROFILE DETAILS -->
+		<div id = "details2">
+			<div id = "detailscontent2">
+				<div id = "dpdiv">
+					<img id = "dp2" src = "{{avatar}}">
+				</div>
+
+				<div id = "name2">
+					<a href="/user/{{username}}" id="toprofile"><p id = "profileusername2">{{username}}</p></a>
+				</div>
+
+		    </div>
+        </div>
+    </div>
+    {{/profiledetails}}
+
+
+	<!-- POSTS -->
+	
+>>>>>>> master
 	{{#each post}}
 
 		<div class="post">
 			<div class="postheader">
+<<<<<<< HEAD
 				<a href="view-post" class = "posttitle">
+=======
+				<a href="/posts/{{_id}}" class = "posttitle">
+>>>>>>> master
 					{{title}}
 				</a>
 				<div class = "ffbutton">♡</div>
 			</div>
 
 			<div class="posttags">
+<<<<<<< HEAD
 				{{#each tag}}
 					<a href="{{taglink}}" class="tag">{{tagname}}</a>
 				{{/each}}
+=======
+				<a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+>>>>>>> master
 			</div>
 
 			<div class="postedby">
