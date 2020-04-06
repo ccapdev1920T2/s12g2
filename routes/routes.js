@@ -367,7 +367,19 @@ app.get('/posts/:postId/edit', function(req, res){
     when a client sends an HTTP GET request for `/search` if the user is logged in
 */
 app.get('/search', function(req, res) {
+    
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
         controller.getSearch(req, res);
+});
+
+app.get('/tagged/:tagname', function(req, res){
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getTagged(req, res);
 });
 
 

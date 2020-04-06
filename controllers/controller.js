@@ -813,10 +813,8 @@ const controller = {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
-                Post.find(query).populate('poster').populate('categories').sort({postdate : -1}).exec(function(err, results){
+                Post.find(query).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                     if (err) throw err;
-                    
-                    var posts = []
 
                     if (results != null)
                         posts = multipleMongooseToObj(results);
@@ -841,6 +839,8 @@ const controller = {
 
                         Client.findOne({user: req.session.user}, function(err, result1){
                             res.render('search', {
+                                isSearch: false,
+                                isTag: true,
                                 query: input,
                                 username: result1.username,
                                 profiledetails: users, 
@@ -854,7 +854,7 @@ const controller = {
             }
             else
             {
-                Post.find({}).populate('poster').populate('categories').sort({postdate : -1}).exec(function(err, results){
+                Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                     if (err) throw err;
     
                     var posts = []
@@ -881,6 +881,52 @@ const controller = {
             }
     },
 
+
+    getTagged: function(req, res){
+        
+        console.log("@ getTagged")
+        
+        var posts = []
+
+        if(req.session.user.isClient)
+        {
+            Category.findOne({name: req.params.tagname}).exec(function(err, result){
+
+                Post.find({category: result}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                    if (err) throw err;
+    
+                    if (results != null)
+                        posts = multipleMongooseToObj(results);
+                    
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+                        post.tagname = post.category.name;
+        
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
+                    });
+                    
+                    Client.findOne({user: req.session.user}, function(err, client){
+                        res.render('search', {
+                            isSearch: false,
+                            isTag: true,
+                            query: req.params.tagname,
+                            username: client.username,
+                            //profiledetails: users, 
+                            post: posts
+                        });
+                    }); 
+                });
+            });
+        }
+        else
+        {
+            //TODO add error page? idk
+        }
+        
+    }
 };
 
 module.exports = controller;
