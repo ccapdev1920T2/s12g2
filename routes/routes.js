@@ -386,7 +386,7 @@ app.get('/posts/:postId/:action', function(req, res){
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
-        controller.getBid(req, res);
+        controller.getClientAction(req, res);
 });
 
 

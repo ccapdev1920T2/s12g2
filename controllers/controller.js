@@ -932,7 +932,7 @@ const controller = {
         }
     },
 
-    getBid: function(req, res){
+    getClientAction: function(req, res){
     
         Client.findOne({user: req.session.user}, function(err, client){
 
