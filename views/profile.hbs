@@ -1,33 +1,33 @@
-<div id = "reportscreen">
+<!--<div id = "reportscreen">
 	<div id = "reportcontent">
 		<button id = "close">X</button>
 		<h1 style = "text-align: center; margin-left: 80px">REPORT USER</h1>
 		<br>
 		<div id = "report">
-			<form name = "report">
+			<form action = "/user/{{usern}}/reportuser" name = "report" method = "post" >
 				<h3 style = "text-align: center; color: black">REASON/S</h3>
 				<div class = "reportreasons" id = "rr1">
 					<div>
-					<input type = "checkbox" class = "reportchecks" id = "offensive">
+					<input name = "reason" type = "radio" class = "reportchecks" id = "offensive">
 					<label for = "offensive" style = "color: black">Offensive/Abusive Behavior</label>
 					</div>
 					<div>
-					<input type = "checkbox" class = "reportchecks" id = "flaking">
+					<input name = "reason" type = "radio" class = "reportchecks" id = "flaking">
 					<label for = "flaking" style = "color: black">Flaking</label>
 					</div>
 					<div>
-					<input type = "checkbox" class = "reportchecks" id = "defamation">
+					<input name = "reason" type = "radio" class = "reportchecks" id = "defamation">
 					<label for = "defamation" style = "color: black">Defamation</label>
 					</div>
 					
 				</div>
 				<div class = "reportreasons" id = "rr2">
 					<div>
-					<input type = "checkbox" class = "reportchecks" id = "slander">
+					<input name = "reason" type = "radio" class = "reportchecks" id = "slander">
 					<label for = "slander" style = "color: black">Slander</label>
 					</div>
 					<div>
-					<input type = "checkbox" class = "reportchecks" id = "spam">
+					<input name = "reason" type = "radio" class = "reportchecks" id = "spam">
 					<label for = "spam" style = "color: black">Spam</label>
 					</div>
 				</div>
@@ -35,18 +35,19 @@
 				<br>
 				<h3 style = "text-align: center; color: black">COMPLAINT</h3>
 				<div id = "reportcomplaint">
-					<textarea form = "report" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
+					<textarea form = "report" name = "textcomplaint" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
 
 				</div>
 				<p class = "errormessage" id = "reporterrormessage"></p>
 				<div id = "submitbutton">
-					<button type = "button" id = "profilesubmit">SUBMIT</button>
+					
+					<input class = "submit" type = "submit" id = "profilesubmit" value = "Submit" onclick = "report.submit()">
 				</div>
 			
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <div id = "wrapper1">
 	<!-- HEADER -->
@@ -103,7 +104,7 @@
 					USER REVIEWS
 				</a>
 
-				<a id = "reportbutton" href = "#">
+				<a id = "reportbutton" href = "/user/{{username}}/reportuser">
 					REPORT USER
 				</a>
 			</div>
@@ -158,48 +159,3 @@
 	
 
 </div>	
-
-<script type = "text/javascript">
-
-	$("#reportbutton").click(function() 
-	{
-		$("#textcomplaint").val("");
-		var checks = $(".reportchecks:checked");
-		var x;
-		
-		for(x = 0; x < checks.length; x++)
-			checks[x].checked = false;
-
-		$("#reportscreen").css("display", "block");
-	});
-
-	$("#close").click(function() 
-	{
-		$("#errormessage").text("");
-		$("#reportscreen").css("display", "none");
-	});
-
-	$("#profilesubmit").click(function() 
-	{
-		var checks = $(".reportchecks:checked");
-		
-		if(checks.length > 0 && !($("#textcomplaint").val().trim() == ""))
-		{
-			$("#errormessage").text("");
-			$("#reportscreen").css("display", "none");
-		}
-		else
-		{
-			$("#reportscreen").css("display", "block");
-
-			if(checks.length == 0)
-				$("#errormessage").text("Please check at least one of the boxes.");
-			else if($("#textcomplaint").val().trim() == "")
-				$("#errormessage").text("Please write your complaint.");
-			
-		}
-
-		
-	});
-
-</script>

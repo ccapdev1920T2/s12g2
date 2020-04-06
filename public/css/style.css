@@ -983,6 +983,20 @@ input[type=email], input[type=password], input[type=text]
 	overflow: auto;
 }
 
+#reportcontent2
+{
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	border-radius: 30px;
+	width: 900px;
+	height: 550px;
+	box-shadow: 10px 10px 20px gray;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
 #close
 {
 	float: right;
@@ -1012,9 +1026,20 @@ input[type=email], input[type=password], input[type=text]
 	flex-direction: column;
 	margin: 10px;
 	margin-right: 10px;
+	margin-left: 75px;
 	width: 300px;
 	height: 100px;
 	float: left;
+}
+
+#rr1
+{
+	text-align: left;
+}
+
+#rr2
+{
+	text-align: left;
 }
 
 #textcomplaint

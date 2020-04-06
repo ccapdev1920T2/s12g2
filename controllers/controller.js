@@ -881,6 +881,98 @@ const controller = {
             }
     },
 
+    /* LOADS ALL THE REPORTS ON USERS */
+    getReportedUsers: function(req, res) {
+        console.log("@ getReportedUsers");
+
+        Report.find({isResolved: false}).populate('reporteduser').populate('reporter').exec(function(err, results){
+            if (err) throw err;
+
+            var reports = []
+            console.log("HELLO + " + results);
+            if (reports != null)
+                reports = multipleMongooseToObj(results);
+
+            reports.forEach(function (report) {
+
+                report.avatar = (report.avatar == null) ? "/img/default.png" : report.avatar;
+                report.reported = report.reporteduser.username;
+                report.reason = report.reason;
+                report.complaint = report.complaint;
+
+                report.reporter = report.reporter.username;
+
+                var timestamp = new Date(report.datesubmitted)
+
+                report.date = timestamp.toDateString();
+                report.time = timestamp.toTimeString();
+            });
+
+            res.render('admin-users', {
+                complaint: reports });
+             
+        });
+
+    },
+
+    /* ADDS THE REPORT TO THE DATABASE */
+    getReportUser: function(req, res) {
+        console.log("@ getReportUser");
+
+        var reason = req.body.reason;
+        var complaint = req.body.textcomplaint;
+
+        console.log("REASON: " + req.body.reason);
+        console.log("COMPLAINT: " + req.body.textcomplaint);
+        console.log("USERNAME: " + req.params.username);
+        
+        if((complaint != undefined || complaint != " ") && reason != undefined)
+        {
+            Client.findOne({user: req.session.user}, function(err, reporter){
+
+                Client.findOne({username: req.params.username}, function(err, reported) {
+
+                    var report = new Report({
+                        
+                        reporter: reporter,
+                        reporteduser: reported,
+                        reason: reason,
+                        complaint: complaint,
+                        isResolved: false
+                    })
+
+                    report.save(function(err) {
+                        if(err) throw err;
+                        console.log("New Report: " + report);
+
+                        res.redirect('/user/' + reported.username);
+
+                    })
+                })
+            });
+
+           
+        }
+
+
+    },
+
+    /* LOADS REPORT USER */
+    loadReportUser: function(req, res) {
+        console.log("@ loadReportUser");
+
+        Client.findOne({user: req.session.user}).exec(function(err, result) {
+            if(err) throw err;
+            console.log(result);
+            res.render('reportuser', {
+                username: result.username,
+                usern: req.params.username
+            });
+
+        });
+        
+    }
+
 };
 
 module.exports = controller;
