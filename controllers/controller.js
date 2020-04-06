@@ -469,9 +469,14 @@ const controller = {
             post.cutofftime = cutoff.toTimeString();
             post.date = postdate.toDateString();
             post.time = postdate.toTimeString();
+            
+            post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+            post.isBidding = !post.isStolen;
 
             //find current session client
             Client.findOne({user: req.session.user}, function(err, result){
+
+                post.isNotPoster = (JSON.stringify(post.poster) != JSON.stringify(result)) ? true : false;
 
                 if(req.session.user.isClient) {
                     res.render('viewpost', {
@@ -925,7 +930,44 @@ const controller = {
         {
             //TODO add error page? idk
         }
-        
+    },
+
+    getBid: function(req, res){
+    
+        Client.findOne({user: req.session.user}, function(err, client){
+
+            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, result){
+
+                result.highestbidder = client;
+                if(req.params.action == "bid")
+                    result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                else if (req.params.action == "steal")
+                    result.currentprice = result.stealprice;
+
+                result.save(function(err){
+                    if (err) throw err;
+                    console.log("Updated post: " + result);
+
+                    var post = result.toObject();
+                    post.postername = result.poster.username;
+                    post.biddername = result.highestbidder.username;
+
+                    var cutoff = new Date(post.cutoff);
+                    var postdate = new Date(post.postdate);
+
+                    post.tagname = post.category.name;
+                    post.cutoffdate = cutoff.toDateString();
+                    post.cutofftime = cutoff.toTimeString();
+                    post.date = postdate.toDateString();
+                    post.time = postdate.toTimeString();
+
+                    post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+                    post.isBidding = !post.isStolen;
+
+                    res.redirect('/posts/' + req.params.postId);
+                });               
+            });
+        });
     }
 };
 

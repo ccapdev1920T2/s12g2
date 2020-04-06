@@ -49,7 +49,14 @@
     </div>
 
     <div class="sidebar">
+        {{#if isBidding}}
         <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
+        {{/if}}
+
+        {{#if isStolen}}
+        <div class="sidebarlabels" style="font-size: 18px;">sold to</div>
+        {{/if}}
+
             <img class="bidderavatar" src="{{bidderavatar}}">
         <div class="biddername">{{biddername}}</div>
         <div class="pricemain currentprice">
@@ -64,10 +71,14 @@
             P{{stealprice}}
         </div>
 
+        {{#if isNotPoster}}
+        {{#if isBidding}}
         <div class="actions">
             <span class="actionbutton" id="bidbutton">bid</span>
             <span class="actionbutton" id="stealbutton">steal</span>
         </div>
+        {{/if}}
+        {{/if}}
 
     </div>
     {{/post}}
@@ -75,28 +86,17 @@
 </div>
 
 <script type="text/javascript">
+    
+    var url = window.location.href;
+    var postId = url.substring(url.lastIndexOf('/') + 1);
 
-    $(".ffbutton").click(function(){
-        //if not clicked
-        if($(this).css("color") == 'rgb(0, 0, 0)')
-        {
-            $(this).css("background-color", "black");
-            $(this).css("color", "white");
-            
-            var ffnumber = $(this).closest('.postheader').children('.ffnum');
-            ffnumber.text(Number(ffnumber.text()) + 1);
-        }
-
-        //if already clicked
-        else
-        {
-            $(this).css("background-color", "white");
-            $(this).css("color", "black");
-            
-            var ffnumber = $(this).closest('.postheader').children('.ffnum');
-            ffnumber.text(Number(ffnumber.text()) - 1);
-        }
+    $("#bidbutton").click(function(){
+        window.location.replace("/posts/" + postId + "/bid");
     });
+
+    $("#stealbutton").click(function(){
+        window.location.replace("/posts/" + postId + "/steal")
+    })
 
     $("#bidbutton").mouseenter(function(){
         $(this).css("background-color", "green");

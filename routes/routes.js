@@ -382,6 +382,13 @@ app.get('/tagged/:tagname', function(req, res){
         controller.getTagged(req, res);
 });
 
+app.get('/posts/:postId/:action', function(req, res){
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getBid(req, res);
+});
+
 
 /* Exports the object `app` (defined above) when another script exports from this file */
 module.exports = app;
