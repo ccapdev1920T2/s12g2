@@ -453,7 +453,7 @@ const controller = {
     getPost: function(req, res) {
         console.log("@ getPost");
 
-        Post.findOne({_id: req.params.postId}).populate('poster').populate('highestbidder').exec(function(err, result){
+        Post.findOne({_id: req.params.postId}).populate('poster').populate('category').populate('highestbidder').exec(function(err, result){
 
             var post = result.toObject();
             post.postername = result.poster.username;
@@ -464,6 +464,7 @@ const controller = {
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
 
+            post.tagname = post.category.name;
             post.cutoffdate = cutoff.toDateString();
             post.cutofftime = cutoff.toTimeString();
             post.date = postdate.toDateString();
@@ -812,7 +813,6 @@ const controller = {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
-                //TODO use models
                 Post.find(query).populate('poster').populate('categories').sort({postdate : -1}).exec(function(err, results){
                     if (err) throw err;
                     
