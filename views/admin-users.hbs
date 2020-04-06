@@ -2,17 +2,18 @@
     {{> adminheader}}
 
     <!-- POSTS -->
-
+    <p class = "instructions">✓ - Disregard Report</p>
+    <p class = "instructions">✕ - Suspend User</p>
     {{#each complaint}}
         <div class="post">
             <div class="repuser">
                 <img src="{{avatar}}" class="repavatar">
                 
-                <a href="profile" class = "reptitle">
+                <a href="/user/{{reported}}" class = "reptitle">
                     {{reported}}
-                </a>
-                <div class = "deletebutton">✕</div>
-                <div class = "acceptbutton">✓</div>
+                </a> 
+                <a id = "suspend" class = "usersbutton" href = "/users/{{_id}}/suspend"><div class = "deletebutton" name = "suspend" value = "suspend" >✕</div></a>
+                <a id = "accept" class = "usersbutton" href = "/users/{{_id}}/accept"><div class = "acceptbutton" name = "accept" value = "accept">✓</div></a>
             </div>
 
             <div class="repreason">
@@ -34,13 +35,6 @@
 </div>
 
 <script type="text/javascript">
-    $(".acceptbutton").click(function(){
-        $(this).parent("div").parent("div").remove();
-    });
-    
-    $(".deletebutton").click(function(){
-        $(this).parent("div").parent("div").remove();
-    });
 
     $(".acceptbutton").mouseenter(function(){
         $(this).css("background-color", "green");

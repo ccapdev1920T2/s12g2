@@ -897,6 +897,7 @@ const controller = {
 
             reports.forEach(function (report) {
 
+                report._id = report._id;
                 report.avatar = (report.avatar == null) ? "/img/default.png" : report.avatar;
                 report.reported = report.reporteduser.username;
                 report.reason = report.reason;
@@ -923,10 +924,6 @@ const controller = {
 
         var reason = req.body.reason;
         var complaint = req.body.textcomplaint;
-
-        console.log("REASON: " + req.body.reason);
-        console.log("COMPLAINT: " + req.body.textcomplaint);
-        console.log("USERNAME: " + req.params.username);
         
         if((complaint != undefined || complaint != " ") && reason != undefined)
         {
@@ -965,7 +962,7 @@ const controller = {
 
         Client.findOne({user: req.session.user}).exec(function(err, result) {
             if(err) throw err;
-            console.log(result);
+            
             res.render('reportuser', {
                 username: result.username,
                 usern: req.params.username
@@ -1056,6 +1053,51 @@ const controller = {
                 });               
             });
         });
+    },
+
+    /* UPDATES REPORT AND CLIENT INFO (IF SUSPENDED) */
+    getAdminUserAction: function(req, res) {
+        console.log("@ getAdminUserAction");
+
+        Report.findOne({_id: req.params.id}).populate('reporteduser').exec(function(err, result) {
+            console.log("RESULT: " + result);
+            console.log(req.params._id);
+            if(result != null)
+            {
+                if(req.params.action == 'accept')
+                {
+                    result.isResolved = true;
+                    result.save(function(err) {
+                        if(err) throw err;
+                        console.log("Updated report: " + result);
+                        res.redirect('/users');
+                    })
+                }
+                else if (req.params.action == 'suspend')
+                {
+                    Client.findOne({username: result.reporteduser.username}).exec(function(err, client) {
+
+                        client.isSuspended = true;
+
+                        client.save(function(err) {
+                            if(err) throw err;
+                            console.log("Updated client: " + client);
+                        })
+
+                        result.isResolved = true;
+                        result.save(function(err) {
+                            if(err) throw err;
+                            console.log("Updated report: " + result);
+                            res.redirect('/users');
+                        })
+                    })
+                }
+                else
+                    res.redirect('/users');
+            }
+            else
+                res.redirect('/users');
+        })
     }
 };
 

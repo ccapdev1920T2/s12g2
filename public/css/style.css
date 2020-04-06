@@ -96,6 +96,11 @@ img
 	text-align: center;
 }
 
+.usersbutton
+{
+	text-decoration: none;
+	color: black;
+}
 .registrationerror
 {
 	font-size: 11px;
@@ -1429,6 +1434,13 @@ input[type=email], input[type=password], input[type=text]
 	border-width: 0px;
 	margin-top: 20px;
 	border-radius: 30px;
+}
+
+.instructions
+{
+	text-align: center;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 15px;
 }
 
 /* ERROR END*/

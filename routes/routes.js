@@ -383,6 +383,7 @@ app.get('/tagged/:tagname', function(req, res){
         controller.getTagged(req, res);
 });
 
+
 app.get('/posts/:postId/:action', function(req, res){
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
@@ -390,6 +391,17 @@ app.get('/posts/:postId/:action', function(req, res){
         controller.getClientAction(req, res);
 });
 
+
+app.get('/users/:id/:action', function(req, res) {
+    
+        // If no one is logged in or a client is logged in
+    if(req.session.user == undefined || req.session.user.isClient)
+        res.redirect('/');
+    else {
+        controller.getAdminUserAction(req, res);
+    }
+
+})
 
 /*
     Executes function getReportedUsers() as defined in object controller in `../controllers/controller.js`
