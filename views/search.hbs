@@ -146,7 +146,13 @@
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
 	</div>
+	{{#if isSearch}}
     <h1>Search Results for "{{query}}"</h1><br>
+	{{/if}}
+
+	{{#if isTag}}
+    <h1>Posts tagged with "{{query}}"</h1><br>
+	{{/if}}
 
     {{#profiledetails}}
 	<!-- PROFILE -->
@@ -182,9 +188,7 @@
 			</div>
 
 			<div class="posttags">
-				{{#each tag}}
-					<a href="{{taglink}}" class="tag">{{tagname}}</a>
-				{{/each}}
+				<a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
 			</div>
 
 			<div class="postedby">

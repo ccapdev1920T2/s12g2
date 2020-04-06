@@ -368,8 +368,19 @@ app.get('/posts/:postId/edit', function(req, res){
 */
 app.get('/search', function(req, res) {
     
-    controller.getSearch(req, res);
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getSearch(req, res);
 
+});
+
+app.get('/tagged/:tagname', function(req, res){
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getTagged(req, res);
 });
 
 
