@@ -945,9 +945,8 @@ input[type=email], input[type=password], input[type=text]
 #posts
 {
 	float: right;
-	margin-top: 50px;
 	margin-right: auto;
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 #reportscreen
