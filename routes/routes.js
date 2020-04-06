@@ -394,12 +394,22 @@ app.get('/posts/:postId/:action', function(req, res){
 
 app.get('/users/:id/:action', function(req, res) {
     
-        // If no one is logged in or a client is logged in
+    // If no one is logged in or a client is logged in
     if(req.session.user == undefined || req.session.user.isClient)
         res.redirect('/');
     else {
         controller.getAdminUserAction(req, res);
     }
+
+})
+
+app.get('/:id/:action', function(req, res) {
+    
+    // If no one is logged in or a client is logged in
+    if(req.session.user == undefined || req.session.user.isClient)
+        res.redirect('/');
+    else
+        controller.getAdminPostAction(req, res);
 
 })
 
@@ -438,6 +448,8 @@ app.post('/user/:username/reportuser', function(req, res) {
         controller.getReportUser(req, res);
 
 })
+
+
 
 
 /* Exports the object `app` (defined above) when another script exports from this file */

@@ -1060,8 +1060,7 @@ const controller = {
         console.log("@ getAdminUserAction");
 
         Report.findOne({_id: req.params.id}).populate('reporteduser').exec(function(err, result) {
-            console.log("RESULT: " + result);
-            console.log(req.params._id);
+            
             if(result != null)
             {
                 if(req.params.action == 'accept')
@@ -1097,6 +1096,43 @@ const controller = {
             }
             else
                 res.redirect('/users');
+        })
+    },
+
+    /* UPDATES REPORT AND CLIENT INFO (IF SUSPENDED) */
+    getAdminPostAction: function(req, res) {
+        console.log("@ getAdminPostAction");
+
+        Post.findOne({_id: req.params.id}).exec(function(err, result) {
+            
+            if(result != null)
+            {
+                if(req.params.action == 'approve')
+                {
+                    result.isApproved = true;
+                    result.isReviewed = true;
+
+                    result.save(function(err) {
+                        if(err) throw err;
+                        console.log("Updated report: " + result);
+                        res.redirect('/');
+                    })
+                }
+                else if (req.params.action == 'delete')
+                {
+                    Post.deleteOne({_id: req.params.id}, function(err) {
+                        if(err) throw err;
+
+                        console.log("Post successfully deleted");
+
+                        res.redirect('/');
+                    })
+                }
+                else
+                    res.redirect('/');
+            }
+            else
+                res.redirect('/');
         })
     }
 };
