@@ -239,7 +239,6 @@ const controller = {
             if (req.query.filter)
                 filter = {name: req.query.filter};
             
-            console.log(sortOpt);
             Category.find(filter).exec(function(err, result){
 
                 Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
@@ -809,7 +808,7 @@ const controller = {
     editPost: function(req, res){
 
         console.log("@ editPost");
-
+        
         Post.findOne({_id: req.params.postId}, function(err, post){
 
             if(req.body.description)
@@ -818,6 +817,7 @@ const controller = {
             if(req.body.details)
                 post.details = req.body.details;
 
+                console.log(req.body.details);
             post.save(function(err){
                 if (err) throw err;
                 console.log("Updated post: " + post);
@@ -1050,7 +1050,7 @@ const controller = {
                             }); 
                         });
                     });
-                    
+
             });
 
         }
@@ -1154,7 +1154,7 @@ const controller = {
                     if(err) throw err;
 
                     console.log("Post successfully deleted");
-
+                    console.log(req.params.number);
                     if (req.params.number == 1)
                         res.redirect('/user/' + req.params.username);
                     if (req.params.number == 2)
@@ -1162,7 +1162,7 @@ const controller = {
                 });
             }
             else
-                res.redirect('/user/' + req.params.username);
+                res.redirect('back');
         });
     }, 
 

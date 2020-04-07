@@ -285,7 +285,7 @@ app.get('/editpost', function(req, res) {
         controller.getEditPost(req, res); // if the user is a client
     else
         res.redirect('/') // if the user is admin
-})
+});
 
 
 /*
@@ -331,7 +331,7 @@ app.get('/user/:username/reportuser', function(req, res) {
     else
         controller.loadReportUser(req, res);
 
-})
+});
 
 
 /*
@@ -346,7 +346,7 @@ app.post('/user/:username/reportuser', function(req, res) {
     else
         controller.getReportUser(req, res);
 
-})
+});
 
 
 /*
@@ -376,8 +376,7 @@ app.post('/user/:username/reviews', function(req, res) {
     else
         controller.sendReview(req, res);
 
-})
-
+});
 
 /*
     Executes function getPost() as defined in the object controller in `../controllers/controller.js`
@@ -447,7 +446,7 @@ app.get('/users/:id/:action', function(req, res) {
         controller.getAdminUserAction(req, res);
     }
 
-})
+});
 
 
 /*
@@ -462,7 +461,7 @@ app.get('/:id/:action', function(req, res) {
     else
         controller.getAdminPostAction(req, res);
 
-})
+});
 
 
 /*
