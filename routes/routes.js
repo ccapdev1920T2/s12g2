@@ -19,6 +19,9 @@ app.use(session({secret: " randomstring123", resave: false, saveUninitialized: t
 */
 app.get('/favicon.ico', controller.getFavicon);
 
+app.get('/about', function(req, res){
+    res.render("about");
+})
 
 /*
     Renders `registration.hbs` as defined in the object controller in `../views/registration.hbs`
@@ -447,7 +450,7 @@ app.get('/users/:id/:action', function(req, res) {
         controller.getAdminUserAction(req, res);
     }
 
-})
+});
 
 
 /*
@@ -462,7 +465,7 @@ app.get('/:id/:action', function(req, res) {
     else
         controller.getAdminPostAction(req, res);
 
-})
+});
 
 
 /*
@@ -477,6 +480,19 @@ app.get('/users', function(req, res) {
     else
         controller.getReportedUsers(req, res);
 
+});
+
+
+app.get('/user/:username/:postId/delete/:number', function(req,res) {
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getDeletePost(req, res);
+})
+
+
+app.get("*", function(req, res){
+    res.render("error");
 })
 
 

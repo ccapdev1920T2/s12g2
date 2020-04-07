@@ -8,7 +8,7 @@
 		<br>
 		<div id = "report">
 			<form action = "/user/{{usern}}/reportuser" name = "report" method = "post" >
-				<h3 style = "text-align: center; color: black">REASON/S</h3>
+				<h3>REASON/S</h3>
 				<div class = "reportreasons" id = "rr1">
 					<div>
 					<input name = "reason" type = "radio" class = "reportchecks" id = "offensive" value = "offensive">
@@ -36,15 +36,14 @@
 				</div>
 
 				<br>
-				<h3 style = "text-align: center; color: black">COMPLAINT</h3>
+				<h3>COMPLAINT</h3>
 				<div id = "reportcomplaint">
 					<textarea name = "textcomplaint" id = "textcomplaint" placeholder = "Ex. The user stopped replying after I paid..." style = "font-size:  15px"></textarea>
                     
 				</div>
 				<p class = "errormessage" id = "reporterrormessage"></p>
 				<div id = "submitbutton">
-					
-					<input class = "submit" type = "submit" id = "profilesubmit" value = "Submit" onclick = "report.submit()">
+					<input class = "button" type = "submit" id = "profilesubmit" value = "Submit" onclick = "report.submit()">
 				</div>
 			
 			</form>
