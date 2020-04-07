@@ -695,8 +695,8 @@ const controller = {
         var category = req.body.categ; // must check
         var pic = req.body.pic; // must check
         
-        if( itemname != null && description != null && sprice != null & priceinc != null &&
-            stealp != null /*&&  cutoffdt*/ && modep != null && meetup != null && category != null /*&&  pic*/ ) {
+        if( itemname && description && sprice & priceinc  &&
+            stealp /*&&  cutoffdt*/ && modep  && meetup && category  /*&&  pic*/ ) {
 
             Category.findOne({name: category}, function(err, result){
                 
@@ -735,7 +735,20 @@ const controller = {
         }
         else
         {
-            res.send("MISSING FIELDS");
+                res.render('createpost', {
+                    title: itemname,
+                    description: description,
+    
+                    startprice: sprice,
+                    stealprice: stealp,
+                    incrementprice: priceinc,
+    
+                    cutoff: cutoffdt,
+                    paymentmode: modep,
+                    details: meetup,
+                    category: category,
+                    //pictures: pic
+                });
         }
     },
 
