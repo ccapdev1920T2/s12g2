@@ -477,15 +477,15 @@ app.get('/users', function(req, res) {
     else
         controller.getReportedUsers(req, res);
 
-<<<<<<< HEAD
-})
-
-
-=======
 });
 
 
+/*
+    Executes function getDeletePost() as defined in object controller in `../controllers/controller.js`
+    when a client tries to delete a post.
+*/
 app.get('/user/:username/:postId/delete/:number', function(req,res) {
+
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
@@ -493,11 +493,13 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
 })
 
 
+/*
+    Renders the error page when the user tries to access an invalid page.
+*/
 app.get("*", function(req, res){
     res.render("error");
 })
 
 
->>>>>>> master
 /* Exports the object `app` (defined above) when another script exports from this file */
 module.exports = app;
