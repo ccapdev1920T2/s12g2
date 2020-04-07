@@ -1,7 +1,7 @@
 <div id = "reportscreen">
 	<div id = "reportcontent">
 		<button id = "close">X</button>
-		<h1 style = "text-align: center; margin-left: 80px">FILTER AND SORT</h1>
+		<h1 style = "text-align: center; margin-left: 80px; margin-bottom: 0px">FILTER AND SORT</h1>
 		<br>
 		<div id = "filtersortsubmit">
 				<div id = "filtersort">
@@ -10,117 +10,119 @@
 						<div id = "filter">
 							
 								<div class = "filteroptions">
-									<form method = "get" name = "filter">
+									<form method = "get" name = "sortfilter">
 									<div>
-										<input type = "checkbox" id = "book">
+										<input type = "radio" id = "book" name = "book">
 										<label for = "book" style = "color: black">Book</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "forpet">
+										<input type = "radio" id = "forpet" name = "forpet">
 										<label for = "forpet" style = "color: black">For Pet</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "womens">
+										<input type = "radio" id = "womens" name = "womens">
 										<label for = "womens" style = "color: black">Women's</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "top">
-										<label for = "top" style = "color: black">Top</label>
-									</div>
-
-									<div>
-										<input type = "checkbox" id = "bottom">
-										<label for = "bottom" style = "color: black">Bottom</label>
-									</div>
-
-									<div>
-										<input type = "checkbox" id = "mens">
+										<input type = "radio" id = "mens" name = "mens">
 										<label for = "mens" style = "color: black">Men's</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "stationery">
-										<label for = "stationery" style = "color: black">Stationery</label>
-									</div>
-								</div>
-
-								<div class = "filteroptions">
-									<div>
-										<input type = "checkbox" id = "food">
-										<label for = "food" style = "color: black">Food</label>
-									</div>
-
-									<div>
-										<input type = "checkbox" id = "collectible">
-										<label for = "collectible" style = "color: black">Collectible</label>
-									</div>
-
-									<div>
-										<input type = "checkbox" id = "childrens">
+										<input type = "radio" id = "childrens" name = "childrens">
 										<label for = "childrens" style = "color: black">Children's</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "shoes">
+										<input type = "radio" id = "shoes" name = "shoes">
 										<label for = "shoes" style = "color: black">Shoes</label>
 									</div>
 
+								</div>
+
+								<div class = "filteroptions">
+
 									<div>
-										<input type = "checkbox" id = "accessory">
+										<input type = "radio" id = "stationery" name = "stationery">
+										<label for = "stationery" style = "color: black">Stationery</label>
+									</div>
+
+									<div>
+										<input type = "radio" id = "food" name = "food">
+										<label for = "food" style = "color: black">Food</label>
+									</div>
+
+									<div>
+										<input type = "radio" id = "collectible" name = "collectible">
+										<label for = "collectible" style = "color: black">Collectible</label>
+									</div>
+
+									<div>
+										<input type = "radio" id = "accessory" name = "accessory">
 										<label for = "accessory" style = "color: black">Accessory</label>
 									</div>
 
 									<div>
-										<input type = "checkbox" id = "technology">
+										<input type = "radio" id = "technology" name = "technology">
 										<label for = "technology" style = "color: black">Technology</label>
 									</div>
 								</div>
-
-								</form>
 						</div>
 					</div>
 
 					<div id = "sorttitleoptions">
 						<h3 style = "text-align: center; color: black;">SORT BY</h3>
 						<div id = "sort">
-							<form name = "sort">
 								<div class = "sortoptions">
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "date">
-										<label for = "date" style = "color: black">Date</label>
+										<input type = "radio" name = "dateasc" id = "dateasc">
+										<label for = "date" style = "color: black">Date Posted (Ascending)</label>
 									</div>
 
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "ffs">
-										<label for = "ffs" style = "color: black">Number of FFs</label>
+										<input type = "radio" name = "datedes" id = "datedes">
+										<label for = "date" style = "color: black">Date Posted (Descending)</label>
 									</div>
 
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "bids">
-										<label for = "bids" style = "color: black">Number of Bids</label>
+										<input type = "radio" name = "bids" id = "bids">
+										<label for = "bids" style = "color: black">Popularity (Number of Bids)</label>
 									</div>
 
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "stealprice">
-										<label for = "stealprice" style = "color: black">Steal Price</label>
+										<input type = "radio" name = "stealpricelth" id = "stealpricelth">
+										<label for = "stealprice" style = "color: black">Steal Price Low to High</label>
 									</div>
 
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "currentprice">
-										<label for = "currentprice" style = "color: black">Current Price</label>
+										<input type = "radio" name = "stealpricehtl" id = "stealpricehtl">
+										<label for = "stealprice" style = "color: black">Steal Price High to Low</label>
 									</div>
 
 									<div class = "sortoption">
-										<input type = "radio" name = "sort" id = "title">
-										<label for = "title" style = "color: black">Title</label>
+										<input type = "radio" name = "currentpricelth" id = "currentpricelth">
+										<label for = "currentprice" style = "color: black">Current Price Low to High</label>
 									</div>
 
+									<div class = "sortoption">
+										<input type = "radio" name = "currentpricehtl" id = "currentpricehtl">
+										<label for = "currentprice" style = "color: black">Current Price High to Low</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "titleaz" id = "titleaz">
+										<label for = "title" style = "color: black">Title (A-Z)</label>
+									</div>
+
+									<div class = "sortoption">
+										<input type = "radio" name = "titleza" id = "titleza">
+										<label for = "title" style = "color: black">Title (Z-A)</label>
+									</div>
 
 								</div>
-
 							</form>
 						</div>
 					</div>
@@ -128,12 +130,13 @@
 
 				
 				<div id = "submitbutton">
-					<button id = "profilesubmit">SUBMIT</button>
+					<button id = "profilesubmit" onclick = "sortfilter.submit()">SUBMIT</button>
 				</div>
 			
 		</div>
 	</div>
 </div>
+
 
 <div id = "wrapper1">
 	{{> userheader username = username}}

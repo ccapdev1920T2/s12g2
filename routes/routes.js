@@ -397,14 +397,24 @@ app.get('/posts/:postId/:action', function(req, res){
 
 app.get('/users/:id/:action', function(req, res) {
     
-        // If no one is logged in or a client is logged in
+    // If no one is logged in or a client is logged in
     if(req.session.user == undefined || req.session.user.isClient)
         res.redirect('/');
     else {
         controller.getAdminUserAction(req, res);
     }
 
-})
+});
+
+app.get('/:id/:action', function(req, res) {
+    
+    // If no one is logged in or a client is logged in
+    if(req.session.user == undefined || req.session.user.isClient)
+        res.redirect('/');
+    else
+        controller.getAdminPostAction(req, res);
+
+});
 
 /*
     Executes function getReportedUsers() as defined in object controller in `../controllers/controller.js`
@@ -418,7 +428,7 @@ app.get('/users', function(req, res) {
     else
         controller.getReportedUsers(req, res);
 
-})
+});
 
 
 app.get('/user/:username/reportuser', function(req, res) {
@@ -429,7 +439,7 @@ app.get('/user/:username/reportuser', function(req, res) {
     else
         controller.loadReportUser(req, res);
 
-})
+});
 
 
 app.post('/user/:username/reportuser', function(req, res) {
@@ -440,11 +450,20 @@ app.post('/user/:username/reportuser', function(req, res) {
     else
         controller.getReportUser(req, res);
 
+});
+
+app.get('/user/:username/:postId/delete/:number', function(req,res) {
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getDeletePost(req, res);
 })
 
 app.get("*", function(req, res){
     res.render("error");
 })
+
+
 
 
 /* Exports the object `app` (defined above) when another script exports from this file */
