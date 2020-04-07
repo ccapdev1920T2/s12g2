@@ -851,6 +851,7 @@ const controller = {
             
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString();
+
                             });
                             
                             Client.find(query).sort({username: 1}).exec(function(err, result2){

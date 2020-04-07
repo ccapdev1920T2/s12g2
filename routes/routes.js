@@ -19,6 +19,9 @@ app.use(session({secret: " randomstring123", resave: false, saveUninitialized: t
 */
 app.get('/favicon.ico', controller.getFavicon);
 
+app.get('/about', function(req, res){
+    res.render("about");
+})
 
 /*
     Executes function editProfile() as defined in object controller in `../controllers/controller.js`
@@ -454,6 +457,10 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
         res.redirect('/'); // redirects user back to the log in page
     else
         controller.getDeletePost(req, res);
+})
+
+app.get("*", function(req, res){
+    res.render("error");
 })
 
 

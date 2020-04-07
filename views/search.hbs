@@ -143,12 +143,13 @@
 
 	<!-- SEARCHBAR-->
 	<div id="searchbar">
-			<form name="searchform" action="search" method="GET">
+			<form name="searchform" action="/search" method="GET">
 				<input type="text" placeholder="search" id="search" name = "search">
 				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
 	</div>
+
 	{{#if isSearch}}
     <h1>Search Results for "{{query}}"</h1><br>
 	{{/if}}
@@ -159,17 +160,17 @@
 
     {{#profiledetails}}
 	<!-- PROFILE -->
-	<div id = "profile2">
+	<div id = "profile">
 
 		<!-- PROFILE DETAILS -->
-		<div id = "details2">
-			<div id = "detailscontent2">
+		<div id = "searchdetails">
+			<div id = "searchdetailscontent">
 				<div id = "dpdiv">
-					<img id = "dp2" src = "{{avatar}}">
+					<img id = "dp" src = "{{avatar}}">
 				</div>
 
-				<div id = "name2">
-					<a href="/user/{{username}}" id="toprofile"><p id = "profileusername2">{{username}}</p></a>
+				<div id = "name">
+					<a href="/user/{{username}}" id="toprofile"><p id = "profileusername">{{username}}</p></a>
 				</div>
 
 		    </div>
@@ -187,7 +188,6 @@
 				<a href="/posts/{{_id}}" class = "posttitle">
 					{{title}}
 				</a>
-				<div class = "ffbutton">♡</div>
 			</div>
 
 			<div class="posttags">
@@ -220,22 +220,6 @@
 
 
 <script type="text/javascript">
-
-		$(".ffbutton").click(function(){
-		//if not clicked
-		if($(this).css("color") == 'rgb(0, 0, 0)')
-		{
-			$(this).css("background-color", "black");
-			$(this).css("color", "white");
-		}
-
-		//if already clicked
-		else
-		{
-			$(this).css("background-color", "white");
-			$(this).css("color", "black");
-		}
-	});
 
 	$("#filterbutton").click(function() 
 	{

@@ -49,11 +49,11 @@
 				</div>
 
 				
-				<a id = "reviews" href= "/user/{{username}}/reviews">
+				<a class = "link reviewbutton" href= "/user/{{username}}/reviews">
 					USER REVIEWS
 				</a>
 
-				<a id = "reportbutton" href = "/editprofile">
+				<a class = "link reportbutton" href = "/editprofile">
 					EDIT PROFILE
 				</a>
 			</div>
@@ -61,7 +61,7 @@
 {{/profiledetails}}
 
 		<div id = "posts">
-			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
+			<div class="createbutton"><a href="/createpost" class="link">+</a></div>
 			<!-- POSTS -->
 		{{#each post}}
 
@@ -88,6 +88,7 @@
 					<div class="currentprice">
 						P{{currentprice}}
 					</div>
+
 					
 				</div>
 
