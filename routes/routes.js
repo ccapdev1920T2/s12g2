@@ -196,7 +196,7 @@ app.get('/editprofile', function(req, res) {
     Executes function editProfile() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP POST request for `/editprofile` if the user is logged in
 */
-app.post('/editProfile', function(req, res, next){
+app.post('/editprofile', function(req, res, next){
     if(req.session.user == undefined) // if the user is not logged in 
         res.redirect('/'); // redirects user back to the log in page 
     else if(req.session.user.isClient)
