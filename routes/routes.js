@@ -490,15 +490,23 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
         res.redirect('/'); // redirects user back to the log in page
     else
         controller.getDeletePost(req, res);
-})
+});
 
+/*
+    Renders the about page.
+*/
+app.get('/about', function(req, res){
+    res.render("about");
+});
 
 /*
     Renders the error page when the user tries to access an invalid page.
 */
 app.get("*", function(req, res){
     res.render("error");
-})
+});
+
+
 
 
 /* Exports the object `app` (defined above) when another script exports from this file */

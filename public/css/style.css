@@ -1067,6 +1067,17 @@ h1
 
 #profilesubmit
 {
+    background-color: #DBAB61;
+	user-select: none;
+    padding: 14px 13px 10px 15px;
+	border-radius: 30px;
+	border: 0px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-decoration-line: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: white;
 	text-align: center;
 }
 
