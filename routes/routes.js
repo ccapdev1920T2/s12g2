@@ -24,32 +24,47 @@ app.get('/about', function(req, res){
 })
 
 /*
-    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/editprofile` if the user is logged in
+    Renders `registration.hbs` as defined in the object controller in `../views/registration.hbs`
+    when a client sends an HTTP GET request for `/register`
 */
-app.get('/editprofile', function(req, res) {
-
-    if(req.session.user == undefined) // if the user is not logged in 
-        res.redirect('/'); // redirects user back to the log in page 
-    else if(req.session.user.isClient)
-        controller.editProfile(req, res); // if the user is a client
-    else
-        res.redirect('/'); // if the user is admin
+app.get('/register', function(req, res) {
+    
+    res.render('registration');
 
 });
 
 
 /*
-    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
-    when a client sends an HTTP POST request for `/editprofile` if the user is logged in
+    Executes function getRegistration() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/register`
 */
-app.post('/editProfile', function(req, res, next){
-    if(req.session.user == undefined) // if the user is not logged in 
-        res.redirect('/'); // redirects user back to the log in page 
-    else if(req.session.user.isClient)
-        controller.postProfile(req, res, next); // if the user is a client
-    else
-        res.redirect('/'); // if the user is admin
+app.post('/register', function(req, res) {
+    
+    req.session.destroy(function(err) { // logs out the user, before registration
+        controller.getRegistration(req, res);
+    })
+
+});
+
+
+/*
+    Executes function checkEmail() as defined in the object controller in `../controllers/controller.js`
+    to check if the email being used to register is already taken.
+*/
+app.post('/checkEmail', function(req, res) {
+
+    controller.checkEmail(req, res);
+});
+
+
+/*
+    Executes function checkUsername() as defined in the object controller in `../controllers/controller.js`
+    to check if the username being used to register is already taken.
+*/
+app.post('/checkUsername', function(req, res) {
+
+    controller.checkUsername(req, res);
+
 });
 
 
@@ -66,13 +81,6 @@ app.get('/', function(req, res) {
         controller.getHomepage(req, res);
 
 });
-
-
-/*
-    Executes function checkLogIn() as defined in the object controller in `../controllers/controller.js`
-    when a client tries to log in.
-*/
-app.post('/checkLogIn', controller.checkLogIn);
 
 
 /*
@@ -121,6 +129,13 @@ app.post('/home', function(req, res) {
 
 
 /*
+    Executes function checkLogIn() as defined in the object controller in `../controllers/controller.js`
+    when a client tries to log in.
+*/
+app.post('/checkLogIn', controller.checkLogIn);
+
+
+/*
     When the user clicks logout, the session is destroyed
     and the user is redirected back to the log in page
 */
@@ -134,6 +149,63 @@ app.get('/logout', function(req, res) {
             res.redirect('/');
     })
 
+});
+
+
+/*
+    Executes function getSearch() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/search` if the user is logged in
+*/
+app.get('/search', function(req, res) {
+    
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getSearch(req, res);
+
+});
+
+
+/*
+    Executes function getTaggged() as defined in object controller in `../controllers/controller.js`
+    when a client filters the homepage if the user is logged in
+*/
+app.get('/tagged/:tagname', function(req, res){
+
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getTagged(req, res);
+});
+
+
+/*
+    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP GET request for `/editprofile` if the user is logged in
+*/
+app.get('/editprofile', function(req, res) {
+
+    if(req.session.user == undefined) // if the user is not logged in 
+        res.redirect('/'); // redirects user back to the log in page 
+    else if(req.session.user.isClient)
+        controller.editProfile(req, res); // if the user is a client
+    else
+        res.redirect('/'); // if the user is admin
+
+});
+
+
+/*
+    Executes function editProfile() as defined in object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/editprofile` if the user is logged in
+*/
+app.post('/editProfile', function(req, res, next){
+    if(req.session.user == undefined) // if the user is not logged in 
+        res.redirect('/'); // redirects user back to the log in page 
+    else if(req.session.user.isClient)
+        controller.postProfile(req, res, next); // if the user is a client
+    else
+        res.redirect('/'); // if the user is admin
 });
 
 
@@ -250,6 +322,37 @@ app.post('/user/:username', function(req, res) {
 
 
 /*
+    Executes function loadReportUser() as defined in the object controller in `../controllers/controller.js`
+    when a client sends an HTTP POST request for `/user/:username/reportuser` if the user is logged in
+    else it redirects the user back to the log in page
+*/
+app.get('/user/:username/reportuser', function(req, res) {
+    
+    // If no one is logged in or admin is logged in
+    if(req.session.user == undefined || !req.session.user.isClient)
+        res.redirect('/');
+    else
+        controller.loadReportUser(req, res);
+
+})
+
+
+/*
+    Executes function getReportUser() as defined in the object controller in `../controllers/controller.js`
+    when a client submits a report on a user.
+*/
+app.post('/user/:username/reportuser', function(req, res) {
+
+    // If no one is logged in or admin is logged in
+    if(req.session.user == undefined || !req.session.user.isClient)
+        res.redirect('/');
+    else
+        controller.getReportUser(req, res);
+
+})
+
+
+/*
     Executes function getReviews() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/user/:username/reviews` if the user is logged in
     else it redirects the user back to the log in page
@@ -280,51 +383,6 @@ app.post('/user/:username/reviews', function(req, res) {
 
 
 /*
-    Renders `registration.hbs` as defined in the object controller in `../views/registration.hbs`
-    when a client sends an HTTP GET request for `/register`
-*/
-app.get('/register', function(req, res) {
-    
-    res.render('registration');
-
-});
-
-
-/*
-    Executes function getRegistration() as defined in the object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/register`
-*/
-app.post('/register', function(req, res) {
-    
-    req.session.destroy(function(err) { // logs out the user, before registration
-        controller.getRegistration(req, res);
-    })
-
-});
-
-
-/*
-    Executes function checkEmail() as defined in the object controller in `../controllers/controller.js`
-    to check if the email being used to register is already taken.
-*/
-app.post('/checkEmail', function(req, res) {
-
-    controller.checkEmail(req, res);
-});
-
-
-/*
-    Executes function checkUsername() as defined in the object controller in `../controllers/controller.js`
-    to check if the username being used to register is already taken.
-*/
-app.post('/checkUsername', function(req, res) {
-
-    controller.checkUsername(req, res);
-
-});
-
-
-/*
     Executes function getPost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/posts/:postId` if the user is logged in
     else it redirects the user back to the log in page
@@ -352,6 +410,7 @@ app.post('/posts/:postId', function(req, res) {
         controller.editPost(req, res);
 });
 
+
 /*
     Executes function getEditPost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/posts/:postId/edit` if the user is logged in
@@ -365,28 +424,11 @@ app.get('/posts/:postId/edit', function(req, res){
         controller.getEditPost(req, res);
 });
 
+
 /*
-    Executes function getSearch() as defined in object controller in `../controllers/controller.js`
-    when a client sends an HTTP GET request for `/search` if the user is logged in
+    Executes function getClientAction() as defined in the object controller in `../controllers/controller.js`
+    when a client either bids or steals a post
 */
-app.get('/search', function(req, res) {
-    
-    if(req.session.user == undefined) // if the user is not logged in
-        res.redirect('/'); // redirects user back to the log in page
-    else
-        controller.getSearch(req, res);
-
-});
-
-app.get('/tagged/:tagname', function(req, res){
-
-    if(req.session.user == undefined) // if the user is not logged in
-        res.redirect('/'); // redirects user back to the log in page
-    else
-        controller.getTagged(req, res);
-});
-
-
 app.get('/posts/:postId/:action', function(req, res){
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
@@ -395,6 +437,10 @@ app.get('/posts/:postId/:action', function(req, res){
 });
 
 
+/*
+    Executes function getAdminUserAction() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to either suspend or disregard a report.
+*/
 app.get('/users/:id/:action', function(req, res) {
     
     // If no one is logged in or a client is logged in
@@ -406,6 +452,11 @@ app.get('/users/:id/:action', function(req, res) {
 
 });
 
+
+/*
+    Executes function getAdminPostAction() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to either approve or delete a post.
+*/
 app.get('/:id/:action', function(req, res) {
     
     // If no one is logged in or a client is logged in
@@ -415,6 +466,7 @@ app.get('/:id/:action', function(req, res) {
         controller.getAdminPostAction(req, res);
 
 });
+
 
 /*
     Executes function getReportedUsers() as defined in object controller in `../controllers/controller.js`
@@ -431,27 +483,6 @@ app.get('/users', function(req, res) {
 });
 
 
-app.get('/user/:username/reportuser', function(req, res) {
-    
-    // If no one is logged in or admin is logged in
-    if(req.session.user == undefined || !req.session.user.isClient)
-        res.redirect('/');
-    else
-        controller.loadReportUser(req, res);
-
-});
-
-
-app.post('/user/:username/reportuser', function(req, res) {
-
-    // If no one is logged in or admin is logged in
-    if(req.session.user == undefined || !req.session.user.isClient)
-        res.redirect('/');
-    else
-        controller.getReportUser(req, res);
-
-});
-
 app.get('/user/:username/:postId/delete/:number', function(req,res) {
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
@@ -459,11 +490,10 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
         controller.getDeletePost(req, res);
 })
 
+
 app.get("*", function(req, res){
     res.render("error");
 })
-
-
 
 
 /* Exports the object `app` (defined above) when another script exports from this file */
