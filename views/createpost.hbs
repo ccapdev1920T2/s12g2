@@ -4,13 +4,16 @@
 
 
     <!-- CREATE POSTS -->
+    
+    <p class="title">CREATE A POST</p><br>
+    
     <div class="post">
 
             <form action = "/success" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
-                    <p>create a post</p><br>
-                    <p style = "font-size: 10px">please choose at least one category and upload at least one photo. don't leave any fields blank.</p>
-                    <br>
+
+                    <p id = "subtitle">Please choose at least one category and upload at least one photo. Don't leave any fields blank.</p>
+
                     <!-- ITEM NAME -->
                     <label for="itemname">Item Name</label><br>
                     <input type="text" id="itemname" name="itemname" maxlength=50><br>
@@ -175,16 +178,10 @@
 
         if(!valid)
         {
-                alert("Please fill in all the missing fields.");
-        }
-        else
-        {
-            var doc = {
-                itemname: 
-            }
-            $.get('/createpost', 
+            alert("Please fill in all the missing fields.");
+            window.location.replace("/createpost");
         }
 
-    })
+    });
     
 </script>

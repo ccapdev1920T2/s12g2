@@ -2,8 +2,6 @@
     {{> adminheader}}
 
     <!-- POSTS -->
-    <p class = "instructions">✓ - Approve Post</p>
-    <p class = "instructions">✕ - Delete Post</p>
 
     {{#each post}}
         <div class="post">
@@ -11,8 +9,8 @@
                 <a href="/posts/{{_id}}" class = "posttitle">
                     {{title}}
                 </a>
-                <a class = "usersbutton" href = "/{{_id}}/delete"><div class = "deletebutton">✕</div></a>
-                <a class = "usersbutton" href = "/{{_id}}/approve"></a><div class = "acceptbutton">✓</div></a>
+                <div class = "deletebutton">✕</div>
+                <div class = "acceptbutton">✓</div>
             </div>
 
             <div class="posttags">
@@ -42,6 +40,13 @@
     {{/each}}
 
 <script type="text/javascript">
+    $(".acceptbutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+    
+    $(".deletebutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
 
     $(".acceptbutton").mouseenter(function(){
         $(this).css("background-color", "green");
