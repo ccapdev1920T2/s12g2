@@ -49,11 +49,11 @@
 				</div>
 
 				
-				<a class = "link reviewbutton" href= "/user/{{username}}/reviews">
+				<a id = "reviews" href= "/user/{{username}}/reviews">
 					USER REVIEWS
 				</a>
 
-				<a class = "link reportbutton" href = "/editprofile">
+				<a id = "reportbutton" href = "/editprofile">
 					EDIT PROFILE
 				</a>
 			</div>
@@ -61,7 +61,7 @@
 {{/profiledetails}}
 
 		<div id = "posts">
-			<div class="createbutton"><a href="/createpost" class="link">+</a></div>
+			<a href="/createpost" style="text-decoration: none;"><div class="createbutton">+</div></a>
 			<!-- POSTS -->
 		{{#each post}}
 
@@ -70,7 +70,7 @@
 					<a href="/posts/{{_id}}" class = "posttitle">
 						{{title}}
 					</a>
-						<a href="/user/{{postername}}/{{_id}}/delete/1" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
+						<a href="" class ="sbbutton" id="filterbutton">X</a>
 						<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
 				</div>
 
@@ -88,7 +88,6 @@
 					<div class="currentprice">
 						P{{currentprice}}
 					</div>
-
 					
 				</div>
 
@@ -118,14 +117,6 @@
 	$("#submitbutton").click(function() {
 
 		$.load('editpost');
-	});
-
-	$("#filterbutton").click(function() {
-
-	});
-	document.getElementById("reportbutton").onclick = function() {
-		document.getElementById("reportscreen").style.display = "block";
-	}
-
+	})
 
 </script>

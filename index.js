@@ -23,13 +23,6 @@ app.set('view engine', 'hbs');
 
 app.use(express.static('public'));
 
-handlebars.registerHelper('ifCond', function(v1, v2, options) {
-    if(v1 === v2) {
-      return options.fn(this);
-    }
-    return options.inverse(this);
-  });
-
 handlebars.registerHelper('loop', function(n) {
     var a = [];
     

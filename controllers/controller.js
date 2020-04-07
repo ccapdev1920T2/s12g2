@@ -205,12 +205,7 @@ const controller = {
                 console.log("Updated client: " + client);
                 res.redirect('/user/' + client.username);
             });
-        });
-
-        if (req.body.delete)
-        {
-            var post = req.params.postId;
-        }
+        })
     },
 
     /* LOADS EDIT PROFILE */
@@ -238,39 +233,32 @@ const controller = {
         
         if (req.session.user.isClient)
         {
-            var sortopt = this.sortOptions(req);
-            var filter = {};
 
-            if (req.query.filter)
-                filter = {name: req.query.filter};
+            Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                if (err) throw err;
 
-            Category.find(filter).exec(function(err, result){
+                var posts = []
+                if (results != null)
+                    posts = multipleMongooseToObj(results);
 
-                Post.find({category: result}).populate('poster').populate('category').sort(sortopt).exec(function(err, results){
-                    if (err) throw err;
+                posts.forEach(function (post) {
+                    post.postername = post.poster.username;
+                    post.tagname = post.category.name;
 
-                    var posts = []
-                    if (results != null)
-                        posts = multipleMongooseToObj(results);
+                    var timestamp = new Date(post.postdate)
 
-                    posts.forEach(function (post) {
-                        post.postername = post.poster.username;
-                        post.tagname = post.category.name;
+                    post.date = timestamp.toDateString();
+                    post.time = timestamp.toTimeString();
+                })
 
-                        var timestamp = new Date(post.postdate)
-
-                        post.date = timestamp.toDateString();
-                        post.time = timestamp.toTimeString();
-                    })
-
-                    Client.findOne({user: req.session.user}, function(err, result){
-                        res.render('homepage', {
-                            username: result.username,
-                            post: posts
-                        });
+                Client.findOne({user: req.session.user}, function(err, result){
+                    res.render('homepage', {
+                        username: result.username,
+                        post: posts
                     });
                 });
-            });
+            })
+
         }
         else {
 
@@ -828,54 +816,41 @@ const controller = {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
-                var sortopt = this.sortOptions(req);
-                var filter = {};
-    
-                if (req.query.filter)
-                    filter = {name: req.query.filter};
-    
-                Category.find(filter).exec(function(err, result){
-    
-                    Post.find({category: result}).exec(function(err, result){
-                        Post.find(query).populate('poster').populate('category').sort(sortopt).exec(function(err, results){
-                            if (err) throw err;
-        
-                            if (results != null)
-                                posts = multipleMongooseToObj(results);
-                            
-                            posts.forEach(function (post) {
-                                post.postername = post.poster.username;
-                                post.tagname = post.category.name;
-                
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                Post.find(query).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                    if (err) throw err;
 
+                    if (results != null)
+                        posts = multipleMongooseToObj(results);
+                    
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+                        post.tagname = post.category.name;
+        
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
+                    });
+                    
+                    Client.find(query).sort({username: 1}).exec(function(err, result2){
+                        if (err) throw err;
+
+                        var users = []
+
+                        if (result2 != null)
+                            users = multipleMongooseToObj(result2);
+
+                        Client.findOne({user: req.session.user}, function(err, result1){
+                            res.render('search', {
+                                isSearch: false,
+                                isTag: true,
+                                query: input,
+                                username: result1.username,
+                                profiledetails: users, 
+                                post: posts
                             });
-                            
-                            Client.find(query).sort({username: 1}).exec(function(err, result2){
-                                if (err) throw err;
-        
-                                var users = []
-        
-                                if (result2 != null)
-                                    users = multipleMongooseToObj(result2);
-        
-                                Client.findOne({user: req.session.user}, function(err, result1){
-                                    res.render('search', {
-                                        isSearch: false,
-                                        isTag: true,
-                                        query: input,
-                                        username: result1.username,
-                                        profiledetails: users, 
-                                        post: posts
-                                    });
-                                }); 
-        
-                            });
-                        });
-        
+                        }); 
+
                     });
 
                 });
@@ -1005,49 +980,34 @@ const controller = {
 
         if(req.session.user.isClient)
         {
+            Category.findOne({name: req.params.tagname}).exec(function(err, result){
 
-            var sortopt = this.sortOptions(req);
-            var filter = {};
-
-            if (req.query.filter)
-                filter = {name: req.query.filter};
-
-            var tagname = req.params.tagname;
-
-            Category.find(filter).exec(function(err, result){
-
-                Post.find({category: result}).exec(function(err, result){
-
-                    Category.findOne({name: tagname}).exec(function(err, result){
-
-                        Post.find({category: result}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
-                            if (err) throw err;
-            
-                            if (results != null)
-                                posts = multipleMongooseToObj(results);
-                            
-                            posts.forEach(function (post) {
-                                post.postername = post.poster.username;
-                                post.tagname = post.category.name;
-                
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
-                            });
-                            
-                            Client.findOne({user: req.session.user}, function(err, client){
-                                res.render('search', {
-                                    isSearch: false,
-                                    isTag: true,
-                                    query: req.params.tagname,
-                                    username: client.username,
-                                    //profiledetails: users, 
-                                    post: posts
-                                });
-                            }); 
-                        });
+                Post.find({category: result}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                    if (err) throw err;
+    
+                    if (results != null)
+                        posts = multipleMongooseToObj(results);
+                    
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+                        post.tagname = post.category.name;
+        
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
                     });
+                    
+                    Client.findOne({user: req.session.user}, function(err, client){
+                        res.render('search', {
+                            isSearch: false,
+                            isTag: true,
+                            query: req.params.tagname,
+                            username: client.username,
+                            //profiledetails: users, 
+                            post: posts
+                        });
+                    }); 
                 });
             });
         }
@@ -1174,79 +1134,7 @@ const controller = {
             else
                 res.redirect('/');
         })
-    },
-
-    getDeletePost: function(req, res){
-        console.log("@ getDeletePost");
-
-        Post.findOne({_id: req.params.postId}).exec(function(err, result) {
-            
-            if(result != null)
-            {
-                Post.deleteOne({_id: req.params.postId}, function(err) {
-                    if(err) throw err;
-
-                    console.log("Post successfully deleted");
-
-                    if (req.params.number == 1)
-                        res.redirect('/user/' + req.params.username);
-                    if (req.params.number == 2)
-                        res.redirect('/');
-                });
-            }
-            else
-                res.redirect('/user/' + req.params.username);
-        });
-    }, 
-
-    sortOptions: function(req) {
-
-        var sortopt = {postdate: -1};
-        if(req.query.dateasc)
-            sortopt = {postdate: 1};
-        else if (req.query.datedes)
-            sortopt = {postdate: -1};
-        else if (req.query.bids)
-            sortopt = {numofbids: -1};
-        else if (req.query.stealpricelth)
-            sortopt = {stealprice: 1};
-        else if (req.query.stealpricehtl)
-            sortopt = {stealprice: -1};
-        else if (req.query.currentpricelth)
-            sortopt = {currentprice: 1};
-        else if (req.query.currentpricehtl)
-            sortopt = {currentprice: -1};
-        else if (req.query.titleaz)
-            sortopt = {title: 1};
-        else if (req.query.titleza)
-            sortopt = {title: -1};
-        
-        return sortopt;
-    },
-
-    // filterOptions: function(req){
-
-    //     var filter = {};
-    //     if(req.query.book)
-    //         filter = {name : "Book"};
-    //     else if(req.query.forpet)
-    //         filter = {name : "For Pet"};
-    //     else if(req.query.womens)
-    //         filter = {name : "Women's"};
-    //     else if(req.query.mens)
-    //         filter = {name : "Men's"};
-    //     else if(req.query.stationery)
-    //         filter = {name : "Stationery"};
-    //     else if(req.query.food)
-    //         filter = {name : "Food"};
-    //     else if(req.query.collectible)
-    //         filter = {name : "Collectible"};
-    //     else if(req.query.accessory)
-    //         filter = {name : "Accessory"};
-    //     else if(req.query.technology)
-    //         filter = {name : "Technology"};
-    //     return filter;
-    // },
+    }
 };
 
 module.exports = controller;

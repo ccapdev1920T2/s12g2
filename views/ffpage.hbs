@@ -1,0 +1,56 @@
+<div id = "wrapper1">
+
+    {{> userheader username = username}}
+
+    <!-- TITLE -->
+    <div class="fftitle">
+        liked posts
+    </div>
+
+    <!-- POSTS -->
+    {{#each post}}
+        <div class="post">
+            <div class="postheader">
+                <a href="view-post" class = "posttitle">
+                    {{title}}
+                </a>
+                <div class = "ffbutton">♡</div>
+            </div>
+
+            <div class="posttags">
+                {{#each tag}}
+                    <a href="{{taglink}}" class="tag">{{tagname}}</a>
+                {{/each}}
+            </div>
+
+            <div class="postedby">
+                <img class="avatar" src="{{posteravatar}}">
+                <a href="{{posterprofile}}" class="username">{{postername}}</a>
+            
+                <div class="stealprice">
+                    P{{stealprice}}
+                </div>
+                <div class="currentprice">
+                    P{{currentprice}}
+                </div>
+                
+            </div>
+            
+
+            <img class="itemimage" src="{{itemimg}}">
+            
+            <div class="dateposted">
+				{{date}} | {{time}}
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<script type="text/javascript">
+    $(".ffbutton").css("background-color", "black");
+    $(".ffbutton").css("color", "white");
+
+    $(".ffbutton").click(function(){
+        $(this).parent("div").parent("div").remove();
+    });
+</script>

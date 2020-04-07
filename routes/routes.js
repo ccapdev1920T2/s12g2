@@ -19,9 +19,6 @@ app.use(session({secret: " randomstring123", resave: false, saveUninitialized: t
 */
 app.get('/favicon.ico', controller.getFavicon);
 
-app.get('/about', function(req, res){
-    res.render("about");
-})
 
 /*
     Renders `registration.hbs` as defined in the object controller in `../views/registration.hbs`
@@ -450,7 +447,7 @@ app.get('/users/:id/:action', function(req, res) {
         controller.getAdminUserAction(req, res);
     }
 
-});
+})
 
 
 /*
@@ -465,7 +462,7 @@ app.get('/:id/:action', function(req, res) {
     else
         controller.getAdminPostAction(req, res);
 
-});
+})
 
 
 /*
@@ -483,7 +480,12 @@ app.get('/users', function(req, res) {
 });
 
 
+/*
+    Executes function getDeletePost() as defined in object controller in `../controllers/controller.js`
+    when a client tries to delete a post.
+*/
 app.get('/user/:username/:postId/delete/:number', function(req,res) {
+
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else
@@ -491,6 +493,9 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
 })
 
 
+/*
+    Renders the error page when the user tries to access an invalid page.
+*/
 app.get("*", function(req, res){
     res.render("error");
 })

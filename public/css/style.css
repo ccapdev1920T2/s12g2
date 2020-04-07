@@ -68,7 +68,6 @@ img
 	margin-left: auto;
 	margin-right:auto;
 	text-decoration:none;
-	text-transform: uppercase;
 	letter-spacing: 5px;
 	font-size: 30px;
 	color: #382a1f;
@@ -130,7 +129,7 @@ img
 label
 {
 	padding: 0px 20px;
-
+	
 	font-size: 15px;
 	text-transform: lowercase;
 }
@@ -139,7 +138,6 @@ input[type=email], input[type=password], input[type=text]
 {
 	border: none;
 	margin-bottom:20px;
-	outline: none;
 	
 	background-color: transparent;
 	text-align: center;
@@ -150,22 +148,15 @@ input[type=email], input[type=password], input[type=text]
 	border-bottom: 0.5px solid rgb(46, 62, 62);
 }
 
-.button
+.submit
 {
 	margin-top: 10px;
 	border: 0.5px solid black;
 	background-color: transparent;
 	border-radius: 30px;
 	padding: 13px 20px 10px 20px;
-	outline: none;
-	
-	font-size:12px;
-	letter-spacing: 2px;
-	color: black;
 	text-transform: uppercase;
-	text-decoration: none;
 	font-family:  'Josefin Sans', sans-serif, Arial;
-	cursor: pointer;
 }
 
 .link
@@ -173,7 +164,6 @@ input[type=email], input[type=password], input[type=text]
 	text-decoration: none;
 	text-transform: uppercase;
 	color: black;
-	transition: 0.25s;
 }
 
 .link:hover
@@ -205,7 +195,7 @@ input[type=email], input[type=password], input[type=text]
 #search
 {
 	width: 400px;
-	border-bottom: 0.5px solid #2e3e3e;
+	border-bottom: 1px solid #2e3e3e;
 	padding: 5px;
 	
 	text-align: left;
@@ -220,8 +210,7 @@ input[type=email], input[type=password], input[type=text]
 	padding: 14px 13px 10px 15px;
 	margin-left: 10px;
 	border-radius: 30px;
-	border: 0.5px solid black;
-	cursor: pointer;
+	border: 1px solid black;
 
 	letter-spacing:2px;
 	text-decoration-line:none;
@@ -251,7 +240,7 @@ input[type=email], input[type=password], input[type=text]
 	margin-bottom: 7px;
 }
 
-.deletebutton, .acceptbutton
+.ffbutton, .deletebutton, .acceptbutton
 {
 
 	float: right;
@@ -259,7 +248,6 @@ input[type=email], input[type=password], input[type=text]
 	border: 1px solid black;
 	border-radius: 50%;
 	user-select: none;
-	cursor: pointer;
 
 	text-align: center;
 	text-decoration:none;
@@ -434,6 +422,15 @@ input[type=email], input[type=password], input[type=text]
     margin-bottom: 70px;
 }
 
+.ffnum
+{
+	float: right;
+	margin: 10px 15px 0px 15px;
+	
+	font-size: 20px;
+	color: black;
+}
+
 .postedby
 {
 	user-select: none;
@@ -594,13 +591,13 @@ input[type=email], input[type=password], input[type=text]
 	margin: 10px;
 	border: 1px solid black;
 	border-radius: 30px;
-	cursor: pointer;
 
 	letter-spacing:2px;
 	text-decoration-line:none;
 	text-transform: uppercase;
 	font-size:16px;
 	color: black;
+
 }
 
 .actionslink
@@ -629,125 +626,124 @@ input[type=email], input[type=password], input[type=text]
 
 .postdetails p
 {
-	user-select: none;
 	display: inline-block;
 	margin-bottom: 20px;
 	max-width: 500px;
 	text-decoration:none;
-	font-size: 25px;
-}
-
-#subtitle
-{
-	margin-top: 0px;
-	padding-bottom: 10px;
-	font-size: 13px;
-	font-family: "Open Sans", sans-serif;
+	text-transform: uppercase;
+	font-size: 20px;
+	color: #382a1f;
+	font-weight: 700;
 }
 
 .postdetails label
 {
 	padding: 0 0;
-	margin-bottom: 10px;
 	font-size: 15px;
 	text-transform: uppercase;
-	font-weight: 600;
-    display:inline-block;
-}
-
-.postdetails input
-{
-	font-family: 'Open Sans', sans-serif;
-	color: #382a1f;
-	margin-bottom:30px;
-	outline: 0;
-
-	border-radius: 15px;
-	border: 0.5px solid #ebebeb;
-	padding: 10px;
+	color:  #382a1f;
 }
 
 .postdetails input[type=text]
 {
 	border: none;
-	border-radius: 0;
-	padding: 0;
 	border-bottom: 0.5px solid #ebebeb;
 	margin-right: 5px;
+	margin-bottom:20px;
 	
 	background-color: transparent;
 	text-align: start;
 	letter-spacing: 1.5px;
     line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
 	width: 80%;
+    border-bottom: 0.5px solid #ebebeb;
+}
+
+.postdetails button
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	margin-left: 80%;
+	border-radius: 30px;
+}
+.postdetails input[type=datetime-local]
+{
+	width: 40%;
+	font-family: 'Josefin Sans', sans-serif;
+	margin-bottom: 20px;	
+}
+.postdetails input[type=file], input[type=checkbox]
+{
+	margin-bottom:20px;
+	font-family: 'Josefin Sans', sans-serif;
 }
 
 .postdetails input[id="price"]
-{	
+{
+	border: none;
+	border-bottom: 0.5px solid #ebebeb;
+	margin-right: 5px;
+	margin-bottom:20px;
+	
 	background-color: transparent;
 	text-align: start;
+	letter-spacing: 1.5px;
     line-height: 2;
+	color: #382a1f;
+	font-family: 'Josefin Sans', sans-serif;
 	width: 20%;
 	border-bottom: 0.5px solid #ebebeb;
 }
-
-.postdetails input[type=file], input[type=checkbox], input[type=datetime-local]
-{
-	cursor: pointer;
-}
-
 .postdetails textarea
 {
-	border-radius: 15px;
-	border: 0.5px solid #ebebeb;
-	padding: 10px;
 	margin-bottom:20px;
 	resize: none;
 	height: 100px;
 	width: 79%;
-	font-family: 'Open Sans', sans-serif;
-	outline: none;
+	font-family: 'Josefin Sans', sans-serif;
+
 }
 
 .postdetails select
 {
 	margin-bottom:20px;
-	font-family: 'Open Sans', sans-serif;
-	border-radius: 15px;
-	border: 0.5px solid #ebebeb;
-	padding: 10px;
-	outline: none;
-	cursor: pointer;
-}
-
-.postdetails button
-{
-	padding: 13px 20px 10px 20px;
-	border-radius: 30px;
-	border: 0.5px solid black;
-	margin-top: 20px;
-	margin-left: 80%;
-	border-radius: 30px;
-	cursor: pointer;
-	outline: none;
-	
-	letter-spacing: 2px;
 	font-family: 'Josefin Sans', sans-serif;
-	background-color: transparent;
-	text-transform: uppercase;
-	color: black;
 }
 
 /* CREATE AND EDIT POST END */
 
-/* SEARCH START */
-h1
+/* FFPAGE START */
+
+.fftitle
 {
+	margin-bottom:20px;
+	letter-spacing: 5px;
+	font-size: 30px;
 	text-transform: uppercase;
-	letter-spacing: 1.5pt;
+	text-align: center;
+	color: #382a1f;
 }
 
-#searchdetails
+/* FFPAGE END */
+
+/* SEARCH START */
+#profile2
+{
+	min-width: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+	height: xx;
+	vertical-align: center;
+}
+
+#details2
 {
 	width: 400px;
 	height: 400px;
@@ -763,7 +759,7 @@ h1
 	margin-right: auto;
 }
 
-#searchdetailscontent
+#detailscontent2
 {
 	width: 400px;
 	height: 400px;
@@ -771,6 +767,22 @@ h1
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+#dp2
+{
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin: 10px;
+}
+
+#name2
+{
+	margin: 20px;
+	float: center;
+	text-align: center;
 }
 
 #toprofile
@@ -785,6 +797,7 @@ h1
 	font-size: 30px;
 }
 
+
 /* SEARCH END*/
 
 
@@ -793,6 +806,7 @@ h1
 {
 	min-width: 100vh;
 	margin-bottom: 30px;
+	height: xx;
 	display: flex;
 	justify-content: space-between;
 }
@@ -802,29 +816,22 @@ h1
 {
 	margin: 0px 0px 20px 20px;
 	padding: 3px 3px 0px 3px;
-	margin-left: auto;	
+	margin-left: auto;
 	background-color: white;
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
-	cursor: pointer;
-	user-select:none;
 
+	text-decoration: none;
 	text-align: center;
 	font-size: 30px;
 	font-family: "Open Sans";
 }
 
-.createbutton link
-{
-	color: black;
-	text-decoration: none;
-}
-
 #details
 {
-	width: 300px;
-	height: 500px;
+	width: 400px;
+	height: 700px;
 	padding: 10px;
 	position: relative;
 	display: flex;
@@ -842,9 +849,9 @@ h1
 
 #detailscontent
 {
-	width: 300px;
-	height: 500px;
-	margin-top: 0px;
+	width: 400px;
+	height: 700px;
+	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -852,8 +859,8 @@ h1
 
 #dp
 {
-	width: 140px;
-	height: 140px;
+	width: 200px;
+	height: 200px;
 	object-fit: cover;
 	border-radius: 50%;
 	margin: 10px;
@@ -875,7 +882,7 @@ h1
 #profileusername
 {
 	margin: 0px;
-	font-size: 27px;
+	font-size: 30px;
 }
 
 #bio
@@ -886,7 +893,7 @@ h1
 
 #biotext
 {
-	font-size: 12px;
+	font-size: 14px;
 	font-family: 'Open Sans', sans-serif;
 	letter-spacing: 0.5px;
 	text-align: center;
@@ -912,24 +919,26 @@ h1
 	min-width: 180px;
 	max-height: 70px;
 	margin: 10px;
-	font-size: 12px;
+	font-size: 14px;
 	font-family: 'Open Sans', sans-serif;
 	letter-spacing: 0.5px;
 	text-align: center;
 }
 
-.reportbutton
+#reportbutton
 {
+	text-decoration: none;
+	font-size: 12px;
+	margin: 10px;
 	color: #990000;
-	margin-bottom: 20px;
-	user-select: none;
 }
 
-.reviewbutton
+#reviews
 {
 	color: #DBAB61;
-	margin-bottom: 20px;
-	user-select: none;
+	margin: 10px;
+	height: 15px;
+	text-decoration: none;
 }
 
 #stars
@@ -1039,14 +1048,12 @@ h1
 
 #textcomplaint
 {
-	border-radius: 20px;
-	border: 0.5px solid #ebebeb;
-	background-color: transparent;
-	padding: 10px;
 	height: 100px;
 	width: 600px;
-	outline: none;
-
+	border: 10px;
+	border-color: black;
+	padding: 10px;
+	background-color: #F8F8F8;
 	font-family: 'Open Sans', sans-serif;
 	letter-spacing: 0.5px;
 	color: black;
@@ -1067,7 +1074,13 @@ h1
 
 #profilesubmit
 {
-	text-align: center;
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: #DBAB61;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;	
 }
 
 #iconattribute
@@ -1244,7 +1257,7 @@ h1
 .repreason h3, .repcomplaint h3
 {
 	font-size: 20px;
-	letter-spacing: 2px;
+	letter-spacing: 5px;
 	font-family: 'Josefin Sans', sans-serif, 'Arial';
 	text-transform: uppercase;
 	color: black;
@@ -1254,7 +1267,7 @@ h1
 
 .repreason p, .repcomplaint p
 {
-	font-size: 14px;
+	font-size: 15px;
 	margin-top: 10px;
 	font-family: 'Open Sans', sans-serif;
 }
@@ -1290,12 +1303,10 @@ h1
 
 .reviews
 {
-	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 50px;
 	border-radius: 30px;
-	user-select: none;
 	
 	box-shadow: 10px 10px 20px #e0e0e0;
 	padding: 30px;
@@ -1305,6 +1316,7 @@ h1
 	display: flex;
 	justify-content: left;
 	flex-direction: column;
+
 }
 
 #reviewdiv
@@ -1315,7 +1327,6 @@ h1
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 #reviewstars
 {
@@ -1333,23 +1344,8 @@ h1
 	margin: 20px;
 }
 
-#writereviewstars select
-{
-	border-radius: 20px;
-	border: 0.5px solid #ebebeb;
-	padding: 10px;
-	cursor: pointer;
-	outline: none;
-}
-
 #reviewbox
 {
-	border-radius: 20px;
-	border: 0.5px solid #ebebeb;
-	padding: 10px;
-	outline: none;
-
-	font-family: "Open Sans", sans-serif;
 	height: 70px;
 	width: 600px;
 	resize: none;
@@ -1357,9 +1353,20 @@ h1
 	margin-right: 20px;
 }
 
-#submitreview
+#submitreviewbutton
 {
 	text-align: center;
+}
+
+#submitreview
+{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: #DBAB61;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
+	margin-top: 20px;
+	border-radius: 30px;
 }
 
 .reviewtext 
@@ -1369,7 +1376,6 @@ h1
 	margin-bottom: 20px;
 	margin-left: 20px;
 	font-size: 15px;
-	text-transform: uppercase;
 }
 
 .writereviewtext
@@ -1396,16 +1402,15 @@ h1
 
 #errorbox
 {
-	display: table-cell;
-	box-sizing: border-box;
 	margin-top: 15%;
+	display: table-cell;
+	vertical-align: middle;
 	border-radius: 30px;
 	box-shadow: 10px 10px 20px #e0e0e0;
 	padding: 30px;
-	vertical-align: middle;
 	width: 700px;
+	box-sizing: border-box;
 	background-color:white;
-	user-select: none;
 }
 
 #error
@@ -1417,28 +1422,18 @@ h1
 
 #errortext
 {
-	font-family: "Open Sans", sans-serif;
-	font-size: 14px;
-}
-
-#errortext a
-{
-	color: black;
+	font-size: 16px;
 }
 
 #goback
 {
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: green;
+	color: white;
+	padding: 15px 20px;
+	border-width: 0px;
 	margin-top: 20px;
 	border-radius: 30px;
-	border: 0.5px solid black;
-	background-color: transparent;
-	padding: 15px 20px;
-	cursor: pointer;
-	outline: none;
-
-	color: black;
-	letter-spacing: 2px;
-	font-family: 'Josefin Sans', sans-serif;
 }
 
 .instructions
