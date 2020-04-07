@@ -842,8 +842,8 @@ const controller = {
 
                         Client.findOne({user: req.session.user}, function(err, result1){
                             res.render('search', {
-                                isSearch: false,
-                                isTag: true,
+                                isSearch: true,
+                                isTag: false,
                                 query: input,
                                 username: result1.username,
                                 profiledetails: users, 

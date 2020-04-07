@@ -3,11 +3,11 @@
     {{> userheader username = username}}
 
     <!-- EDIT POSTS -->
+    <p class="title">edit post</p>
     <div class="post">
             {{#postdetails}}
             <form action="/posts/{{_id}}" class="createpost" action="#" id="createpost" name = "edit" method = "POST">
                 <div class="postdetails">
-                    <p>edit post</p><br>
                     <label for="description">Description</label><br>
                     <textarea name="description" form="createpost">{{description}}</textarea><br>
                     <label for="meetup">Meet-up Details</label><br>
