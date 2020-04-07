@@ -153,10 +153,8 @@
             valid = false;
         }
         
-        if($(".categ:checked").length == 0) // VALIDATION FOR CATEGORIES
+        if($.trim($("#meetup").val()) == "") // VALIDATION FOR CATEGORIES
         {
-            $("#categ").css("color", "lightcoral");
-            categorychosen = false;
             valid = false;
         }
         
@@ -170,7 +168,6 @@
         if(!valid)
         {
             alert("Please fill in all the missing fields.");
-            window.location.replace("/createpost");
         }
 
     });
