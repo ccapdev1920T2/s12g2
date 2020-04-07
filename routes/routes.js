@@ -477,8 +477,27 @@ app.get('/users', function(req, res) {
     else
         controller.getReportedUsers(req, res);
 
+<<<<<<< HEAD
 })
 
 
+=======
+});
+
+
+app.get('/user/:username/:postId/delete/:number', function(req,res) {
+    if(req.session.user == undefined) // if the user is not logged in
+        res.redirect('/'); // redirects user back to the log in page
+    else
+        controller.getDeletePost(req, res);
+})
+
+
+app.get("*", function(req, res){
+    res.render("error");
+})
+
+
+>>>>>>> master
 /* Exports the object `app` (defined above) when another script exports from this file */
 module.exports = app;
