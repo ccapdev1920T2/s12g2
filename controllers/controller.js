@@ -1,4 +1,4 @@
-const async = require('async');
+const multer = require('multer');
 
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
@@ -160,6 +160,23 @@ const controller = {
     postProfile: function(req, res, next) {
         console.log("@ postProfile");
 
+        var imgurl;
+
+        var Storage = multer.diskStorage
+        ({
+            destination: function(req, file, callback) {
+                callback(null, './public/img');
+            },
+            filename: function(req, file, callback) {
+                imgurl = file.fieldname + "_" + Date.now() + "_" + file.originalname;
+                callback(null, imgurl);
+            }
+        });
+
+        var upload = multer({
+            storage: Storage
+        }).array("imgUploader", 1);
+
         //TODO may error ba if passwords do not match
 
         if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
@@ -174,38 +191,49 @@ const controller = {
             })
         }
 
-        Client.findOne({user: req.session.user}, function(err, client){
-
-            if(req.body.tw)
-            {
-                client.twitter = req.body.tw;
-                client.hasig = true;
-            }
-                
-            if(req.body.fb)
-            {
-                client.facebook = req.body.fb;
-                client.hasig = true;
+        upload(req, res, function(err){
+            if(err) {
+                console.log(err);
+                return res.end("Something went wrong.");
             }
 
-            if(req.body.ig)
-            {
-                client.instagram = req.body.ig;
-                client.hasig = true;
-            }
+            Client.findOne({user: req.session.user}, function(err, client){
+            
+                if(imgurl != undefined)
+                    client.avatar = "/img/" + imgurl;
+    
+                if(req.body.tw)
+                {
+                    client.twitter = req.body.tw;
+                    client.hasig = true;
+                }
+                    
+                if(req.body.fb)
+                {
+                    client.facebook = req.body.fb;
+                    client.hasig = true;
+                }
+    
+                if(req.body.ig)
+                {
+                    client.instagram = req.body.ig;
+                    client.hasig = true;
+                }
+    
+                if(req.body.bio)
+                    client.bio = req.body.bio;
+    
+                if(req.body.contactd)
+                    client.number = req.body.contactd;
+    
+                client.save(function(err){
+                    if (err) throw err;
+                    console.log("Updated client: " + client);
+                    res.redirect('/user/' + client.username);
+                });
+            })
 
-            if(req.body.bio)
-                client.bio = req.body.bio;
-
-            if(req.body.contactd)
-                client.number = req.body.contactd;
-
-            client.save(function(err){
-                if (err) throw err;
-                console.log("Updated client: " + client);
-                res.redirect('/user/' + client.username);
-            });
-        })
+        });
     },
 
     /* LOADS EDIT PROFILE */
