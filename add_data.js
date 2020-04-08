@@ -199,12 +199,6 @@ function createCategories(cb) {
             categoryCreate("Children's", callback);
         },
         function(callback) {
-            categoryCreate("Top", callback);
-        },
-        function(callback) {
-            categoryCreate("Bottom", callback);
-        },
-        function(callback) {
             categoryCreate("Shoes", callback);
         },
         function(callback) {
@@ -275,14 +269,20 @@ function createClients(cb) {
 function createPosts(cb) {
     async.series([
         function(callback) {
-            postCreate(clients[0]._id, "post 1 test", "here is my post. hello home!",
-                120, 150, 200, 10, clients[3], "Cash", "Goks", categories[0],
+            postCreate(clients[0]._id, "OFF-WHITE CROPPED TOP", "stain sa front. cute for summer",
+                120, 150, 200, 10, clients[3], "Cash", "Goks", categories[2],
                 true, true, false, callback);
         },
         function(callback) {
-            postCreate(clients[2]._id, "post 2 test", "here is my second post. hello!!!",
-                400, 420, 550, 20, clients[3], "GCash", "DLSU", categories[2],
-                true, false, false, callback);
+            postCreate(clients[1]._id, "HARRY POTTER AND THE PHILOSOPHER'S STONE", "Good as new. None of the pages are folded. Wrapped in plastic. RFS: Decluttering",
+                200, 210, 300, 10, clients[3], "Cash", "Around DLSU", categories[0],
+                true, true, false, callback);
+        },
+        function(callback) {
+            postCreate(clients[2]._id, "EXO GROWL XOXO REPACKAGE ALBUM KISS VER", 
+            "WTS/LFB 100%. Sealed and Official EXO GROWL (XOXO Repackage Album) Kiss Version. Includes all official 12 photocards and poster",
+                600, 620, 750, 10, clients[3], "GCash", "Bloemen", categories[8],
+                true, true, false, callback);
         },
     ], cb);
 }

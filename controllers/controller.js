@@ -839,7 +839,7 @@ const controller = {
 
                 var sortOpt = this.sortOptions(req);
                 var filter = {};
-
+                
                 if (req.query.filter)
                     filter = {name: req.query.filter};
             
@@ -1016,8 +1016,8 @@ const controller = {
             var filter = {};
 
             if (req.query.filter)
-                filter = {name: req.query.filter};
-        
+                filter = {"name": req.query.filter};
+
             Category.find(filter).exec(function(err, result){
 
                     Category.findOne({name: req.params.tagname}).exec(function(err, result){
@@ -1168,25 +1168,23 @@ const controller = {
 
     sortOptions: function(req) {
 
-        var sortopt = {postdate: -1};
+        var sortopt = {"postdate": -1};
         if(req.query.sort == 'dateasc')
-            sortopt = {postdate: 1};
+            sortopt = {"postdate": 1};
         else if (req.query.sort == 'datedes')
-            sortopt = {postdate: -1};
-        else if (req.query.sort == 'bids')
-            sortopt = {numofbids: -1};
+            sortopt = {"postdate": -1};
         else if (req.query.sort == 'stealpricelth')
-            sortopt = {stealprice: 1};
+            sortopt = {"stealprice": 1};
         else if (req.query.sort == 'stealpricehtl')
-            sortopt = {stealprice: -1};
+            sortopt = {"stealprice": -1};
         else if (req.query.sort == 'currentpricelth')
-            sortopt = {currentprice: 1};
+            sortopt = {"currentprice": 1};
         else if (req.query.sort == 'currentpricehtl')
-            sortopt = {currentprice: -1};
+            sortopt = {"currentprice": -1};
         else if (req.query.sort == 'titleaz')
-            sortopt = {title: 1};
+            sortopt = {"title": 1};
         else if (req.query.sort == 'titleza')
-            sortopt = {title: -1};
+            sortopt = {"title": -1};
         
         return sortopt;
     },
