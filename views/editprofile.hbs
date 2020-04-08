@@ -6,13 +6,13 @@
 	<!-- PROFILE -->
 	<div id = "profile">
 		<div id = "editpic">
+			<form name = "profile" enctype ="multipart/form-data" action = "/api/upload" method="POST">	
 				<img id ="dp" src="{{avatar}}" alt="image">
-				<input type="file" onchange="readURL(this);" accept="image/*" id="dpchange"><br>
+				<input type="file" name="imgUploader" id="files"/>
 		</div>
 
 		<div class = "editprofile">
 			<div id = "editdetails">
-				<form name = "profile" action = "/user/{{username}}" method="POST">
 					<div class = "edit">
 						<p>user details</p><br>
 						<label id="bio">description</label>
@@ -34,8 +34,8 @@
 						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}" value="{{facebook}}"><br>
 						<label id="ig">Instagram</label><br>
 						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
-						
-						<button type="submit" form="profile" value="Submit" onclick="profile.submit()">Submit</button>
+			
+						<button type="submit" form="profile" onclick="profile.submit()">Submit</button>
 					</div>
 				</form>
 			</div>
