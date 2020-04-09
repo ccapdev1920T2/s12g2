@@ -266,35 +266,36 @@ const controller = {
 
             if (req.query.filter)
                 filter = {name: req.query.filter};
-            
-            Category.find(filter).exec(function(err, result){
 
-                Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
-                    if (err) throw err;
-    
-                    var posts = []
-                    if (results != null)
-                        posts = multipleMongooseToObj(results);
-    
-                    posts.forEach(function (post) {
-                        post.postername = post.poster.username;
-                        post.posteravatar = post.poster.avatar;
-                        post.tagname = post.category.name;
-    
-                        var timestamp = new Date(post.postdate)
-    
-                        post.date = timestamp.toDateString();
-                        post.time = timestamp.toTimeString();
-                    })
-    
-                    Client.findOne({user: req.session.user}, function(err, result){
-                        res.render('homepage', {
-                            username: result.username,
-                            post: posts
+            
+                Category.find(filter).exec(function(err, result){
+                    Post.find({"category": result}).sort(sortOpt).populate('poster').populate('category').exec(function(err, results){
+                        if (err) throw err;
+        
+                        var posts = []
+                        if (results != null)
+                            posts = multipleMongooseToObj(results);
+        
+                        posts.forEach(function (post) {
+                            post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
+                            post.tagname = post.category.name;
+        
+                            var timestamp = new Date(post.postdate)
+        
+                            post.date = timestamp.toDateString();
+                            post.time = timestamp.toTimeString();
+                        })
+        
+                        Client.findOne({user: req.session.user}, function(err, result){
+                            res.render('homepage', {
+                                username: result.username,
+                                post: posts
+                            });
                         });
                     });
                 });
-            });
+            
         }
         else {
 
@@ -499,8 +500,7 @@ const controller = {
                 post.biddername = result.highestbidder.username;
                 post.bidderavatar = post.highestbidder.avatar;
             }
-            else 
-            {
+            else {
                 post.biddername = "-";
                 post.bidderavatar = '/img/default.png';
             }
@@ -724,7 +724,7 @@ const controller = {
     postCreatePost: function(req, res) {
         console.log("@ postCreatePost");
         
-        var itemname = req.body.itemname;
+        var itemname = req.body.itemname.toUpperCase();
         var description = req.body.description;
         var sprice = req.body.sprice;
         var priceinc = req.body.priceinc;
@@ -752,7 +752,7 @@ const controller = {
             console.log(modep);
             console.log(meetup);
             console.log(category);
-        
+       
         
             if( itemname && description && sprice & priceinc  &&
                 stealp /*&&  cutoffdt*/ && modep  && meetup && category && imgurl != undefined) {
@@ -822,16 +822,17 @@ const controller = {
         var clientQuery = {user: req.query.user};
         var postQuery = {title: req.query.title};
 
+        console.log(postQuery);
         Client.findOne(clientQuery, function(err, client){
 
             client = client.toObject();
 
             Post.findOne(postQuery, function(err, post){
-
+                
                 res.render('postsuccess', {
                     username: client.username,
                     _id: post._id
-                })
+                });
             });
         });  
     },
@@ -1227,7 +1228,7 @@ const controller = {
 
     sortOptions: function(req) {
 
-        var sortopt = {"postdate": -1};
+        var sortopt;
         if(req.query.sort == 'dateasc')
             sortopt = {"postdate": 1};
         else if (req.query.sort == 'datedes')
@@ -1244,6 +1245,9 @@ const controller = {
             sortopt = {"title": 1};
         else if (req.query.sort == 'titleza')
             sortopt = {"title": -1};
+        else
+            sortopt = {"postdate": -1};
+
         
         return sortopt;
     },

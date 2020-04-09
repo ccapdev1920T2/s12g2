@@ -10,6 +10,7 @@
     <div class="post">
 
             <form enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
+
                 <div class="postdetails">
 
                     <p id = "subtitle">Please choose one category and upload at least one photo. Don't leave any fields blank.</p>
@@ -41,7 +42,7 @@
                     <!-- MODE OF PAYMENT -->
                     <label for="modep">Mode of Payment</label><br>
                     <select name="modep">
-                        <option value="Cash">Cash</option>
+                        <option selected value="Cash">Cash</option>
                         <option value="GCash">G-Cash</option>
                         <option value="Bank Transfer">Bank Transfer</option>
                         <option value="Paymaya">Paymaya</option>
@@ -49,11 +50,11 @@
                    
                     <!-- MEET-UP DETAILS -->
                     <label for="meetup">Meet-up Details</label><br>
-                    <input type="text" id="meetup" name="meetup" value="{{details}}"><br>
+                    <input type="text" id="meetup" name="meetup" placeholder = "Ex. At Agno, Andrew Lobby, etc."value="{{details}}"><br>
                    
                     <!-- CATEGORIES -->
                     <label for="categ">Categories</label><br>
-                    <input type = "radio" id = "book" name = "categ" value = "Book">
+                    <input type = "radio" id = "book" name = "categ" value = "Book" checked>
 					<label for = "Book" style = "color: black">Book</label><br>
                     <input type = "radio" id = "forpet" name = "categ" value = "For Pet">
 					<label for = "forpet" style = "color: black">For Pet</label><br>
@@ -99,7 +100,7 @@
     $("#submit").click(function() {
 
         var valid = true;
-
+        var notequal = true;
         // RESETS BACKGROUND COLOR OF FIELDS
         $("#itemname").css("background-color", "white");
         $("#description").css("background-color", "white");
@@ -153,10 +154,10 @@
             valid = false;
         }
         
-        if($.trim($("#meetup").val()) == "") // VALIDATION FOR CATEGORIES
-        {
-            valid = false;
-        }
+        //if($("#stealprice").val() <= $("#sprice").val()) // VALIDATION FOR STEAL PRICE AND START PRICE
+       // {
+        //    notequal = false;
+       // }
         
         if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
         {
@@ -170,6 +171,10 @@
             alert("Please fill in all the missing fields.");
         }
 
+        if(!notequal)
+        {
+            alert("Make sure that the steal price is not less than or equal to the starting price.");
+        }
     });
     
 </script>
