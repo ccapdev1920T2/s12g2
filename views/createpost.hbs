@@ -9,7 +9,7 @@
     
     <div class="post">
 
-            <form enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
+            <form action = "/createpost" enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
 
                     <p id = "subtitle">Please choose one category and upload at least one photo. Don't leave any fields blank.</p>
@@ -78,7 +78,7 @@
                    
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
-                    <input type="file" id = "pic" name="pic" accept="image/*" multiple><br>
+                    <input type="file" id = "pic" name="pic" accept="image/*"><br>
                    
                     <!-- SUBMIT -->
                     <button type="submit" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>

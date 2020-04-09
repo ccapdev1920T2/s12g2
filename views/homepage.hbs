@@ -146,41 +146,42 @@
 
 	{{#each post}}
 
-		<div class="post">
-			<div class="postheader">
-				<a href="/posts/{{_id}}" class = "posttitle">
-					{{title}}
-				</a>
-				{{#ifCond postername ../username}}
-            	<a href="/user/{{postername}}/{{_id}}/delete/2" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
-				<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
-            	{{/ifCond}}
-			</div>
-
-			<div class="posttags">
-                <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
-            </div>
-
-			<div class="postedby">
-				<img class="avatar" src="{{posteravatar}}">
-				<a href="/user/{{postername}}" class="username">{{postername}}</a>
-			
-				<div class="stealprice">
-					P{{stealprice}}
+			<div class="post">
+				<div class="postheader">
+					<a href="/posts/{{_id}}" class = "posttitle">
+						{{title}}
+					</a>
+					{{#ifCond postername ../username}}
+					<a href="/user/{{postername}}/{{_id}}/delete/2" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
+					<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
+					{{/ifCond}}
 				</div>
-				<div class="currentprice">
-					P{{currentprice}}
+
+				<div class="posttags">
+					<a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
 				</div>
+
+				<div class="postedby">
+					<img class="avatar" src="{{posteravatar}}">
+					<a href="/user/{{postername}}" class="username">{{postername}}</a>
 				
-			</div>
+					<div class="stealprice">
+						P{{stealprice}}
+					</div>
+					<div class="currentprice">
+						P{{currentprice}}
+					</div>
 
-			<img class="itemimage" src="{{itemimg}}">
-			
-			<div class="dateposted">
-				{{date}} | {{time}}
+					
+				</div>
+
+				<img class="itemimage" src="{{itemimg}}">
+				
+				<div class="dateposted">
+					{{date}} | {{time}}
+				</div>
 			</div>
-		</div>
-	{{/each}}
+		{{/each}}
 
 </div>
 
