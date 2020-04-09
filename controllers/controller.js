@@ -330,7 +330,7 @@ const controller = {
         }
         else {
 
-            Post.find({isApproved: false, isReviewed: false, isOpen: true}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+            Post.find({isOpen: true, isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                 if(err) throw err;
                 var posts = []
                 if (results != null)
@@ -350,6 +350,8 @@ const controller = {
 
                     post.date = timestamp.toDateString();
                     post.time = timestamp.toTimeString();
+
+                    post.itemimg = post.picture;
                 })
 
                 res.render('admin-posts', {
@@ -569,6 +571,7 @@ const controller = {
                 post.image[index].itemimg = picture;
             });
 
+            post.itemimg = post.picture;
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
@@ -980,6 +983,8 @@ const controller = {
             
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString();
+
+                                post.itemimg = post.picture;
                             });
                             
                             Client.find(query).sort(sortOpt).exec(function(err, result2){
@@ -1024,6 +1029,8 @@ const controller = {
     
                         post.date = timestamp.toDateString();
                         post.time = timestamp.toTimeString();
+
+                        post.itemimg = post.picture;
                     });
     
                     Client.findOne({user: req.session.user}, function(err, result){
@@ -1157,6 +1164,8 @@ const controller = {
             
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString();
+
+                                post.itemimg = post.picture;
                             });
                             
                             Client.findOne({user: req.session.user}, function(err, client){
