@@ -36,11 +36,9 @@
             </p>
         </div>
 
-        <div class = "pics">
-            {{#each pic}}
-                <img class="itemimage" src="{{img}}">
-            {{/each}}
-        </div>
+        {{#each image}}
+        <img class="itemimage" src="{{itemimg}}">
+        {{/each}}
         
         <div class="dateposted">
             {{date}} | {{time}}
