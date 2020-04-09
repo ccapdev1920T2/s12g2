@@ -41,9 +41,9 @@
             </p>
         </div>
 
-            
-                <img class="itemimage" src="{{itemimg}}">
-            
+        {{#each image}}
+        <img class="itemimage" src="{{itemimg}}">
+        {{/each}}
         
         <div class="dateposted">
             {{date}} | {{time}}

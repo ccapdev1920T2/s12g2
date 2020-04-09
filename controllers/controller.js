@@ -32,16 +32,13 @@ const multipleMongooseToObj = (arrayOfMongooseDocuments) => {
 //         multipleMongooseToObj,
 // };
 
-var imgurl;
-
 var Storage = multer.diskStorage
 ({
     destination: function(req, file, callback) {
         callback(null, './public/img');
     },
     filename: function(req, file, callback) {
-        imgurl = file.fieldname + "_" + Date.now() + "_" + file.originalname;
-        callback(null, imgurl);
+        callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
     }
 });
 
@@ -100,7 +97,7 @@ const controller = {
             
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString();
-                                post.itemimg = post.picture;
+                                post.itemimg = post.picture[0];
                             })
 
                             res.render('self-profile', {
@@ -140,7 +137,7 @@ const controller = {
                                     post.date = timestamp.toDateString();
                                     post.time = timestamp.toTimeString();
 
-                                    post.itemimg = post.picture;
+                                    post.itemimg = post.picture[0];
                                 })
     
                                 res.render('profile', {
@@ -177,7 +174,7 @@ const controller = {
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
 
-                            post.itemimg = post.picture;
+                            post.itemimg = post.picture[0];
                         })
 
                         res.render('admin-profile', {
@@ -223,10 +220,13 @@ const controller = {
                 return res.end("Something went wrong.");
             }
 
+            var temp = req.file.path;
+            var imgurl = temp.substr(6);
+
             Client.findOne({user: req.session.user}, function(err, client){
             
-                if(imgurl != undefined)
-                    client.avatar = "/img/" + imgurl;
+                if(temp != undefined)
+                    client.avatar = imgurl;
     
                 if(req.body.tw)
                 {
@@ -316,7 +316,7 @@ const controller = {
     
                         post.date = timestamp.toDateString();
                         post.time = timestamp.toTimeString();
-                        post.itemimg = post.picture;
+                        post.itemimg = post.picture[0];
                     })
     
                     Client.findOne({user: req.session.user}, function(err, result){
@@ -405,7 +405,7 @@ const controller = {
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
 
-                            post.itemimg = post.picture;
+                            post.itemimg = post.picture[0];
                         })
 
                         Client.findOne({user: req.session.user}, function(err, result){
@@ -440,7 +440,7 @@ const controller = {
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
 
-                            post.itemimg = post.picture;
+                            post.itemimg = post.picture[0];
                         });
         
                         res.render('admin-posts', {
@@ -562,10 +562,13 @@ const controller = {
             post.cutofftime = cutoff.toTimeString();
             post.date = postdate.toDateString();
             post.time = postdate.toTimeString();
+            
+            post.image = [];
+            post.picture.forEach(function(picture, index){
+                post.image[index] = new Object();
+                post.image[index].itemimg = picture;
+            });
 
-            post.itemimg = post.picture;
-           console.log("HELLO : " + post.picture);
-           console.log("HELLO : " + post.itemimg);
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
@@ -777,22 +780,18 @@ const controller = {
 
         var upload = multer({
             storage: Storage
-        }).single("pic");
+        }).array("pic", 10);
 
         upload(req, res, function(err){
             if(err) {
                 console.log(err);
                 return res.end("Something went wrong.");
             }
-            console.log("/img/" + imgurl);
-            console.log(itemname);
-            console.log(description);
-            console.log(sprice);
-            console.log(priceinc);
-            console.log(modep);
-            console.log(meetup);
-            console.log(category);
-
+            var ogpaths = req.files.map(file => file.path);
+            var paths = []
+            ogpaths.forEach(function(path){
+                paths.push(path.substr(6));
+            });
             
             var itemname = req.body.itemname.toUpperCase();
             var description = req.body.description;
@@ -804,10 +803,20 @@ const controller = {
             var meetup = req.body.meetup;
             var category = req.body.categ; // must check
             //var pic = req.body.pic; // must check
+
+            console.log(itemname);
+            console.log(description);
+            console.log(sprice);
+            console.log(priceinc);
+            console.log(stealp)
+            console.log(cutoffdt)
+            console.log(modep);
+            console.log(meetup);
+            console.log(category);
         
-        
-            if( itemname && description && sprice & priceinc  &&
-                stealp /*&&  cutoffdt*/ && modep  && meetup && category && imgurl != undefined) {
+            //TODO
+            if(itemname && description && sprice && priceinc && stealp
+                && cutoffdt && modep && meetup && category) {
 
                 Category.findOne({name: category}, function(err, result){
                     
@@ -832,37 +841,38 @@ const controller = {
                             category: result,
                             postdate: dateposted,
                             //pictures: pic,
-                            picture: "/img/" + imgurl
+                            picture: paths
 
                         })
 
-                        post.save(function(err){
+                        post.save(function(err, result){
                             if (err) throw err;
                             console.log("New Post: " + post);
 
                             var id = req.session.user._id;
-                            res.redirect('/success?title=' + itemname +'&user=' + id);
+                            res.redirect('/success?id=' + result._id +'&user=' + id);
                         });
                     });
                 });
             }
             else
             {
-                    res.render('createpost', {
+                console.log("error");
+                res.render('createpost', {
 
-                        title: itemname,
-                        description: description,
-        
-                        startprice: sprice,
-                        stealprice: stealp,
-                        incrementprice: priceinc,
-        
-                        cutoff: cutoffdt,
-                        paymentmode: modep,
-                        details: meetup,
-                        category: category,
-                        //pictures: pic
-                    });
+                    title: itemname,
+                    description: description,
+    
+                    startprice: sprice,
+                    stealprice: stealp,
+                    incrementprice: priceinc,
+    
+                    cutoff: cutoffdt,
+                    paymentmode: modep,
+                    details: meetup,
+                    category: category,
+                    //pictures: pic
+                });
             }
         })
     },
@@ -872,7 +882,7 @@ const controller = {
         console.log("@ getSuccess");
 
         var clientQuery = {user: req.query.user};
-        var postQuery = {title: req.query.title};
+        var postQuery = {_id: req.query.id};
 
         Client.findOne(clientQuery, function(err, client){
 

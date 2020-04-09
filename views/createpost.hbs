@@ -78,7 +78,7 @@
                    
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
-                    <input type="file" id = "pic" name="pic" accept="image/*"><br>
+                    <input type="file" id = "pic" name="pic" accept="image/*" multiple/><br>
                    
                     <!-- SUBMIT -->
                     <button type="submit" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
@@ -87,6 +87,7 @@
     </div>
 
 <script type="text/javascript">
+
     function isNumber(evt)
     {
         var charCode = (evt.which) ? evt.which : event.keyCode
