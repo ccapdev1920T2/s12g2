@@ -25,12 +25,25 @@ const multipleMongooseToObj = (arrayOfMongooseDocuments) => {
     return tempArray;
 };
 
-const mongooseToObj = (doc) => { if (doc == null){ return null; } return doc.toObject(); };
+// const mongooseToObj = (doc) => { if (doc == null){ return null; } return doc.toObject(); };
 
-    module.exports = {
-        mongooseToObj,
-        multipleMongooseToObj,
-};
+//     module.exports = {
+//         mongooseToObj,
+//         multipleMongooseToObj,
+// };
+
+var imgurl;
+
+var Storage = multer.diskStorage
+({
+    destination: function(req, file, callback) {
+        callback(null, './public/img');
+    },
+    filename: function(req, file, callback) {
+        imgurl = file.fieldname + "_" + Date.now() + "_" + file.originalname;
+        callback(null, imgurl);
+    }
+});
 
 
 const controller = {
@@ -57,8 +70,6 @@ const controller = {
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
 
-                viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
-
                 if(req.session.user.isClient) // if the user is a client
                 {
                     // if user is viewing their own profile
@@ -72,6 +83,7 @@ const controller = {
 
                             posts.forEach(function (post) {
                                 post.postername = post.poster.username;
+                                post.posteravatar = post.poster.avatar;
                                 post.tagname = post.category.name;
             
                                 var timestamp = new Date(post.postdate)
@@ -104,6 +116,7 @@ const controller = {
 
                                 posts.forEach(function (post) {
                                     post.postername = post.poster.username;
+                                    post.posteravatar = post.poster.avatar;
                                     post.tagname = post.category.name;
                 
                                     var timestamp = new Date(post.postdate)
@@ -133,6 +146,7 @@ const controller = {
 
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
@@ -160,23 +174,6 @@ const controller = {
     postProfile: function(req, res, next) {
         console.log("@ postProfile");
 
-        var imgurl;
-
-        var Storage = multer.diskStorage
-        ({
-            destination: function(req, file, callback) {
-                callback(null, './public/img');
-            },
-            filename: function(req, file, callback) {
-                imgurl = file.fieldname + "_" + Date.now() + "_" + file.originalname;
-                callback(null, imgurl);
-            }
-        });
-
-        var upload = multer({
-            storage: Storage
-        }).array("imgUploader", 1);
-
         //TODO may error ba if passwords do not match
 
         if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
@@ -190,6 +187,10 @@ const controller = {
                 });
             })
         }
+
+        var upload = multer({
+            storage: Storage
+        }).single("avatar");
 
         upload(req, res, function(err){
             if(err) {
@@ -245,7 +246,6 @@ const controller = {
         Client.findOne(query, function(err, result){
 
             result = result.toObject();
-            result.avatar = (result.avatar == null) ? "/img/default.png" : result.avatar;
 
             res.render('editprofile', {
                 username: result.username,
@@ -278,6 +278,7 @@ const controller = {
     
                     posts.forEach(function (post) {
                         post.postername = post.poster.username;
+                        post.posteravatar = post.poster.avatar;
                         post.tagname = post.category.name;
     
                         var timestamp = new Date(post.postdate)
@@ -305,6 +306,7 @@ const controller = {
 
                 posts.forEach(function (post) {
                     post.postername = post.poster.username;
+                    post.posteravatar = post.poster.avatar;
                     post.tagname = post.category.name;
 
                     var timestamp = new Date(post.postdate)
@@ -353,6 +355,7 @@ const controller = {
 
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
@@ -380,6 +383,7 @@ const controller = {
         
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
@@ -497,7 +501,9 @@ const controller = {
 
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
-
+            
+            post.bidderavatar = post.highestbidder.avatar;
+            post.posteravatar = post.poster.avatar;
             post.tagname = post.category.name;
             post.cutoffdate = cutoff.toDateString();
             post.cutofftime = cutoff.toTimeString();
@@ -542,8 +548,7 @@ const controller = {
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
 
-                viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
-                
+                //client view
                 if(req.session.user.isClient)
                 {
                     // if user is viewing their own profile
@@ -555,15 +560,15 @@ const controller = {
                             if(results != null)
                                 reviews = multipleMongooseToObj(results);
                             
-                                reviews.forEach(function (review) {
-
+                            reviews.forEach(function (review)
+                            {
                                 review.checkedStars = parseInt(review.num_stars);
                                 review.uncheckedStars = 5 - parseInt(review.num_stars);
                                 review.username = review.reviewer.username;
-                                review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
+                                review.avatar = review.reviewer.avatar;
                                 review.text = review.review;
-                                
                             })
+                            
 
                             res.render('self-profilereviews', {
                                 title: viewedclient.username,
@@ -590,7 +595,7 @@ const controller = {
                                     review.checkedstars = parseInt(review.num_stars);
                                     review.uncheckedstars = 5 - parseInt(review.num_stars);
                                     review.username = review.reviewer.username;
-                                    review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
+                                    review.avatar = review.reviewer.avatar;
                                     review.text = review.review;
 
                                 })
@@ -605,38 +610,33 @@ const controller = {
                         });
                     }   
                 }
+
+                //admin view
                 else
                 {
-                    Client.find({username: req.params.username}).exec(function(err, reviewed){
-                    
-                        reviewed = reviewed.toObject();
-
-                        Review.find({revieweduser: reviewed._id}).populate('reviewer').exec(function(err, results){
-                                
-                            var reviews = [];
+                    Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
                             
-                            if(results != null)
-                                reviews = multipleMongooseToObj(results);
-    
-                            reviews.forEach(function (review) {
-                                
-                                review.checkedStars = parseInt(review.num_stars);
-                                review.uncheckedStars = 5 - parseInt(review.num_stars);
-                                review.username = review.reviewer.username;
-                                review.avatar = (review.avatar == null) ? "/img/default.png" : review.avatar;
-                                review.text = review.review;
+                        var reviews = [];
+                        
+                        if(results != null)
+                            reviews = multipleMongooseToObj(results);
 
-                            })
-    
-                            res.render('admin-profilereviews', {
-                                title: viewedclient.username,
-                                profiledetails: viewedclient,
-                                review: reviews
-                            });
+                        reviews.forEach(function (review) {
+                            
+                            review.checkedStars = parseInt(review.num_stars);
+                            review.uncheckedStars = 5 - parseInt(review.num_stars);
+                            review.username = review.reviewer.username;
+                            review.avatar = review.reviewer.avatar;
+                            review.text = review.review;
+
+                        })
+
+                        res.render('admin-profilereviews', {
+                            title: viewedclient.username,
+                            profiledetails: viewedclient,
+                            review: reviews
                         });
-                    
-                    
-                    })
+                    });
                     
                 }
             }
@@ -845,7 +845,7 @@ const controller = {
             if(req.body.details)
                 post.details = req.body.details;
 
-                console.log(req.body.details);
+            console.log(req.body.details);
             post.save(function(err){
                 if (err) throw err;
                 console.log("Updated post: " + post);
@@ -883,6 +883,7 @@ const controller = {
                             
                             posts.forEach(function (post) {
                                 post.postername = post.poster.username;
+                                post.posteravatar = post.poster.avatar;
                                 post.tagname = post.category.name;
                 
                                 var timestamp = new Date(post.postdate)
@@ -926,6 +927,7 @@ const controller = {
     
                     posts.forEach(function (post) {
                         post.postername = post.poster.username;
+                        post.posteravatar = post.poster.avatar;
                         post.tagname = post.category.name;
     
                         var timestamp = new Date(post.postdate)
@@ -958,7 +960,7 @@ const controller = {
             reports.forEach(function (report) {
 
                 report._id = report._id;
-                report.avatar = (report.avatar == null) ? "/img/default.png" : report.avatar;
+                report.avatar = report.reporteduser.avatar;
                 report.reported = report.reporteduser.username;
                 report.reason = report.reason;
                 report.complaint = report.complaint;
@@ -1058,6 +1060,7 @@ const controller = {
                             
                             posts.forEach(function (post) {
                                 post.postername = post.poster.username;
+                                post.posteravatar = post.poster.avatar;
                                 post.tagname = post.category.name;
                 
                                 var timestamp = new Date(post.postdate)
