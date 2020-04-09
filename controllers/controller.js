@@ -794,7 +794,7 @@ const controller = {
             console.log(category);
 
             
-            var itemname = req.body.itemname;
+            var itemname = req.body.itemname.toUpperCase();
             var description = req.body.description;
             var sprice = req.body.sprice;
             var priceinc = req.body.priceinc;
