@@ -257,6 +257,7 @@ app.get('/success', function(req, res) {
 
 });
 
+
 /*
     Executes function getCreatePost() as defined in the object controller in `../controllers/controller.js`
     when a client sends an HTTP GET request for `/createpost` if the user is logged in as a client
