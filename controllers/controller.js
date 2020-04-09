@@ -291,6 +291,8 @@ const controller = {
 
             if (req.query.filter)
                 filter = {name: req.query.filter};
+            
+            Category.find(filter).exec(function(err, result){
 
                 Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                     if (err) throw err;
@@ -324,7 +326,7 @@ const controller = {
                         });
                     });
                 });
-            
+            });
         }
         else {
 
@@ -541,7 +543,8 @@ const controller = {
                 post.biddername = result.highestbidder.username;
                 post.bidderavatar = post.highestbidder.avatar;
             }
-            else {
+            else 
+            {
                 post.biddername = "-";
                 post.bidderavatar = '/img/default.png';
             }
@@ -871,17 +874,16 @@ const controller = {
         var clientQuery = {user: req.query.user};
         var postQuery = {title: req.query.title};
 
-        console.log(postQuery);
         Client.findOne(clientQuery, function(err, client){
 
             client = client.toObject();
 
             Post.findOne(postQuery, function(err, post){
-                
+
                 res.render('postsuccess', {
                     username: client.username,
                     _id: post._id
-                });
+                })
             });
         });  
     },
@@ -1277,7 +1279,7 @@ const controller = {
 
     sortOptions: function(req) {
 
-        var sortopt;
+        var sortopt = {"postdate": -1};
         if(req.query.sort == 'dateasc')
             sortopt = {"postdate": 1};
         else if (req.query.sort == 'datedes')
@@ -1294,9 +1296,6 @@ const controller = {
             sortopt = {"title": 1};
         else if (req.query.sort == 'titleza')
             sortopt = {"title": -1};
-        else
-            sortopt = {"postdate": -1};
-
         
         return sortopt;
     },
