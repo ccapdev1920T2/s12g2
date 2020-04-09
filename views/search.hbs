@@ -10,7 +10,7 @@
 						<div id = "filter" style="margin-left: 30px;">
 							
 								<div class = "filteroptions">
-									<form method = "get" name = "sortfilter">
+									<form method = "get" name = "searchsortf">
 									<div>
 										<input type = "radio" id = "book" name = "filter" value = "Book">
 										<label for = "book" style = "color: black">Book</label>
@@ -116,15 +116,13 @@
 									</div>
 
 								</div>
-
-							</form>
 						</div>
 					</div>
 				</div>
 
 				
 				<div id = "submitbutton">
-					<button id = "profilesubmit" onclick = "sortfilter.submit()">SUBMIT</button>
+					<button id = "profilesubmit" onclick = "searchsortf.submit()">SUBMIT</button>
 				</div>
 			
 		</div>
@@ -136,12 +134,12 @@
 
 	<!-- SEARCHBAR-->
 	<div id="searchbar">
-			<form name="searchform" action="/search" method="GET">
-				<input type="text" placeholder="search" id="search" name = "search">
-				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
+				<input type="text" placeholder="search" id="search" name = "search" value="{{query}}">
+				<span class ="sbbutton" id="searchbutton" onclick ="searchsortf.submit()">search</span>
 				<span class ="sbbutton" id="filterbutton">filter</span>
 			</form>
 	</div>
+
 
 	{{#if isSearch}}
     <h1>Search Results for "{{query}}"</h1><br>

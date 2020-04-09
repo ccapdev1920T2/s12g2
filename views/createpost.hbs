@@ -97,10 +97,15 @@
         return true;
     }
 
+    $("input").keyup(function(){
+        $('#submit').prop('disabled', false);
+    });
+
     $("#submit").click(function() {
-
         var valid = true;
+        var notequal = true;
 
+        $('#submit').prop('disabled', false);
         // RESETS BACKGROUND COLOR OF FIELDS
         $("#itemname").css("background-color", "white");
         $("#description").css("background-color", "white");
@@ -158,6 +163,14 @@
         {
             valid = false;
         }
+
+        if($.trim($("#stealprice").val()) <= $.trim($("#sprice").val())) // VALIDATION FOR STEAL PRICE
+        {
+            $("#stealprice").css("background-color", "lightcoral");
+            $("#sprice").css("background-color", "lightcoral");
+            notequal = false;
+        }
+        
         
         if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
         {
@@ -169,6 +182,13 @@
         if(!valid)
         {
             alert("Please fill in all the missing fields.");
+            $('#submit').prop('disabled', true);
+        }
+
+        if(!notequal)
+        {
+            alert("Make sure that the steal price is greater than the starting price.");
+            $('#submit').prop('disabled', true);
         }
 
     });
