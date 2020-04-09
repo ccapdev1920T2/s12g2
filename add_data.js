@@ -92,7 +92,7 @@ function clientCreate(user, id_num, username, number,
 
 function postCreate(poster, title, description,
     startprice, currentprice, stealprice, incrementprice,
-    highestbidder, paymentmode, details, category,
+    highestbidder, paymentmode, details, category, picture,
     isOpen, isApproved, isReviewed, cb)
 {
     var post = new Post({
@@ -109,6 +109,7 @@ function postCreate(poster, title, description,
         paymentmode: paymentmode,
         details: details,
         category: category,
+        picture: picture,
 
         isOpen: isOpen,
         isApproved: isApproved,
@@ -269,30 +270,30 @@ function createPosts(cb) {
     async.series([
         function(callback) {
             postCreate(clients[0]._id, "OFF-WHITE CROPPED TOP", "stain sa front. cute for summer",
-                120, 150, 200, 10, clients[3], "Cash", "Goks", categories[2],
+                '120', '150', '200', '10', clients[3], "Cash", "Goks", categories[2], '/img/item_shar.jpg',
                 true, true, false, callback);
         },
         function(callback) {
             postCreate(clients[1]._id, "HARRY POTTER AND THE PHILOSOPHER'S STONE", "Good as new. None of the pages are folded. Wrapped in plastic. RFS: Decluttering",
-                200, 210, 300, 10, clients[3], "Cash", "Around DLSU", categories[0],
+                '200', '210', '300', '10', clients[3], "Cash", "Around DLSU", categories[0], '/img/item_christine.jpg',
                 true, true, false, callback);
         },
         function(callback) {
             postCreate(clients[2]._id, "K-POP TWICE LIGHTSTICK VERSION 2 CANDY BONG", 
             "WTS/LFB 100% Unopened and Official. \nInclusions: Free TWICE Photocards\nRFS: I need money for WJSN concert :-(",
-               2100, 2300, 2300, 50, clients[3], "GCash", "Andrew Lobby", categories[8],
+               '2100', '2300', '2300', '50', clients[3], "GCash", "Andrew Lobby", categories[8], '/img/item_robi1.jpg',
                 false, true, false, callback);
         },
         function(callback) {
             postCreate(clients[2]._id, "EXO GROWL XOXO REPACKAGE ALBUM KISS VER", 
             "WTS/LFB 100% Sealed and Official\nEXO GROWL (XOXO Repackage Album) Kiss Version\n\nIncludes all official 12 photocards and poster",
-                600, 620, 750, 10, clients[3], "GCash", "Bloemen", categories[8],
+                '600', '620', '750', '10', clients[3], "GCash", "Bloemen", categories[8], '/img/item_robi.jpg',
                 true, true, false, callback);
         },
         function(callback) {
             postCreate(clients[3]._id, "PEDIGREE TERIYAKI FLAVOR DOG TREATS", 
             "Sealed treats! If this is not sold, I get to eat it!\nRFS: My owner wants me to :(",
-                300, 300, 500, 20, null, "GCash", "Bloemen", categories[1],
+                '300', '300', '500', '20', null, "GCash", "Bloemen", categories[1], '/img/item_nemo.jpg',
                 true, true, false, callback);
         },
     ], cb);
