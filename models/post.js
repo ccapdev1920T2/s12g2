@@ -21,8 +21,8 @@ var postSchema = new Schema({
     details:        {type: String, /*max: ,*/ required: true},
     category:       {type: Schema.Types.ObjectId, ref: Categories, /*max: ,*/ required: true},
     postdate:       {type: Date, default: Date.now},
-    // pictures:        {type: Schema.Types.ObjectId, ref: 'Files', required: true}, // indicate array?
-
+    //pictures:        {type: Schema.Types.ObjectId, ref: 'Files', required: true}, // indicate array?
+    picture:         {type: String, default: "/img/default.png"},
     isOpen:         {type: Boolean, default: true},
     isApproved:     {type: Boolean, default: false},
     isReviewed:     {type: Boolean, default: false},

@@ -298,7 +298,7 @@ const controller = {
         }
         else {
 
-            Post.find({isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+            Post.find({isApproved: false, isReviewed: false, isOpen: true}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                 if(err) throw err;
                 var posts = []
                 if (results != null)
@@ -495,14 +495,19 @@ const controller = {
 
             var post = result.toObject();
             post.postername = result.poster.username;
-            if(result.highestbidder != null)
+            if(result.highestbidder){
                 post.biddername = result.highestbidder.username;
-            else post.biddername = "-";
+                post.bidderavatar = post.highestbidder.avatar;
+            }
+            else 
+            {
+                post.biddername = "-";
+                post.bidderavatar = '/img/default.png';
+            }
 
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
             
-            post.bidderavatar = post.highestbidder.avatar;
             post.posteravatar = post.poster.avatar;
             post.tagname = post.category.name;
             post.cutoffdate = cutoff.toDateString();
@@ -728,63 +733,86 @@ const controller = {
         var modep = req.body.modep; // must check
         var meetup = req.body.meetup;
         var category = req.body.categ; // must check
-        var pic = req.body.pic; // must check
+        //var pic = req.body.pic; // must check
+
+        var upload = multer({
+            storage: Storage
+        }).single("pic");
+
+        upload(req, res, function(err){
+            if(err) {
+                console.log(err);
+                return res.end("Something went wrong.");
+            }
+            console.log("/img/" + imgurl);
+            console.log(itemname);
+            console.log(description);
+            console.log(sprice);
+            console.log(priceinc);
+            console.log(modep);
+            console.log(meetup);
+            console.log(category);
         
-        if( itemname && description && sprice & priceinc  &&
-            stealp /*&&  cutoffdt*/ && modep  && meetup && category  /*&&  pic*/ ) {
+        
+            if( itemname && description && sprice & priceinc  &&
+                stealp /*&&  cutoffdt*/ && modep  && meetup && category && imgurl != undefined) {
 
-            Category.findOne({name: category}, function(err, result){
-                
-                Client.findOne({user: req.session.user}, function(err, poster){
-    
-                    var dateposted = new Date();
-                    var datecutoff =  new Date(cutoffdt);
+                Category.findOne({name: category}, function(err, result){
+                    
+                    Client.findOne({user: req.session.user}, function(err, poster){
+        
+                        var dateposted = new Date();
+                        var datecutoff =  new Date(cutoffdt);
 
-                    var post = new Post({
-                        poster: poster,
+                        var post = new Post({
+                            poster: poster,
+                            title: itemname,
+                            description: description,
+            
+                            startprice: sprice,
+                            currentprice: sprice,
+                            stealprice: stealp,
+                            incrementprice: priceinc,
+            
+                            cutoff: datecutoff,
+                            paymentmode: modep,
+                            details: meetup,
+                            category: result,
+                            postdate: dateposted,
+                            //pictures: pic,
+                            picture: "/img/" + imgurl
+
+                        })
+
+                        post.save(function(err){
+                            if (err) throw err;
+                            console.log("New Post: " + post);
+
+                            var id = req.session.user._id;
+                            res.redirect('/success?title=' + itemname +'&user=' + id);
+                        });
+                    });
+                });
+            }
+            else
+            {
+                    res.render('createpost', {
+
                         title: itemname,
                         description: description,
         
                         startprice: sprice,
-                        currentprice: sprice,
                         stealprice: stealp,
                         incrementprice: priceinc,
         
-                        cutoff: datecutoff,
+                        cutoff: cutoffdt,
                         paymentmode: modep,
                         details: meetup,
-                        category: result,
-                        postdate: dateposted
-                        //pictures: pic,
-                    })
-
-                    post.save(function(err){
-                        if (err) throw err;
-                        console.log("New Post: " + post);
-
-                        var id = req.session.user._id;
-                        res.redirect('/success?title=' + itemname +'&user=' + id);
+                        category: category,
+                        //pictures: pic
                     });
-                });
-            });
-        }
-        else
-        {
-                res.render('createpost', {
-                    title: itemname,
-                    description: description,
-    
-                    startprice: sprice,
-                    stealprice: stealp,
-                    incrementprice: priceinc,
-    
-                    cutoff: cutoffdt,
-                    paymentmode: modep,
-                    details: meetup,
-                    category: category,
-                    //pictures: pic
-                });
-        }
+            }
+        })
     },
 
     /* LOADS SUCCESS PAGE FOR CREATING A POST */
