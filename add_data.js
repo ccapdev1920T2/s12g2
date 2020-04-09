@@ -278,21 +278,9 @@ function createPosts(cb) {
                 true, true, false, callback);
         },
         function(callback) {
-            postCreate(clients[2]._id, "K-POP TWICE LIGHTSTICK VERSION 2 CANDY BONG", 
-            "WTS/LFB 100% Unopened and Official. \nInclusions: Free TWICE Photocards\nRFS: I need money for WJSN concert :-(",
-               2100, 2300, 2300, 50, clients[3], "GCash", "Andrew Lobby", categories[8],
-                false, true, false, callback);
-        },
-        function(callback) {
             postCreate(clients[2]._id, "EXO GROWL XOXO REPACKAGE ALBUM KISS VER", 
-            "WTS/LFB 100% Sealed and Official\nEXO GROWL (XOXO Repackage Album) Kiss Version\n\nIncludes all official 12 photocards and poster",
+            "WTS/LFB 100%. Sealed and Official EXO GROWL (XOXO Repackage Album) Kiss Version. Includes all official 12 photocards and poster",
                 600, 620, 750, 10, clients[3], "GCash", "Bloemen", categories[8],
-                true, true, false, callback);
-        },
-        function(callback) {
-            postCreate(clients[3]._id, "PEDIGREE TERIYAKI FLAVOR DOG TREATS", 
-            "Sealed treats! If this is not sold, I get to eat it!\nRFS: My owner wants me to :(",
-                300, 300, 500, 20, null, "GCash", "Bloemen", categories[1],
                 true, true, false, callback);
         },
     ], cb);

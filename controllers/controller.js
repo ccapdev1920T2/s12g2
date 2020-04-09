@@ -70,6 +70,11 @@ const controller = {
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
 
+                if(viewedclient.avatar != null)
+                    viewedclient.avatar = viewedclient.avatar;
+                else
+                    viewedclient.avatar = "/img/default.png";
+
                 if(req.session.user.isClient) // if the user is a client
                 {
                     // if user is viewing their own profile
@@ -83,13 +88,19 @@ const controller = {
 
                             posts.forEach(function (post) {
                                 post.postername = post.poster.username;
-                                post.posteravatar = post.poster.avatar;
+                                
+                                if(post.poster.avatar != null)
+                                    post.posteravatar = post.poster.avatar;
+                                else
+                                    post.posteravatar = "/img/default.png";
+
                                 post.tagname = post.category.name;
             
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString();
+                                post.itemimg = post.picture;
                             })
 
                             res.render('self-profile', {
@@ -116,13 +127,20 @@ const controller = {
 
                                 posts.forEach(function (post) {
                                     post.postername = post.poster.username;
-                                    post.posteravatar = post.poster.avatar;
+                                    
+                                    if(post.poster.avatar != null)
+                                        post.posteravatar = post.poster.avatar;
+                                    else
+                                        post.posteravatar = "/img/default.png";
+
                                     post.tagname = post.category.name;
                 
                                     var timestamp = new Date(post.postdate)
                 
                                     post.date = timestamp.toDateString();
                                     post.time = timestamp.toTimeString();
+
+                                    post.itemimg = post.picture;
                                 })
     
                                 res.render('profile', {
@@ -146,13 +164,20 @@ const controller = {
 
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
-                            post.posteravatar = post.poster.avatar;
+                            
+                            if(post.poster.avatar != null)
+                                post.posteravatar = post.poster.avatar;
+                            else
+                                post.posteravatar = "/img/default.png";
+
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
+
+                            post.itemimg = post.picture;
                         })
 
                         res.render('admin-profile', {
@@ -266,36 +291,42 @@ const controller = {
 
             if (req.query.filter)
                 filter = {name: req.query.filter};
-
             
-                Category.find(filter).exec(function(err, result){
-                    Post.find({"category": result}).sort(sortOpt).populate('poster').populate('category').exec(function(err, results){
-                        if (err) throw err;
-        
-                        var posts = []
-                        if (results != null)
-                            posts = multipleMongooseToObj(results);
-        
-                        posts.forEach(function (post) {
-                            post.postername = post.poster.username;
+            Category.find(filter).exec(function(err, result){
+
+                Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+                    if (err) throw err;
+    
+                    var posts = [];
+
+                    if(results != null)
+                        posts = multipleMongooseToObj(results);
+
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+
+                        if(post.poster.avatar != null)
                             post.posteravatar = post.poster.avatar;
-                            post.tagname = post.category.name;
-        
-                            var timestamp = new Date(post.postdate)
-        
-                            post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
-                        })
-        
-                        Client.findOne({user: req.session.user}, function(err, result){
-                            res.render('homepage', {
-                                username: result.username,
-                                post: posts
-                            });
+                        else
+                            post.posteravatar = "/img/default.png";
+
+                        post.tagname = post.category.name;
+    
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
+                        post.itemimg = post.picture;
+                    })
+    
+                    Client.findOne({user: req.session.user}, function(err, result){
+                        res.render('homepage', {
+                            username: result.username,
+                            post: posts
                         });
                     });
                 });
-            
+            });
         }
         else {
 
@@ -307,7 +338,12 @@ const controller = {
 
                 posts.forEach(function (post) {
                     post.postername = post.poster.username;
-                    post.posteravatar = post.poster.avatar;
+                    
+                    if(post.poster.avatar != null)
+                            post.posteravatar = post.poster.avatar;
+                        else
+                            post.posteravatar = "/img/default.png";
+
                     post.tagname = post.category.name;
 
                     var timestamp = new Date(post.postdate)
@@ -356,13 +392,20 @@ const controller = {
 
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
-                            post.posteravatar = post.poster.avatar;
+                            
+                            if(post.poster.avatar != null)
+                                post.posteravatar = post.poster.avatar;
+                            else
+                                post.posteravatar = "/img/default.png";
+
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
+
+                            post.itemimg = post.picture;
                         })
 
                         Client.findOne({user: req.session.user}, function(err, result){
@@ -384,13 +427,20 @@ const controller = {
         
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
-                            post.posteravatar = post.poster.avatar;
+                            
+                            if(post.poster.avatar != null)
+                                post.posteravatar = post.poster.avatar;
+                            else
+                                post.posteravatar = "/img/default.png";
+
                             post.tagname = post.category.name;
         
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString();
+
+                            post.itemimg = post.picture;
                         });
         
                         res.render('admin-posts', {
@@ -412,13 +462,6 @@ const controller = {
         var phone = req.body.phone;
         var pw = req.body.password;
         var cpw = req.body.confirmpassword;
-
-        console.log(req.body.idnum)
-        console.log(req.body.email)
-        console.log(req.body.username)
-        console.log(req.body.phone)
-        console.log(req.body.password)
-        console.log(req.body.confirmpassword)
 
         if( idnum != "" && idnum.length == 8 && idnum.match(/^-{0,1}\d+$/) &&
             email != "" &&
@@ -500,7 +543,8 @@ const controller = {
                 post.biddername = result.highestbidder.username;
                 post.bidderavatar = post.highestbidder.avatar;
             }
-            else {
+            else 
+            {
                 post.biddername = "-";
                 post.bidderavatar = '/img/default.png';
             }
@@ -508,13 +552,20 @@ const controller = {
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
             
-            post.posteravatar = post.poster.avatar;
+            if(post.poster.avatar == null)
+                post.posteravatar = '/img/default.png';
+            else    
+                post.posteravatar = post.poster.avatar;
+
             post.tagname = post.category.name;
             post.cutoffdate = cutoff.toDateString();
             post.cutofftime = cutoff.toTimeString();
             post.date = postdate.toDateString();
             post.time = postdate.toTimeString();
-            
+
+            post.itemimg = post.picture;
+           console.log("HELLO : " + post.picture);
+           console.log("HELLO : " + post.itemimg);
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
@@ -723,17 +774,6 @@ const controller = {
     /* ADDS NEW POST INTO DATABASE */
     postCreatePost: function(req, res) {
         console.log("@ postCreatePost");
-        
-        var itemname = req.body.itemname.toUpperCase();
-        var description = req.body.description;
-        var sprice = req.body.sprice;
-        var priceinc = req.body.priceinc;
-        var stealp = req.body.stealp;
-        var cutoffdt = req.body.cutoffdt;
-        var modep = req.body.modep; // must check
-        var meetup = req.body.meetup;
-        var category = req.body.categ; // must check
-        //var pic = req.body.pic; // must check
 
         var upload = multer({
             storage: Storage
@@ -752,7 +792,19 @@ const controller = {
             console.log(modep);
             console.log(meetup);
             console.log(category);
-       
+
+            
+            var itemname = req.body.itemname;
+            var description = req.body.description;
+            var sprice = req.body.sprice;
+            var priceinc = req.body.priceinc;
+            var stealp = req.body.stealp;
+            var cutoffdt = req.body.cutoffdt;
+            var modep = req.body.modep; // must check
+            var meetup = req.body.meetup;
+            var category = req.body.categ; // must check
+            //var pic = req.body.pic; // must check
+        
         
             if( itemname && description && sprice & priceinc  &&
                 stealp /*&&  cutoffdt*/ && modep  && meetup && category && imgurl != undefined) {
@@ -822,17 +874,16 @@ const controller = {
         var clientQuery = {user: req.query.user};
         var postQuery = {title: req.query.title};
 
-        console.log(postQuery);
         Client.findOne(clientQuery, function(err, client){
 
             client = client.toObject();
 
             Post.findOne(postQuery, function(err, post){
-                
+
                 res.render('postsuccess', {
                     username: client.username,
                     _id: post._id
-                });
+                })
             });
         });  
     },
@@ -1228,7 +1279,7 @@ const controller = {
 
     sortOptions: function(req) {
 
-        var sortopt;
+        var sortopt = {"postdate": -1};
         if(req.query.sort == 'dateasc')
             sortopt = {"postdate": 1};
         else if (req.query.sort == 'datedes')
@@ -1245,9 +1296,6 @@ const controller = {
             sortopt = {"title": 1};
         else if (req.query.sort == 'titleza')
             sortopt = {"title": -1};
-        else
-            sortopt = {"postdate": -1};
-
         
         return sortopt;
     },

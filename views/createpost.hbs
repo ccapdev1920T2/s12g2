@@ -9,8 +9,7 @@
     
     <div class="post">
 
-            <form enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
-
+            <form action = "/createpost" enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
 
                     <p id = "subtitle">Please choose one category and upload at least one photo. Don't leave any fields blank.</p>
@@ -42,7 +41,7 @@
                     <!-- MODE OF PAYMENT -->
                     <label for="modep">Mode of Payment</label><br>
                     <select name="modep">
-                        <option selected value="Cash">Cash</option>
+                        <option value="Cash">Cash</option>
                         <option value="GCash">G-Cash</option>
                         <option value="Bank Transfer">Bank Transfer</option>
                         <option value="Paymaya">Paymaya</option>
@@ -50,11 +49,11 @@
                    
                     <!-- MEET-UP DETAILS -->
                     <label for="meetup">Meet-up Details</label><br>
-                    <input type="text" id="meetup" name="meetup" placeholder = "Ex. At Agno, Andrew Lobby, etc."value="{{details}}"><br>
+                    <input type="text" id="meetup" name="meetup" value="{{details}}"><br>
                    
                     <!-- CATEGORIES -->
                     <label for="categ">Categories</label><br>
-                    <input type = "radio" id = "book" name = "categ" value = "Book" checked>
+                    <input type = "radio" id = "book" name = "categ" value = "Book">
 					<label for = "Book" style = "color: black">Book</label><br>
                     <input type = "radio" id = "forpet" name = "categ" value = "For Pet">
 					<label for = "forpet" style = "color: black">For Pet</label><br>
@@ -79,7 +78,7 @@
                    
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
-                    <input type="file" id = "pic" name="pic" accept="image/*" multiple><br>
+                    <input type="file" id = "pic" name="pic" accept="image/*"><br>
                    
                     <!-- SUBMIT -->
                     <button type="submit" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
@@ -100,7 +99,7 @@
     $("#submit").click(function() {
 
         var valid = true;
-        var notequal = true;
+
         // RESETS BACKGROUND COLOR OF FIELDS
         $("#itemname").css("background-color", "white");
         $("#description").css("background-color", "white");
@@ -154,10 +153,10 @@
             valid = false;
         }
         
-        //if($("#stealprice").val() <= $("#sprice").val()) // VALIDATION FOR STEAL PRICE AND START PRICE
-       // {
-        //    notequal = false;
-       // }
+        if($.trim($("#meetup").val()) == "") // VALIDATION FOR CATEGORIES
+        {
+            valid = false;
+        }
         
         if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
         {
@@ -171,10 +170,6 @@
             alert("Please fill in all the missing fields.");
         }
 
-        if(!notequal)
-        {
-            alert("Make sure that the steal price is not less than or equal to the starting price.");
-        }
     });
     
 </script>
