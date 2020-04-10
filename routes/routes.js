@@ -196,7 +196,6 @@ app.get('/editprofile', function(req, res) {
 /*
     Executes function editProfile() as defined in object controller in `../controllers/controller.js`
     when a client sends an HTTP POST request for `/editprofile` if the user is logged in
-    TODO erase
 */
 app.post('/editprofile', function(req, res, next){
     if(req.session.user == undefined) // if the user is not logged in 
@@ -481,10 +480,6 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
 */
 app.get('/about', function(req, res){
     res.render("about");
-});
-
-app.post('/api/upload', function(req, res, next){
-    controller.postProfile(req, res, next);
 });
 
 /*

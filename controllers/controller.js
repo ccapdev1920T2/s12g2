@@ -7,14 +7,14 @@ mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 const Category  = require('../models/category.js');
 const Client    = require('../models/client.js');
-const File      = require('../models/file.js');
+// const File      = require('../models/file.js');
 const Post      = require('../models/post.js');
 const Report    = require('../models/report.js');
 const Review    = require('../models/review.js');
 const User      = require('../models/user.js');
 
 
-// function that converts query results to obj
+// function that converts an array of documents to objects
 // got code from https://dev.to/abourass/how-to-solve-the-own-property-issue-in-handlebars-with-mongoose-2l7c
 
 const multipleMongooseToObj = (arrayOfMongooseDocuments) => {
@@ -25,13 +25,6 @@ const multipleMongooseToObj = (arrayOfMongooseDocuments) => {
     return tempArray;
 };
 
-// const mongooseToObj = (doc) => { if (doc == null){ return null; } return doc.toObject(); };
-
-//     module.exports = {
-//         mongooseToObj,
-//         multipleMongooseToObj,
-// };
-
 var Storage = multer.diskStorage
 ({
     destination: function(req, file, callback) {
@@ -41,6 +34,7 @@ var Storage = multer.diskStorage
         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
     }
 });
+
 
 
 const controller = {
@@ -58,21 +52,19 @@ const controller = {
         Client.findOne({username: req.params.username}, function(err, viewedclient){
 
             // if profile exists
-            if (viewedclient != null && viewedclient != undefined)
+            if (viewedclient)
             {
-
                 viewedclient = viewedclient.toObject();
 
                 viewedclient.hasfb = (viewedclient.facebook);
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
 
-                if(viewedclient.avatar != null)
-                    viewedclient.avatar = viewedclient.avatar;
-                else
-                    viewedclient.avatar = "/img/default.png";
+                // TODO sa client model nilagay ko na na default is default.png if walang sinet na avatar :0 or kulang ba yun
+                viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
 
-                if(req.session.user.isClient) // if the user is a client
+                // if the user is a client
+                if(req.session.user.isClient)
                 {
                     // if user is viewing their own profile
                     if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
@@ -125,10 +117,7 @@ const controller = {
                                 posts.forEach(function (post) {
                                     post.postername = post.poster.username;
                                     
-                                    if(post.poster.avatar != null)
-                                        post.posteravatar = post.poster.avatar;
-                                    else
-                                        post.posteravatar = "/img/default.png";
+                                    post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                                     post.tagname = post.category.name;
                 
@@ -162,10 +151,7 @@ const controller = {
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
                             
-                            if(post.poster.avatar != null)
-                                post.posteravatar = post.poster.avatar;
-                            else
-                                post.posteravatar = "/img/default.png";
+                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                             post.tagname = post.category.name;
         
@@ -196,37 +182,38 @@ const controller = {
     postProfile: function(req, res, next) {
         console.log("@ postProfile");
 
-        //TODO may error ba if passwords do not match
-
-        if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
-        {
-            User.findOne({_id: req.session.user._id}, function(err, user){
-                user.password = req.body.pw;
-
-                user.save(function(err){
-                    if (err) throw err;
-                    console.log("Updated user: " + user);
-                });
-            })
-        }
-
         var upload = multer({
             storage: Storage
         }).single("avatar");
 
         upload(req, res, function(err){
+
             if(err) {
                 console.log(err);
-                return res.end("Something went wrong.");
+                return res.render("error");
             }
+            
+            var temp;
+            if(req.file)
+                temp = req.file.path;
 
-            var temp = req.file.path;
-            var imgurl = temp.substr(6);
+            //TODO add popup error in hbs file if passwords do not match
+            if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
+            {
+                User.findOne({_id: req.session.user._id}, function(err, user){
+                    user.password = req.body.pw;
+
+                    user.save(function(err){
+                        if (err) throw err;
+                        console.log("Updated user: " + user);
+                    });
+                })
+            }
 
             Client.findOne({user: req.session.user}, function(err, client){
             
                 if(temp != undefined)
-                    client.avatar = imgurl;
+                    client.avatar = temp.substr(6);
     
                 if(req.body.tw)
                 {
@@ -276,7 +263,6 @@ const controller = {
                 username: result.username,
                 profiledetails: result
             });
-
         });
     },
 
@@ -296,7 +282,7 @@ const controller = {
 
                 Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                     if (err) throw err;
-    
+
                     var posts = [];
 
                     if(results != null)
@@ -305,10 +291,7 @@ const controller = {
                     posts.forEach(function (post) {
                         post.postername = post.poster.username;
 
-                        if(post.poster.avatar != null)
-                            post.posteravatar = post.poster.avatar;
-                        else
-                            post.posteravatar = "/img/default.png";
+                        post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                         post.tagname = post.category.name;
     
@@ -339,10 +322,7 @@ const controller = {
                 posts.forEach(function (post) {
                     post.postername = post.poster.username;
                     
-                    if(post.poster.avatar != null)
-                            post.posteravatar = post.poster.avatar;
-                        else
-                            post.posteravatar = "/img/default.png";
+                    post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                     post.tagname = post.category.name;
 
@@ -378,6 +358,7 @@ const controller = {
                 res.status(404).send();
                 res.redirect('/#getstarted');
             }
+            
             else
             {
                 req.session.user = result;
@@ -395,10 +376,7 @@ const controller = {
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
                             
-                            if(post.poster.avatar != null)
-                                post.posteravatar = post.poster.avatar;
-                            else
-                                post.posteravatar = "/img/default.png";
+                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                             post.tagname = post.category.name;
         
@@ -430,10 +408,7 @@ const controller = {
                         posts.forEach(function (post) {
                             post.postername = post.poster.username;
                             
-                            if(post.poster.avatar != null)
-                                post.posteravatar = post.poster.avatar;
-                            else
-                                post.posteravatar = "/img/default.png";
+                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
                             post.tagname = post.category.name;
         
@@ -515,9 +490,7 @@ const controller = {
     checkEmail: function(req, res) {
         console.log("@ checkEmail");
 
-        var query = {email: req.body.email};
-
-        User.findOne({email: req.body.email}, function(err, result){
+        User.findOne(query, function(err, result){
             res.send(result);
         });
     },
@@ -525,10 +498,8 @@ const controller = {
     /* CHECKS IF THE USERNAME IS ALREADY TAKEN. */
     checkUsername: function(req, res) {
         console.log("@ checkUsername");
-
-        var query = {username: req.body.username};
         
-        Client.findOne({username: req.body.username}, function(err, result){
+        Client.findOne(query, function(err, result){
             res.send(result);
         });
     },
@@ -538,6 +509,9 @@ const controller = {
         console.log("@ getPost");
 
         Post.findOne({_id: req.params.postId}).populate('poster').populate('category').populate('highestbidder').exec(function(err, result){
+
+            if(result == null || result == undefined)
+                res.render("error");
 
             var post = result.toObject();
             post.postername = result.poster.username;
@@ -554,10 +528,7 @@ const controller = {
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
             
-            if(post.poster.avatar == null)
-                post.posteravatar = '/img/default.png';
-            else    
-                post.posteravatar = post.poster.avatar;
+            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
             post.tagname = post.category.name;
             post.cutoffdate = cutoff.toDateString();
@@ -575,9 +546,10 @@ const controller = {
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
-            //find current session client
+            // find current session client
             Client.findOne({user: req.session.user}, function(err, result){
 
+                // check if post is client's own post
                 post.isNotPoster = (JSON.stringify(post.poster) != JSON.stringify(result)) ? true : false;
 
                 if(req.session.user.isClient) {
@@ -603,7 +575,6 @@ const controller = {
             // if profile exists
             if (viewedclient != null && viewedclient != undefined)
             {
-
                 viewedclient = viewedclient.toObject();
 
                 viewedclient.hasfb = (viewedclient.facebook);
@@ -690,7 +661,6 @@ const controller = {
                             review.username = review.reviewer.username;
                             review.avatar = review.reviewer.avatar;
                             review.text = review.review;
-
                         })
 
                         res.render('admin-profilereviews', {
@@ -722,9 +692,10 @@ const controller = {
             Client.findOne({user: req.session.user}, function(err, poster){
 
                 Client.findOne({username: req.params.username}, function(err, reviewed) {
+                    if(reviewed == null || reviewed == undefined)
+                        res.render("error");
 
                     var review = new Review({
-                        
                         num_stars: stars,
                         reviewer: poster,
                         revieweduser: reviewed,
@@ -740,8 +711,6 @@ const controller = {
                     })
                 })
             });
-
-           
         }
         else
             res.send("MISSING FIELDS");
@@ -788,7 +757,7 @@ const controller = {
         upload(req, res, function(err){
             if(err) {
                 console.log(err);
-                return res.end("Something went wrong.");
+                return res.render("error");
             }
             var ogpaths = req.files.map(file => file.path);
             var paths = []
@@ -817,7 +786,6 @@ const controller = {
             console.log(meetup);
             console.log(category);
         
-            //TODO
             if(itemname && description && sprice && priceinc && stealp
                 && cutoffdt && modep && meetup && category) {
 
@@ -843,13 +811,12 @@ const controller = {
                             details: meetup,
                             category: result,
                             postdate: dateposted,
-                            //pictures: pic,
                             picture: paths
 
                         })
 
                         post.save(function(err, result){
-                            if (err) throw err;
+                            if (err) res.render("error");
                             console.log("New Post: " + post);
 
                             var id = req.session.user._id;
@@ -860,7 +827,6 @@ const controller = {
             }
             else
             {
-                console.log("error");
                 res.render('createpost', {
 
                     title: itemname,
@@ -874,7 +840,6 @@ const controller = {
                     paymentmode: modep,
                     details: meetup,
                     category: category,
-                    //pictures: pic
                 });
             }
         })
@@ -932,18 +897,23 @@ const controller = {
         
         Post.findOne({_id: req.params.postId}, function(err, post){
 
-            if(req.body.description)
+            if(post)
+            {
+                if(req.body.description)
                 post.description = req.body.description;
 
-            if(req.body.details)
-                post.details = req.body.details;
+                if(req.body.details)
+                    post.details = req.body.details;
 
-            console.log(req.body.details);
-            post.save(function(err){
-                if (err) throw err;
-                console.log("Updated post: " + post);
-                res.redirect('/posts/' + post._id);
-            });
+                console.log(req.body.details);
+                post.save(function(err){
+                    if (err) throw err;
+                    console.log("Updated post: " + post);
+                    res.redirect('/posts/' + post._id);
+                });
+            }
+            else res.render("error");
+            
         })
     },
 
@@ -1145,6 +1115,7 @@ const controller = {
             if (req.query.filter)
                 filter = {"name": req.query.filter};
 
+            //TODO nagamit ba yung first category.find() query? naka gray yung "result" HAHAHs
             Category.find(filter).exec(function(err, result){
 
                     Category.findOne({name: req.params.tagname}).exec(function(err, result){
@@ -1184,23 +1155,26 @@ const controller = {
             });
 
         }
-        else
-        {
-            //TODO add error page? idk
-        }
     },
 
     getClientAction: function(req, res){
     
         Client.findOne({user: req.session.user}, function(err, client){
 
+            //TODO need pa ba isort?
             Post.findOne({_id: req.params.postId}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, result){
 
                 result.highestbidder = client;
+                //if action is bid, add only increment
                 if(req.params.action == "bid")
                     result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                
+                //if action is steal, current price = steal price
                 else if (req.params.action == "steal")
                     result.currentprice = result.stealprice;
+
+                if(result.currentprice == result.stealprice)
+                    result.isOpen = false;
 
                 result.save(function(err){
                     if (err) throw err;
