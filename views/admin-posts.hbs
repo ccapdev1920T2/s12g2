@@ -10,8 +10,8 @@
                 <a href="/posts/{{_id}}" class = "posttitle">
                     {{title}}
                 </a>
-                <div class = "deletebutton">✕</div>
-                <div class = "acceptbutton">✓</div>
+                <a class = "usersbutton" href = "/{{_id}}/delete"><div class = "deletebutton">✕</div></a>
+                <a class = "usersbutton" href = "/{{_id}}/approve"><div class = "acceptbutton">✓</div></a>
             </div>
 
             <div class="posttags">
@@ -41,13 +41,6 @@
     {{/each}}
 
 <script type="text/javascript">
-    $(".acceptbutton").click(function(){
-        $(this).parent("div").parent("div").remove();
-    });
-    
-    $(".deletebutton").click(function(){
-        $(this).parent("div").parent("div").remove();
-    });
 
     $(".acceptbutton").mouseenter(function(){
         $(this).css("background-color", "green");
