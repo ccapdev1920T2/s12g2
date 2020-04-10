@@ -60,7 +60,6 @@ const controller = {
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
 
-                // TODO sa client model nilagay ko na na default is default.png if walang sinet na avatar :0 or kulang ba yun
                 viewedclient.avatar = (viewedclient.avatar == null) ? "/img/default.png" : viewedclient.avatar;
 
                 // if the user is a client
@@ -482,7 +481,7 @@ const controller = {
         }
         else
         {
-            //TODO
+            //TODO // di na ata to need?
         }
     },
 
@@ -1161,8 +1160,7 @@ const controller = {
     
         Client.findOne({user: req.session.user}, function(err, client){
 
-            //TODO need pa ba isort?
-            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, result){
+            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').exec(function(err, result){
 
                 result.highestbidder = client;
                 //if action is bid, add only increment
