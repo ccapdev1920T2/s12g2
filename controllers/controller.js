@@ -1273,6 +1273,45 @@ const controller = {
         });
     },
 
+    /* UPDATES REPORT AND CLIENT INFO (IF SUSPENDED) */
+    getAdminPostAction: function(req, res) {
+        console.log("@ getAdminPostAction");
+
+        Post.findOne({_id: req.params.id}).exec(function(err, result) {
+
+            if(result != null)
+            {
+                if(req.params.action == 'approve')
+                {
+                    result.isApproved = true;
+                    result.isReviewed = true;
+
+                    console.log("HELLO")
+                    result.save(function(err) {
+                        if(err) throw err;
+                        console.log("Updated report: " + result);
+                        res.redirect('/');
+                    })
+                }
+                else if (req.params.action == 'delete')
+                {
+                    Post.deleteOne({_id: req.params.id}, function(err) {
+                        if(err) throw err;
+
+                        console.log("Post successfully deleted");
+
+                        res.redirect('/');
+                    })
+                }
+                else
+                    res.redirect('/');
+            }
+            else
+                res.redirect('/');
+        })
+
+    },
+
     getDeletePost: function(req, res){
         console.log("@ getDeletePost");
 
