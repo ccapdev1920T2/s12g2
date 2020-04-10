@@ -6,9 +6,9 @@
 	<!-- PROFILE -->
 	<div id = "profile">
 		<div id = "editpic">
-			<form name = "profile" enctype ="multipart/form-data" action = "/api/upload" method="POST">	
+			<form name = "profile" enctype ="multipart/form-data" action = "/editprofile" method="POST">	
 				<img id ="dp" src="{{avatar}}" alt="image">
-				<input type="file" name="avatar" id="files"/>
+				<input type="file" name="avatar" id="files" accept="image/*" />
 		</div>
 
 		<div class = "editprofile">
@@ -35,7 +35,9 @@
 						<label id="ig">Instagram</label><br>
 						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
 			
-						<button type="submit" form="profile" onclick="profile.submit()">Submit</button>
+						<div style="float:right">
+							<button type="submit" class = "button" form="profile" onclick="profile.submit()">Submit</button>
+						</div>
 					</div>
 				</form>
 			</div>

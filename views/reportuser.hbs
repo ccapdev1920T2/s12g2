@@ -1,14 +1,15 @@
-<div id = "wrapper1">
+<div id = "wrapper1" style="user-select: none">
 
     {{> userheader username = username}}
 
-    <div>
+	<a class = "title">REPORT USER</a>
+	<br>
+    <div style="margin-top: 20px;">
 	<div id = "reportcontent2">
-		<h1 style = "text-align: center; margin-left: 80px">REPORT USER</h1>
 		<br>
 		<div id = "report">
 			<form action = "/user/{{usern}}/reportuser" name = "report" method = "post" >
-				<h3>REASON/S</h3>
+				<h3>REASON</h3>
 				<div class = "reportreasons" id = "rr1">
 					<div>
 					<input name = "reason" type = "radio" class = "reportchecks" id = "offensive" value = "offensive">
@@ -54,7 +55,7 @@
 </div>
 
 <script type = "text/javascript">
-
+	
 	$("#profilesubmit").click(function() 
 	{
 		var check = $(".reportchecks:checked");

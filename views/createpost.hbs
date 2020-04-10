@@ -12,7 +12,7 @@
             <form action = "/createpost" enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
 
-                    <p id = "subtitle">Please choose one category and upload at least one photo. Don't leave any fields blank.</p>
+                    <p id = "subtitle">Please upload at least one photo and don't leave any fields blank. The first photo uploaded will automatically be the thumbnail. Please choose pictures wisely - they cannot be changed once posted.</p>
                     
                     <!-- ITEM NAME -->
                     <label for="itemname">Item Name</label><br>
@@ -52,36 +52,39 @@
                     <input type="text" id="meetup" name="meetup" value="{{details}}"><br>
                    
                     <!-- CATEGORIES -->
-                    <label for="categ">Categories</label><br>
-                    <input type = "radio" id = "book" name = "categ" value = "Book" checked>
-					<label for = "Book" style = "color: black">Book</label><br>
-                    <input type = "radio" id = "forpet" name = "categ" value = "For Pet">
-					<label for = "forpet" style = "color: black">For Pet</label><br>
-                    <input type = "radio" id = "womens" name = "categ" value = "Women's">
-					<label for = "womens" style = "color: black">Women's</label><br>
-                    <input type = "radio" id = "mens" name = "categ" value = "Men's">
-					<label for = "mens" style = "color: black">Men's</label><br>
-                    <input type = "radio" id = "childrens" name = "categ" value = "Children's">
-					<label for = "childrens" style = "color: black">Children's</label><br>
-                    <input type = "radio" id = "shoes" name = "categ" value = "Shoes">
-					<label for = "shoes" style = "color: black">Shoes</label><br>
-                    <input type = "radio" id = "stationery" name = "categ" value = "Stationery">
-					<label for = "stationery" style = "color: black">Stationery</label><br>
-                    <input type = "radio" id = "food" name = "filter" value = "Food">
-				    <label for = "food" style = "color: black">Food</label><br>
-                    <input type = "radio" id = "collectible" name = "categ" value = "Collectible">
-					<label for = "collectible" style = "color: black">Collectible</label><br>
-                    <input type = "radio" id = "accessory" name = "categ" value = "Accessory">
-					<label for = "accessory" style = "color: black">Accessory</label><br>
-                    <input type = "radio" id = "technology" name = "categ" value = "Technology">
-					<label for = "technology" style = "color: black">Technology</label><br>
-                   
+                    
+                    <label for="categ">Category</label><br>
+                    <div class="radio">
+                        <input type = "radio" id = "book" name = "categ" value = "Book" checked>
+                        <label for = "Book">Book</label><br>
+                        <input type = "radio" id = "forpet" name = "categ" value = "For Pet">
+                        <label for = "forpet">For Pet</label><br>
+                        <input type = "radio" id = "womens" name = "categ" value = "Women's">
+                        <label for = "womens">Women's</label><br>
+                        <input type = "radio" id = "mens" name = "categ" value = "Men's">
+                        <label for = "mens" >Men's</label><br>
+                        <input type = "radio" id = "childrens" name = "categ" value = "Children's">
+                        <label for = "childrens">Children's</label><br>
+                        <input type = "radio" id = "shoes" name = "categ" value = "Shoes">
+                        <label for = "shoes">Shoes</label><br>
+                        <input type = "radio" id = "stationery" name = "categ" value = "Stationery">
+                        <label for = "stationery">Stationery</label><br>
+                        <input type = "radio" id = "food" name = "filter" value = "Food">
+                        <label for = "food">Food</label><br>
+                        <input type = "radio" id = "collectible" name = "categ" value = "Collectible">
+                        <label for = "collectible">Collectible</label><br>
+                        <input type = "radio" id = "accessory" name = "categ" value = "Accessory">
+                        <label for = "accessory">Accessory</label><br>
+                        <input type = "radio" id = "technology" name = "categ" value = "Technology">
+                        <label for = "technology">Technology</label><br>
+                    </div>
+
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
                     <input type="file" id = "pic" name="pic" accept="image/*" multiple/><br>
                    
                     <!-- SUBMIT -->
-                    <button type="submit" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
+                    <button type="submit" class="button" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
                 </div>
             </form>
     </div>
@@ -107,7 +110,6 @@
 
     $("#submit").click(function() {
         var valid = true;
-        var notequal = true;
 
         $('#submit').prop('disabled', false);
         // RESETS BACKGROUND COLOR OF FIELDS
@@ -117,7 +119,7 @@
         $("#priceinc").css("background-color", "white");
         $("#stealprice").css("background-color", "white");
         $("#cutoffdt").css("background-color", "white");
-        $("#meetups").css("background-color", "white");
+        $("#meetup").css("background-color", "white");
         $("#categ").css("color", "black");
         $("#pic").css("background-color", "white");
 
@@ -151,7 +153,19 @@
             valid = false;
         }
         
-        if($.trim($("#cutoffdt").val()) == "") // MUST MODIFY
+        var date = $("#cutoffdt").val();
+        $(document).on('change', '#cutoffdt', function() {
+            date = $(this).val();
+        });
+
+        if((new Date(date)) < Date.now()) // VALIDATION FOR CUTOFFDT
+        {
+            $("#cutoffdt").css("background-color", "lightcoral");
+            alert("Make sure the cut-off date and time is past the current date and time.");
+            $('#submit').prop('disabled', true);
+        }
+
+        if($("#cutoffdt").val() == "")
         {
             $("#cutoffdt").css("background-color", "lightcoral");
             valid = false;
@@ -162,25 +176,27 @@
             $("#meetup").css("background-color", "lightcoral");
             valid = false;
         }
-        
-        if($.trim($("#meetup").val()) == "") // VALIDATION FOR CATEGORIES
-        {
-            valid = false;
-        }
 
-        if($.trim($("#stealprice").val()) <= $.trim($("#sprice").val())) // VALIDATION FOR STEAL PRICE
+        if(parseInt($("#stealprice").val()) <= parseInt($("#sprice").val())) // VALIDATION FOR STEAL PRICE
         {
             $("#stealprice").css("background-color", "lightcoral");
             $("#sprice").css("background-color", "lightcoral");
-            notequal = false;
+            alert("Make sure that the steal price is greater than the starting price.");
+            $('#submit').prop('disabled', true);
         }
         
         
         if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
         {
             $("#pic").css("background-color", "lightcoral");
-            picuploaded = false;
-            valid = false;
+            alert('Please upload at least 1 picture.');
+            $('#submit').prop('disabled', true);
+        }
+
+        else if ($("#pic").prop('files').length > 10) {
+            $("#pic").css("background-color", "lightcoral");
+            alert('Please make sure the number of images do not exceed 10.');
+            $('#submit').prop('disabled', true);
         }
 
         if(!valid)
@@ -188,13 +204,6 @@
             alert("Please fill in all the missing fields.");
             $('#submit').prop('disabled', true);
         }
-
-        if(!notequal)
-        {
-            alert("Make sure that the steal price is greater than the starting price.");
-            $('#submit').prop('disabled', true);
-        }
-
     });
     
 </script>
