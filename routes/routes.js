@@ -39,7 +39,7 @@ app.get('/register', function(req, res) {
 app.post('/register', function(req, res) {
     
     req.session.destroy(function(err) { // logs out the user, before registration
-        controller.getRegistration(req, res);
+        controller.postRegistration(req, res);
     })
 
 });
@@ -49,7 +49,7 @@ app.post('/register', function(req, res) {
     Executes function checkEmail() as defined in the object controller in `../controllers/controller.js`
     to check if the email being used to register is already taken.
 */
-app.post('/checkEmail', function(req, res) {
+app.get('/checkEmail', function(req, res) {
 
     controller.checkEmail(req, res);
 });
@@ -59,7 +59,7 @@ app.post('/checkEmail', function(req, res) {
     Executes function checkUsername() as defined in the object controller in `../controllers/controller.js`
     to check if the username being used to register is already taken.
 */
-app.post('/checkUsername', function(req, res) {
+app.get('/checkUsername', function(req, res) {
 
     controller.checkUsername(req, res);
 

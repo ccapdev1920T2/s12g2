@@ -6,8 +6,8 @@
 	<!-- PROFILE -->
 	<div id = "profile">
 		<div id = "editpic">
-			<form name = "profile" enctype ="multipart/form-data" action = "/editprofile" method="POST">	
-				<img id ="dp" src="{{avatar}}" alt="image" style="margin: 30px 0px 20px 0px">
+			<form id = "editprof" name = "editprof" enctype ="multipart/form-data" action = "/editprofile" method="POST">	
+				<img id ="dp" src="{{avatar}}" alt="image" style="margin: 30px 0px  0px">
 				<input type="file" name="avatar" id="fileinput" accept="image/*" style = "margin-bottom: 20px"/>
 		</div>
 
@@ -15,28 +15,28 @@
 			<div id = "editdetails">
 					<div class = "edit">
 						<p>user details</p><br>
-						<label id="bio">description</label>
+						<label for="bio">description</label>
 						<textarea id="bio" name="bio">{{bio}}</textarea><br>
-						<label id="pw">Password</label><br>
-						<input type="password" id="pw" name="pw" minlength=8 m><br>
-						<label id="cpw">Confirm Password</label>
-						<input type="password" id="cpw" name="cpw" minlength=8><br>
+						<label for="pw">Password</label><br>
+						<input type="password" id="pw" name="pw"><br>
+						<label for="cpw">Confirm Password</label>
+						<input type="password" id="cpw" name="cpw"8><br>
+					    <p id = "pwerror">error</p><br>
 
-						
 						<p>contact details</p><br>
-						<label id="contact">phone number</label>
+						<label for="contact">phone number</label>
 						<input type="text" id="contactd" name="contactd" placeholder="{{number}}"><br>
 
 						<p>social media</p><br>
-						<label id="twt">Twitter</label><br>
+						<label for="twt">Twitter</label><br>
 						<input type="text" id="twt" name="tw" placeholder="http://www.twitter.com/{{twitter}}" value="{{twitter}}"><br>
-						<label id="fb">FaceBook</label><br>
+						<label for="fb">FaceBook</label><br>
 						<input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}" value="{{facebook}}"><br>
-						<label id="ig">Instagram</label><br>
+						<label for="ig">Instagram</label><br>
 						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
 			
 						<div style="float:right">
-							<button id = "submit" type="submit" class = "button" form="profile" onclick="profile.submit()">save</button>
+							<div class = "button" id = "submit">save</div>
 						</div>
 					</div>
 				</form>
@@ -47,6 +47,8 @@
 </div>
 
 <script type="text/javascript">
+
+	$("#pwerror").css("color", "white");
 
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -60,6 +62,45 @@
 		}
 	}
 
+	$("#submit").click(function() {
+		var valid = true;
+		var length = true;
+
+		$("#pw").css("background-color", "white");
+        $("#cpw").css("background-color", "white");
+		var pw = document.getElementById("pw").value;
+        var cpw = document.getElementById("cpw").value;
+
+		if(pw != cpw)
+		{
+			valid = false;
+		}
+
+		if(pw.length < 8)
+		{
+			length = false;
+		}
+
+		if (!length)
+		{
+			$("#pwerror").css("color", "red");
+			$("#pwerror").text("Password must contain at least 8 characters.");
+			$("#pw").css("background-color", "lightcoral");
+		}
+		else if (!valid)
+		{
+			$("#pwerror").css("color", "red");
+			$("#pwerror").text("Password and confirm password do not match.");
+			$("#pw").css("background-color", "lightcoral");
+			$("#cpw").css("background-color", "lightcoral");
+		}
+
+		else if (valid && length)
+		{
+			$("#editprof").submit();
+		}
+
+	});
 	
 
 

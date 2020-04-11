@@ -105,15 +105,7 @@
 
         return true;
     }
-
-    $("input").keyup(function(){
-        $('#submit').prop('disabled', false);
-    });
-
-    $("#pic").change(function(){
-        $('#submit').prop('disabled', false);
-    });
-
+    
     $("#submitpost").click(function() {
         var complete = true;
         var valid = true;

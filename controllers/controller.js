@@ -197,7 +197,7 @@ const controller = {
                 temp = req.file.path;
 
             //TODO add popup error in hbs file if passwords do not match
-            if (req.body.pw && JSON.stringify(req.body.pw) == JSON.stringify(req.body.cpw))
+            if (req.body.pw && req.body.pw == req.body.cpw)
             {
                 User.findOne({_id: req.session.user._id}, function(err, user){
                     user.password = req.body.pw;
@@ -429,8 +429,8 @@ const controller = {
     },
 
     /* LOADS REGISTRATION */
-    getRegistration: function(req, res) {
-        console.log("@ getRegistration");
+    postRegistration: function(req, res) {
+        console.log("@ postRegistration");
         
         var idnum = req.body.idnum;
         var email = req.body.email;
@@ -439,8 +439,8 @@ const controller = {
         var pw = req.body.password;
         var cpw = req.body.confirmpassword;
 
-        if(idnum && idnum.length == 8 && idnum.match(/^-{0,1}\d+$/) && email && phone &&
-           phone.length == 11 && phone.match(/^-{0,1}\d+$/) && pw && cpw && pw == cpw) {
+        if(idnum && idnum.length == 8 && email && phone &&
+           phone.length == 11 && pw && cpw && pw == cpw) {
 
             var user = new User({
                 email: email,
@@ -477,17 +477,15 @@ const controller = {
                 });
             });
         }
-        else
-        {
-            //TODO // di na ata to need?
-        }
     },
 
     /* CHECKS IF THE EMAIL IS ALREADY TAKEN. */
     checkEmail: function(req, res) {
         console.log("@ checkEmail");
 
-        User.findOne(query, function(err, result){
+        var email = req.query.email;
+
+        User.findOne({email: email}).exec(function(err, result){
             res.send(result);
         });
     },
@@ -495,8 +493,11 @@ const controller = {
     /* CHECKS IF THE USERNAME IS ALREADY TAKEN. */
     checkUsername: function(req, res) {
         console.log("@ checkUsername");
+
         
-        Client.findOne(query, function(err, result){
+        var username = req.query.username;
+
+        Client.findOne({username: username}).exec(function(err, result){
             res.send(result);
         });
     },
@@ -929,11 +930,7 @@ const controller = {
                 if (req.query.filter)
                     filter = {name: req.query.filter};
             
-                Category.find(filter).exec(function(err, result){
-
-                    Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function (err, result){
-                        
-                        Post.find(query).populate('poster').populate('category').exec(function(err, results){
+                        Post.find(query).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
         
                             if (results != null)
@@ -972,8 +969,6 @@ const controller = {
                                 }); 
                             });
                         });
-                    });
-                });
 
             }
             else
@@ -1110,10 +1105,9 @@ const controller = {
             if (req.query.filter)
                 filter = {"name": req.query.filter};
 
-            //TODO nagamit ba yung first category.find() query? naka gray yung "result" HAHAHs
             Category.find(filter).exec(function(err, result){
-
-                    Category.findOne({name: req.params.tagname}).exec(function(err, result){
+                                
+                    Category.findOne({name: req.params.tagname}, result).exec(function(err, result){
 
                         Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
