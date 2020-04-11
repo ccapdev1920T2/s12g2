@@ -439,10 +439,8 @@ const controller = {
         var pw = req.body.password;
         var cpw = req.body.confirmpassword;
 
-        if( idnum != "" && idnum.length == 8 && idnum.match(/^-{0,1}\d+$/) &&
-            email != "" &&
-            phone != "" && phone.length == 11 && phone.match(/^-{0,1}\d+$/) &&
-            pw != "" && cpw != "" && pw == cpw) {
+        if(idnum && idnum.length == 8 && idnum.match(/^-{0,1}\d+$/) && email && phone &&
+           phone.length == 11 && phone.match(/^-{0,1}\d+$/) && pw && cpw && pw == cpw) {
 
             var user = new User({
                 email: email,
@@ -686,7 +684,7 @@ const controller = {
         var stars = req.body.stars;
         var reviewtext = req.body.reviewbox;
 
-        if((reviewtext != null || reviewtext != undefined || reviewtext != " ") && stars != "none")
+        if(reviewtext && stars != "none")
         {
             Client.findOne({user: req.session.user}, function(err, poster){
 
@@ -711,8 +709,6 @@ const controller = {
                 })
             });
         }
-        else
-            res.send("MISSING FIELDS");
     },
 
     /* VALIDATES INFORMATION ENTERED AT LOG IN PAGE*/
@@ -1053,7 +1049,7 @@ const controller = {
         var reason = req.body.reason;
         var complaint = req.body.textcomplaint;
         
-        if((complaint != undefined || complaint != " ") && reason != undefined)
+        if(complaint && reason)
         {
             Client.findOne({user: req.session.user}, function(err, reporter){
 
