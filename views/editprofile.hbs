@@ -36,7 +36,7 @@
 						<input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
 			
 						<div style="float:right">
-							<button type="submit" class = "button" form="profile" onclick="profile.submit()">Submit</button>
+							<button id = "submit" type="submit" class = "button" form="profile" onclick="profile.submit()">Submit</button>
 						</div>
 					</div>
 				</form>
@@ -59,6 +59,8 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
+
+	
 
 
 
