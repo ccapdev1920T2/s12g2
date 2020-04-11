@@ -439,7 +439,7 @@ const controller = {
         var pw = req.body.password;
         var cpw = req.body.confirmpassword;
 
-        if(idnum && idnum.length == 8 && email && phone &&
+        if(idnum && idnum.length == 8 && email && username && phone &&
            phone.length == 11 && pw && cpw && pw == cpw) {
 
             var user = new User({
@@ -457,7 +457,7 @@ const controller = {
                     id_num: idnum,
                     username: username,
 
-                    number: parseInt(phone),
+                    number: phone,
                     bio: null,
                     twitter: null,
                     facebook: null,
@@ -486,6 +486,7 @@ const controller = {
         var email = req.query.email;
 
         User.findOne({email: email}).exec(function(err, result){
+            
             res.send(result);
         });
     },
@@ -1320,29 +1321,6 @@ const controller = {
         return sortopt;
     },
 
-    // filterOptions: function(req){
-
-    //     var filter = {};
-    //     if(req.query.book)
-    //         filter = {name : "Book"};
-    //     else if(req.query.forpet)
-    //         filter = {name : "For Pet"};
-    //     else if(req.query.womens)
-    //         filter = {name : "Women's"};
-    //     else if(req.query.mens)
-    //         filter = {name : "Men's"};
-    //     else if(req.query.stationery)
-    //         filter = {name : "Stationery"};
-    //     else if(req.query.food)
-    //         filter = {name : "Food"};
-    //     else if(req.query.collectible)
-    //         filter = {name : "Collectible"};
-    //     else if(req.query.accessory)
-    //         filter = {name : "Accessory"};
-    //     else if(req.query.technology)
-    //         filter = {name : "Technology"};
-    //     return filter;
-    // },
 };
 
 module.exports = controller;

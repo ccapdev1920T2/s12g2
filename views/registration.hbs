@@ -6,31 +6,31 @@
     <a href="" class = "title">REGISTER</a>
     
     <div id = "form">
-        <form method = "post" action = "register">
+        <form method = "post" id ="register">
             
-            <p class = "registrationerror" id = "idnumerror"></p><br>
+            
             <label for = "idnum">id number (8 digits)</label><br>
             <input type = "text" id = "idnum" name = "idnum" placeholder = "ex. 11812345"><br>
-            
-            <p class = "registrationerror" id = "emailerror"></p><br>
+            <p class = "registrationerror" id = "idnumerror"></p><br>
+
             <label for = "email">email</label><br>
             <input type="email" id = "email" name = "email" placeholder = "ex. hello@gmail.com"><br>
-
-            <p class = "registrationerror" id = "usernameerror"></p><br>
+            <p class = "registrationerror" id = "emailerror"></p><br>
+            
             <label for = "idnum">username</label><br>
             <input type = "text" id = "username" name = "username" placeholder = "ex. nemumu"><br>
-
-            <p class = "registrationerror" id = "phoneerror"></p><br>
+            <p class = "registrationerror" id = "usernameerror"></p><br>
+            
             <label for = "phone">phone number (11 digits)</label><br>
             <input type = "text" id = "phone" name = "phone" placeholder = "ex. 012345678901"><br>
+            <p class = "registrationerror" id = "phoneerror"></p><br>
             
-            <p class = "registrationerror" id = "passworderror"></p><br>
             <label for = "password">password</label><br>
             <input type = "password" id = "password" name = "password"><br>
-
+            
             <label for = "confirmpassword">confirm password</label><br>
             <input type = "password" id = "confirmpassword" name = "confirmpassword"><br>
-            
+            <p class = "registrationerror" id = "passworderror"></p><br>
             
         
             <input class = "button" type = "submit" id = "submit" value = "register">
@@ -45,13 +45,56 @@
 
 <script type = "text/javascript">
 
-    $("#submit").click(function() {
-        
-        var valid = true;
+$(document).ready(function () {
 
-        $("#idnum").css("background-color", "white");
+    $("#username").keyup(function(){
+        var username = $("#username").val();
+
+            $.get('/checkUsername', {username: username}, function(result) {
+                if(result.username == username) {
+                    $("#username").css("background-color", "lightcoral");
+                    $("#submit").prop("disabled", true);
+                    $("#usernameerror").text("Username already taken.");
+                }
+                else
+                {
+                    $("#username").css("background-color", "white");
+                    $("#usernameerror").text("");
+                    $("#submit").prop("disabled", false)
+                }
+            });
+    });
+
+    $("#email").keyup(function(){
+        var email = $("#email").val();
+
+            $.get('/checkEmail', {email: email}, function(result) 
+            {
+                if(result.email == email) {
+                    $("#email").css("background-color", "lightcoral");
+                    $("#submit").prop("disabled", true);
+                    $("#emailerror").text("Email already taken.");
+                }
+                 else
+                {
+                    $("#email").css("background-color", "white");
+                    $("#emailerror").text("");
+                    $("#submit").prop("disabled", false)
+                }
+            });
+    });
+
+    $("#submit").click(function() {
+ 
+        var valid = true;
+        var username = $("#username").val();
+        var email = $("#email").val();
+        var pw = $("#password").val();
+        var cpw = $("#confirmpassword").val();
+
         $("#email").css("background-color", "white");
         $("#username").css("background-color", "white");
+        $("#idnum").css("background-color", "white");
         $("#phone").css("background-color", "white");
         $("#password").css("background-color", "white");
         $("#confirmpassword").css("background-color", "white");
@@ -61,6 +104,8 @@
         $("#usernameerror").text("");
         $("#phoneerror").text("");
         $("#passworderror").text("");
+        $("#emailerror").text("");
+        $("#usernameerror").text("");
 
         if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
         {
@@ -72,27 +117,17 @@
                 $("#idnumerror").text("Invalid ID number.");
 
             valid = false;
-        };
+        }
+        else
+        {
+            $("#submit").prop("disabled", false);
+        }
 
         if($.trim($("#email").val()) == "")
         {
             $("#email").css("background-color", "lightcoral");
             $("#emailerror").text("Please add an email address.");
             valid = false;
-        }
-        else
-        {
-            $.post('/checkEmail', {email: $("#email").val()}, function(result) {
-            
-                if(result != "") {
-                    valid = false;
-                    $("#email").text("");
-                    $("#email").css("background-color", "lightcoral");
-                    $("#emailerror").text("Email already registered.");
-                }
-
-            });
-
         }
 
         if($.trim($("#username").val()) == "")
@@ -101,18 +136,6 @@
             $("#usernameerror").text("Please add a username.");
             valid = false;
         }
-        else {
-
-            $.post('/checkUsername', {username: $("#username").val()}, function(result) {
-                
-                if(result != "") {
-                    valid = false;
-                    $("#usernameerror").text("Username already taken.")
-                    $("#username").css("background-color", "lightcoral");
-                }
-            });
-
-        };
 
         if($.trim($("#phone").val()) == "" || !$("#phone").val().match(/^-{0,1}\d+$/) || $("#phone").val().length != 11)
         {
@@ -124,7 +147,12 @@
                 $("#phoneerror").text("Invalid phone number.");
 
             valid = false;
-        };
+        }
+        else
+        {
+            $("#submit").prop("disabled", false);
+        }
+
 
         if($.trim($("#password").val()) == "")
         {
@@ -132,25 +160,33 @@
             $("#confirmpassword").css("background-color", "lightcoral");
             $("#passworderror").text("Please add a password.");
             valid = false;
-        };
-
-        if($.trim($("#confirmpassword").val()) == "" ||  $("#confirmpassword").val() != $("#password").val())
+        }
+        else if (pw.length < 8)
         {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            $("#passworderror").text("Password must contain at least 8 characters.");
+            valid = false;
+        }
+        else if(cpw != pw)
+        {
+            $("#passworderror").text("Password and confirm password do not match.");
+            $("#password").css("background-color", "lightcoral");
             $("#confirmpassword").css("background-color", "lightcoral");
             valid = false;
+        }
+        else
+        {
+            $("#submit").prop("disabled", false);
+        }
 
-            if($("#confirmpassword").val() != $("#password").val())
-                $("#passworderror").text("Password and confirm password do not match.");
-        };
 
         if(!valid)
         {
             alert("Please complete missing/invalid fields.");
+            $("#submit").prop("disabled", true);
         }
-        else
-        {
-            $("#submit").load('/createpost');
-        }
-
+        
     });
+});
 </script>
