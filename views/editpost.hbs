@@ -9,15 +9,53 @@
             <form action="/posts/{{_id}}" class="createpost" action="#" id="createpost" name = "edit" method = "POST">
                 <div class="postdetails">
                     <label for="description">Description</label><br>
-                    <textarea name="description" form="createpost">{{description}}</textarea><br>
+                    <textarea name = "description" id="description" form="createpost">{{description}}</textarea><br>
+
                     <label for="meetup">Meet-up Details</label><br>
                     <input type="text" id="meetup" name="details" value="{{details}}"><br>
-                    <button type="submit" form="createpost" value="Submit" onclick = "edit.submit()">Submit</button>
-                </div>
 
+                    <div style="text-align: center; border-bottom: 0px">
+					    <p id = "createposterror">error</p>
+                    </div>
+                    <div class = "button" id = "submitpost">post</div>
+                </div>
             </form>
             {{/postdetails}}
-        
     </div>
-
 </div>
+
+<script type="text/javascript">
+
+    $("#createposterror").css("color", "white");
+
+    $("#submitpost").click(function(){
+        var complete = true;
+
+        $("#description").css("background-color", "white");
+        $("#meetup").css("background-color", "white");
+
+        if($.trim($("#description").val()) == "") // VALIDATION FOR DESCRIPTION
+        {
+            $("#description").css("background-color", "lightcoral");
+            complete = false;
+        }
+        
+        if ($.trim($("#meetup").val()) == "") // VALIDATION FOR MEETUPS
+        {
+            $("#meetup").css("background-color", "lightcoral");
+            complete = false;
+        }
+
+        if(!complete)
+        {
+            $("#createposterror").css("color", "red");
+            $("#createposterror").text("Please fill in both fields.");
+        }
+        else
+        {
+            $("#createpost").submit();
+        }
+
+    })
+
+</script>

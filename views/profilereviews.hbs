@@ -63,7 +63,7 @@
 			<a class="title"> Leave a Review</a>
 			
 			<div class=" reviews">
-				<form action = "/user/{{username}}/reviews" name = "review" method = "post">
+				<form action = "/user/{{username}}/reviews" name = "review" id="reviewform" method = "post">
 					<p class = "reviewtext">
 						Stars:
 					</p>
@@ -84,8 +84,7 @@
 					<textarea id = "reviewbox" name = "reviewbox" for = "writereview"></textarea>
 					<p class = "errormessage" id = "reviewerrormessage"></p>
 					<div id = "submitbutton">
-						<input class = "button" type = "submit" id = "submitreview" value = "Submit" onclick = "review.submit()">
-						
+						<div class = "button" id = "submitreview">submit</div>
 					</div>
 
 				</form>
@@ -105,7 +104,7 @@
 						</div>
 						<div class="reviewer">
 								<img class="avatar" src="{{avatar}}">
-								<a href="profile" class="username">{{username}}</a>
+								<a href="/user/{{username}}" class="username">{{username}}</a>
 						
 						</div>
 						<p class = "reviewdesc">
@@ -137,6 +136,7 @@
 		if(!($("#stars option:selected").val() == 'none') && !($("#reviewbox").val().trim() == ""))
 		{
 			alert("Your review has been submitted.");	
+			$("#reviewform").submit();
 		}
 		else
 		{

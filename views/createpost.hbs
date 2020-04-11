@@ -12,7 +12,7 @@
             <form action = "/createpost" enctype = "multipart/form-data" class = "createpost" id = "createpost" name = "create" method = "post">
                 <div class="postdetails">
 
-                    <p id = "subtitle">Please upload at least one photo and don't leave any fields blank. The first photo uploaded will automatically be the thumbnail. Please choose pictures wisely - they cannot be changed once posted.</p>
+                    <p id = "subtitle">The first photo uploaded will automatically be the thumbnail. Only "description" and "meet-up details" can be changed after posting.</p>
                     
                     <!-- ITEM NAME -->
                     <label for="itemname">Item Name</label><br>
@@ -84,13 +84,19 @@
                     <input type="file" id = "pic" name="pic" accept="image/*" multiple/><br>
                    
                     <!-- SUBMIT -->
-                    <button type="submit" class="button" id = "submit" form="createpost" value="Submit" onclick = "create.submit()">Submit</button>
+                    
+                    <div style="text-align: center; border-bottom: 0px">
+					    <p id = "createposterror">error</p>
+                    </div>
+                    <div class = "button" id = "submitpost">post</div>
                 </div>
             </form>
     </div>
 
 <script type="text/javascript">
 
+    $("#createposterror").css("color", "white");
+    
     function isNumber(evt)
     {
         var charCode = (evt.which) ? evt.which : event.keyCode
@@ -108,11 +114,10 @@
         $('#submit').prop('disabled', false);
     });
 
-    $("#submit").click(function() {
+    $("#submitpost").click(function() {
+        var complete = true;
         var valid = true;
 
-        $('#submit').prop('disabled', false);
-        // RESETS BACKGROUND COLOR OF FIELDS
         $("#itemname").css("background-color", "white");
         $("#description").css("background-color", "white");
         $("#sprice").css("background-color", "white");
@@ -126,31 +131,31 @@
         if($.trim($("#itemname").val()) == "") // VALIDATION FOR ITEM NAME
         {
             $("#itemname").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
         
         if($.trim($("#description").val()) == "") // VALIDATION FOR DESCRIPTION
         {
             $("#description").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
         
         if($.trim($("#sprice").val()) == "") // VALIDATION FOR STARTING PRICE
         {
             $("#sprice").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
 
         if($.trim($("#priceinc").val()) == "") // VALIDATION FOR PRICE INCREMENT
         {
             $("#priceinc").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
         
         if($.trim($("#stealprice").val()) == "") // VALIDATION FOR STEAL PRICE
         {
             $("#stealprice").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
         
         var date = $("#cutoffdt").val();
@@ -161,48 +166,60 @@
         if((new Date(date)) < Date.now()) // VALIDATION FOR CUTOFFDT
         {
             $("#cutoffdt").css("background-color", "lightcoral");
-            alert("Make sure the cut-off date and time is past the current date and time.");
-            $('#submit').prop('disabled', true);
+
+            $("#createposterror").text("Make sure the cut-off date and time is past the current date and time.");
+            valid = false;
         }
 
         if($("#cutoffdt").val() == "")
         {
             $("#cutoffdt").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
         
         if($.trim($("#meetup").val()) == "") // VALIDATION FOR MEETUPS
         {
             $("#meetup").css("background-color", "lightcoral");
-            valid = false;
+            complete = false;
         }
 
         if(parseInt($("#stealprice").val()) <= parseInt($("#sprice").val())) // VALIDATION FOR STEAL PRICE
         {
             $("#stealprice").css("background-color", "lightcoral");
             $("#sprice").css("background-color", "lightcoral");
-            alert("Make sure that the steal price is greater than the starting price.");
-            $('#submit').prop('disabled', true);
+
+            $("#createposterror").text("Make sure that the steal price is greater than the starting price.");
+            valid = false;
         }
         
         
         if ($("#pic").val() == "") // VALIDATION FOR PIC UPLOAD
         {
             $("#pic").css("background-color", "lightcoral");
-            alert('Please upload at least 1 picture.');
-            $('#submit').prop('disabled', true);
+
+            $("#createposterror").text('Please upload at least 1 picture.');
+            valid = false;
         }
 
-        else if ($("#pic").prop('files').length > 10) {
+        if ($("#pic").prop('files').length > 10) {
             $("#pic").css("background-color", "lightcoral");
-            alert('Please make sure the number of images do not exceed 10.');
-            $('#submit').prop('disabled', true);
+            
+            $("#createposterror").text('Please make sure the number of images do not exceed 10.');
+            valid = false;
         }
 
-        if(!valid)
+        if(!complete)
         {
-            alert("Please fill in all the missing fields.");
-            $('#submit').prop('disabled', true);
+            $("#createposterror").text("Please fill in all the missing fields.");
+        }
+        
+        if(complete && valid)
+        {
+            $("#createpost").submit();
+        }
+        else
+        {
+            $("#createposterror").css("color", "red");
         }
     });
     

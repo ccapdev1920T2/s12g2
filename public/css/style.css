@@ -475,6 +475,7 @@ input[type=email], input[type=password], input[type=text]
 
 	color:black;
 	text-decoration:none;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .postdesc
@@ -628,22 +629,21 @@ input[type=email], input[type=password], input[type=text]
 	text-align: left;
 }
 
-.postdetails p
-{
-	user-select: none;
-	display: inline-block;
-	margin-bottom: 20px;
-	max-width: 500px;
-	text-decoration:none;
-	font-size: 25px;
-}
-
 #subtitle
 {
 	margin-top: 0px;
 	padding-bottom: 10px;
 	font-size: 13px;
 	font-family: "Open Sans", sans-serif;
+}
+
+#createposterror
+{
+	color: red;
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+	text-transform: uppercase;
+	font-size: 12px;
 }
 
 .postdetails label
@@ -739,22 +739,13 @@ input[type=email], input[type=password], input[type=text]
 	cursor: pointer;
 }
 
-.postdetails button
+#submitpost
 {
-	padding: 13px 20px 10px 20px;
-	border-radius: 30px;
-	border: 0.5px solid black;
+	text-align: center;
 	margin-top: 20px;
-	margin-left: 80%;
-	border-radius: 30px;
-	cursor: pointer;
-	outline: none;
-	
-	letter-spacing: 2px;
-	font-family: 'Josefin Sans', sans-serif;
-	background-color: transparent;
-	text-transform: uppercase;
-	color: black;
+	width: 60px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* CREATE AND EDIT POST END */
@@ -844,7 +835,7 @@ h1
 {
 	width: 300px;
 	height: 500px;
-	padding: 10px;
+	padding: 40px 20px 40px 20px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -1086,15 +1077,10 @@ h1
 
 #profilesubmit
 {
-	user-select: none;
-    padding: 14px 13px 10px 15px;
-	border-radius: 30px;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-decoration-line: none;
-    text-transform: uppercase;
-    font-size: 12px;
-	text-align: center;
+	margin-top: 20px;
+	width: 60px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #iconattribute
@@ -1110,15 +1096,17 @@ h1
 #editpic
 {
 	width: 400px;
-	height: 40vh;
+	height: 55vh;
+	margin-right: 20px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	border-radius: 30px;
+	box-sizing: border-box;
 	float: left;
 	background-color: white;
-	border-radius: 30px;
 }
 
 #dpchange
@@ -1178,11 +1166,27 @@ h1
 
 .edit textarea
 {
-	margin-bottom:20px;
+	border-radius: 20px;
+	border: 0.5px solid #ebebeb;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding: 10px;
 	resize: none;
+	outline: none;
+
 	height: 100px;
 	width: 79%;
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#fileinput
+{
+	text-align: center;
+	padding: 10px;
+	border-radius: 20px;
+	border: 0.5px solid #ebebeb;
+	cursor: pointer;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .edit input[type=text]
@@ -1190,14 +1194,14 @@ h1
 	border: none;
 	border-bottom: 0.5px solid #ebebeb;
 	margin-right: 5px;
-	margin-bottom:20px;
+	margin-bottom:25px;
 	
 	background-color: transparent;
 	text-align: start;
-	letter-spacing: 1.5px;
+	letter-spacing: 1.25px;
 	line-height: 2;
 	color: #382a1f;
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	width: 80%;
 	border-bottom: 0.5px solid #ebebeb;
 }
@@ -1206,7 +1210,7 @@ h1
 {
 	border: none;
 	border-bottom: 0.5px solid #ebebeb;
-	margin-right: 5px;
+	margin-right: 10px;
 	margin-bottom:20px;
 	
 	background-color: transparent;
@@ -1375,6 +1379,10 @@ h1
 #submitreview
 {
 	text-align: center;
+	margin-top: 20px;
+	width: 60px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .reviewtext 
