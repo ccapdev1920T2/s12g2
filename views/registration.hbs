@@ -47,6 +47,10 @@
 
 $(document).ready(function () {
 
+    $("input").change(function(){
+        $("#submit").prop("disabled", false);
+    });
+
     $("#username").keyup(function(){
         var username = $("#username").val();
 
