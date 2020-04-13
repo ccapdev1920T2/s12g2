@@ -18,19 +18,33 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Open the command prompt to the folder where the project is.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Step 1. Run the following code:
 
 ```
-until finished
+npm install
 ```
+
+Step 2. To populate the database:
+
+```
+node add_data.js
+```
+
+Step 3. Run the application:
+
+```
+node index.js
+```
+
+To log in as a client, use the following credentials:
+Email: shargaw@dlsu.edu.ph
+Password: hatdog
+
+To log in as admin, use the following credentials:
+Email: bidspp@gmail.com
+Password: p@ssword
 
 End with an example of getting some data out of the system or using it for a little demo
 
