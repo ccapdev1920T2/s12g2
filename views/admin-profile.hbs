@@ -32,15 +32,15 @@
 
 				<div id = "socialmedia">
 					{{#if hasfb}}
-						<a href = "http://www.facebook.com/{{fb}}"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
+						<a href = "http://www.facebook.com/{{fb}}" target="_blank"><img class = "icon" id = "fb"src = "/img/facebook.png"></a>
 					{{/if}}
 
 					{{#if hastw}}
-						<a href = "http://www.twitter.com/{{tw}}"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
+						<a href = "http://www.twitter.com/{{tw}}" target="_blank"><img class = "icon" id = "tw"src = "/img/twitter.png"></a>
 					{{/if}}
 
 					{{#if hasig}}
-						<a href = "http://www.instagram.com/{{ig}}"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
+						<a href = "http://www.instagram.com/{{ig}}" target="_blank"><img class = "icon" id = "ig"src = "/img/instagram.png"></a>
 					{{/if}}
 				</div>
 
@@ -57,6 +57,9 @@
 		</div>
 		{{/profiledetails}}
 
+		<div id = "posts" style="width: 700px">
+			<a class="title">POSTS</a>
+			<br>
 		{{!-- POSTS --}}
 		{{#each post}}
 			<div class="post">
@@ -90,6 +93,7 @@
 				</div>
 			</div>
 		{{/each}}
+		</div>
 
 	</div>
 

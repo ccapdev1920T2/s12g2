@@ -86,6 +86,7 @@
 			$("#pwerror").css("color", "red");
 			$("#pwerror").text("Password must contain at least 8 characters.");
 			$("#pw").css("background-color", "lightcoral");
+			window.scrollTo(0,0);
 		}
 		else if (!valid)
 		{
@@ -93,6 +94,7 @@
 			$("#pwerror").text("Password and confirm password do not match.");
 			$("#pw").css("background-color", "lightcoral");
 			$("#cpw").css("background-color", "lightcoral");
+			window.scrollTo(0,0);
 		}
 
 		else if (valid && length)

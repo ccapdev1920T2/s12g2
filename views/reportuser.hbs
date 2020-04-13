@@ -55,6 +55,9 @@
 </div>
 
 <script type = "text/javascript">
+
+	$("#reporterrormessage").text("error");
+	$("#reporterrormessage").css("color", "white");
 	
 	$("#profilesubmit").click(function() 
 	{
@@ -71,8 +74,14 @@
 
 			if(check.length == 0)
 				$("#reporterrormessage").text("Please choose one reason for your report.");
-			else if($("#textcomplaint").val().trim() == "")
+			
+			if($("#textcomplaint").val().trim() == "")
+			{
 				$("#reporterrormessage").text("Please write your complaint.");
+				$("#textcomplaint").css("background-color", "lightcoral");
+			}
+
+			$("#reporterrormessage").css("color", "red");
 		}
 
 		

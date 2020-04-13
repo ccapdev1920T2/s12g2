@@ -65,8 +65,16 @@ const controller = {
                 // if the user is a client
                 if(req.session.user.isClient)
                 {
+                    // if user is suspended
+                    if (viewedclient.isSuspended)
+                    {
+                        res.render("suspended", {
+                            username: viewedclient.username
+                        })
+                    }
+                    
                     // if user is viewing their own profile
-                    if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
+                    else if (JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
 
                         Post.find({poster: viewedclient._id}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                             var posts = [];
@@ -394,11 +402,25 @@ const controller = {
                         })
 
                         Client.findOne({user: req.session.user}, function(err, result){
-                            res.render('homepage', {
-                                titletag: "Dashboard",
-                                username: result.username,
-                                post: posts
-                            });
+
+                            if(result.isSuspended)
+                            {
+                                req.session.destroy(function(err) {
+                                    if(err)
+                                        console.log(err);
+                                    else
+                                        res.render("self-suspended");
+                                });
+                            }
+                            else
+                            {
+                                res.render('homepage', {
+                                    titletag: "Dashboard",
+                                    username: result.username,
+                                    post: posts
+                                });
+                            }
+                            
                         });
                     })
                 }

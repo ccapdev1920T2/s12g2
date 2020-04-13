@@ -1,6 +1,7 @@
 <div id = "reportscreen">
 	<div id = "reportcontent">
 		<button id = "close">X</button>
+		<br><br>
 		<h1 style = "text-align: center; margin-left: 80px; margin-bottom: 0px">FILTER AND SORT</h1>
 		<br>
 		<div id = "filtersortsubmit">
@@ -123,23 +124,25 @@
 				</div>
 
 				
-				<div id = "submitbutton">
-					<button class = "button" id = "profilesubmit" onclick = "sortfilter.submit()">SUBMIT</button>
-				</div>
+				
 			
 		</div>
+		<div id = "submitbutton">
+					<div class = "button" id = "profilesubmit" onclick = "sortfilter.submit()">SUBMIT</div>
+				</div>
 	</div>
 </div>
 
 <div id = "wrapper1">
 	{{> userheader username = username}}
 
+
 	<!-- SEARCHBAR-->
 	<div id="searchbar">
 			<form name="searchform" action="search" method="GET">
 				<input type="text" placeholder="search" id="search" name = "search">
 				<span class ="sbbutton" id="searchbutton" onclick ="searchform.submit()">search</span>
-				<span class ="sbbutton" id="filterbutton">filter</span>
+				<span class ="sbbutton" id="filterbutton">options</span>
 			</form>
 	</div>
 	<!-- POSTS -->
