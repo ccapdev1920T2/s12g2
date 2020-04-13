@@ -92,6 +92,7 @@ const controller = {
                             })
 
                             res.render('self-profile', {
+                                titletag: viewedclient.username,
                                 title: viewedclient.username,
                                 username: viewedclient.username,
                                 profiledetails: viewedclient,
@@ -129,6 +130,7 @@ const controller = {
                                 })
     
                                 res.render('profile', {
+                                    titletag: viewedclient.username,
                                     title: viewedclient.username,
                                     username: currentclient.username,
                                     profiledetails: viewedclient,
@@ -163,6 +165,7 @@ const controller = {
                         })
 
                         res.render('admin-profile', {
+                            titletag: viewedclient.username,
                             title: viewedclient.username,
                             profiledetails: viewedclient,
                             post: posts
@@ -259,6 +262,7 @@ const controller = {
             result = result.toObject();
 
             res.render('editprofile', {
+                titletag: "Edit Profile",
                 username: result.username,
                 profiledetails: result
             });
@@ -303,6 +307,7 @@ const controller = {
     
                     Client.findOne({user: req.session.user}, function(err, result){
                         res.render('homepage', {
+                            titletag: "Dashboard",
                             username: result.username,
                             post: posts
                         });
@@ -334,6 +339,7 @@ const controller = {
                 })
 
                 res.render('admin-posts', {
+                    titletag: "Dashboard",
                     post: posts
                 });
             });
@@ -389,6 +395,7 @@ const controller = {
 
                         Client.findOne({user: req.session.user}, function(err, result){
                             res.render('homepage', {
+                                titletag: "Dashboard",
                                 username: result.username,
                                 post: posts
                             });
@@ -420,6 +427,7 @@ const controller = {
                         });
         
                         res.render('admin-posts', {
+                            titletag: "Dashboard",
                             post: posts
                         });
                     });
@@ -526,7 +534,7 @@ const controller = {
 
             var cutoff = new Date(post.cutoff);
             var postdate = new Date(post.postdate);
-            
+            var datenow = new Date(Date.now());
             post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
             post.tagname = post.category.name;
@@ -545,14 +553,14 @@ const controller = {
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
-            // TODO: pacheck nalang kung gagana ito yung iuupdate yung document pag past na ng cutoff
-            post.isBidding = (post.cutoffdate < Date.now()) ? true: false;
 
+            post.isBidding = (cutoff.getTime() < datenow.getTime()) ? false: true;
+            
             if(!post.isBidding)
             {
-                post.isOpen = false;
+                result.isOpen = false;
 
-                post.save(function(err) {
+                result.save(function(err) {
                     if(err) throw err;
                     console.log("Updated post: " + post);
                 })
@@ -566,6 +574,7 @@ const controller = {
 
                 if(req.session.user.isClient) {
                     res.render('viewpost', {
+                        titletag: post.title,
                         username: result.username,
                         post: post
                     });
@@ -616,6 +625,7 @@ const controller = {
                             
 
                             res.render('self-profilereviews', {
+                                titletag: "My Reviews",
                                 title: viewedclient.username,
                                 username: viewedclient.username,
                                 profiledetails: viewedclient,
@@ -646,6 +656,7 @@ const controller = {
                                 })
     
                                 res.render('profilereviews', {
+                                    titletag: viewedclient.username + "'s Reviews",
                                     title: viewedclient.username,
                                     username: currentclient.username,
                                     profiledetails: viewedclient,
@@ -676,6 +687,7 @@ const controller = {
                         })
 
                         res.render('admin-profilereviews', {
+                            titletag: viewedclient.username + "'s Reviews",
                             title: viewedclient.username,
                             profiledetails: viewedclient,
                             review: reviews
@@ -750,6 +762,7 @@ const controller = {
             result = result.toObject();
 
             res.render('createpost', {
+                titletag: "Create Post",
                 username: result.username
             });
         })
@@ -839,6 +852,8 @@ const controller = {
             {
                 res.render('createpost', {
 
+                    titletag: "Create Post",
+
                     title: itemname,
                     description: description,
     
@@ -869,6 +884,7 @@ const controller = {
             Post.findOne(postQuery, function(err, post){
 
                 res.render('postsuccess', {
+                    titletag: "Posting Successful!",
                     username: client.username,
                     _id: post._id
                 })
@@ -893,6 +909,7 @@ const controller = {
                 post = post.toObject();
                 
                 res.render('editpost', {
+                    titletag: "Edit Post",
                     username: client.username,
                     postdetails: post
                 })
@@ -930,21 +947,22 @@ const controller = {
 
     getSearch: function(req, res){
         console.log("@ getSearch");
-        
+        var sortOpt = this.sortOptions(req);
         var posts;
+        var filter = {};
+        if (req.query.filter)
+            filter = {name: req.query.filter};
 
             if (req.query.search)
             {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
-                var sortOpt = this.sortOptions(req);
-                var filter = {};
-                
-                if (req.query.filter)
-                    filter = {name: req.query.filter};
+
             
-                        Post.find(query).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+
+                    Category.find(filter).exec(function(err, result){
+                        Post.find({$text: {$search: input}, category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
         
                             if (results != null)
@@ -973,6 +991,7 @@ const controller = {
         
                                 Client.findOne({user: req.session.user}, function(err, result1){
                                     res.render('search', {
+                                        titletag: "Search Results for " + input,
                                         isSearch: true,
                                         isTag: false,
                                         query: input,
@@ -983,34 +1002,37 @@ const controller = {
                                 }); 
                             });
                         });
-
+                    });
             }
             else
             {
-                Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
-                    if (err) throw err;
-    
-                    var posts = []
-                    if (results != null)
-                        posts = multipleMongooseToObj(results);
-    
-                    posts.forEach(function (post) {
-                        post.postername = post.poster.username;
-                        post.posteravatar = post.poster.avatar;
-                        post.tagname = post.category.name;
-    
-                        var timestamp = new Date(post.postdate)
-    
-                        post.date = timestamp.toDateString();
-                        post.time = timestamp.toTimeString();
+                Category.find(filter).exec(function(err, result){
+                    Post.find({}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+                        if (err) throw err;
+        
+                        var posts = []
+                        if (results != null)
+                            posts = multipleMongooseToObj(results);
+        
+                        posts.forEach(function (post) {
+                            post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
+                            post.tagname = post.category.name;
+        
+                            var timestamp = new Date(post.postdate)
+        
+                            post.date = timestamp.toDateString();
+                            post.time = timestamp.toTimeString();
 
-                        post.itemimg = post.picture;
-                    });
-    
-                    Client.findOne({user: req.session.user}, function(err, result){
-                        res.render('homepage', {
-                            username: result.username,
-                            post: posts
+                            post.itemimg = post.picture;
+                        });
+        
+                        Client.findOne({user: req.session.user}, function(err, result){
+                            res.render('homepage', {
+                                titletag: "Search Results for " + input,
+                                username: result.username,
+                                post: posts
+                            });
                         });
                     });
                 });
@@ -1097,6 +1119,7 @@ const controller = {
             if(err) throw err;
             
             res.render('reportuser', {
+                titletag: "Report",
                 username: result.username,
                 usern: req.params.username
             });
@@ -1107,7 +1130,7 @@ const controller = {
 
     getTagged: function(req, res){
         
-        console.log("@ getTagged")
+        console.log("@ getTagged");
         
         var posts = []
 
@@ -1119,10 +1142,8 @@ const controller = {
             if (req.query.filter)
                 filter = {"name": req.query.filter};
 
-            Category.find(filter).exec(function(err, result){
+            Category.findOne({name: req.params.tagname}).exec(function(err, result){
                                 
-                    Category.findOne({name: req.params.tagname}, result).exec(function(err, result){
-
                         Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
             
@@ -1144,6 +1165,7 @@ const controller = {
                             
                             Client.findOne({user: req.session.user}, function(err, client){
                                 res.render('search', {
+                                    titletag: "Posts tagged with " + req.params.tagname,
                                     isSearch: false,
                                     isTag: true,
                                     query: req.params.tagname,
@@ -1153,8 +1175,6 @@ const controller = {
                                 });
                             }); 
                         });
-                    });
-
             });
 
         }

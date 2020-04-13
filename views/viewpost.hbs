@@ -53,6 +53,9 @@
     <div class="sidebar">
         {{#if isBidding}}
         <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
+        {{else}}
+        <div class="sidebarlabels" style="font-size: 18px;">bidding closed</div>
+        <div class="sidebarlabels" style="font-size: 18px;">sold to</div>
         {{/if}}
 
         {{#if isStolen}}

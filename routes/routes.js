@@ -27,7 +27,9 @@ app.get('/favicon.ico', controller.getFavicon);
 */
 app.get('/register', function(req, res) {
     
-    res.render('registration');
+    res.render('registration', {
+        titletag: "Register",
+    });
 
 });
 
@@ -74,7 +76,9 @@ app.get('/checkUsername', function(req, res) {
 app.get('/', function(req, res) {
 
     if(req.session.user == undefined) // if the user is not logged in
-        res.render('home'); // redirects user back to the log in page
+        res.render('home',{
+            titletag: "Welcome to bids++!",
+        }); // redirects user back to the log in page
     else
         controller.getHomepage(req, res);
 
@@ -104,7 +108,9 @@ app.post('/', function(req, res) {
 app.get('/home', function(req, res) {
 
     if(req.session.user == undefined) // if the user is not logged in
-        res.render('home');// redirects user back to the log in page
+        res.render('home', {
+            titletag: "Welcome to bids++!",
+        });// redirects user back to the log in page
     else
         controller.getHomepage(req, res);
     
@@ -479,7 +485,9 @@ app.get('/user/:username/:postId/delete/:number', function(req,res) {
     Renders the about page.
 */
 app.get('/about', function(req, res){
-    res.render("about");
+    res.render("about", {
+        titletag: "About bids++",
+    });
 });
 
 /*
