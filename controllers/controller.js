@@ -545,6 +545,19 @@ const controller = {
             post.isStolen = (post.currentprice == post.stealprice) ? true : false;
             post.isBidding = !post.isStolen;
 
+            // TODO: pacheck nalang kung gagana ito yung iuupdate yung document pag past na ng cutoff
+            post.isBidding = (post.cutoffdate < Date.now()) ? true: false;
+
+            if(!post.isBidding)
+            {
+                post.isOpen = false;
+
+                post.save(function(err) {
+                    if(err) throw err;
+                    console.log("Updated post: " + post);
+                })
+            }
+
             // find current session client
             Client.findOne({user: req.session.user}, function(err, result){
 
