@@ -16,7 +16,6 @@ var clientSchema = new Schema({
     hastw:              Boolean,
     hasig:              Boolean,
     isSuspended:        {type: Boolean, default: false},
-    likedPosts:         [{type: Schema.Types.ObjectId, ref: 'Posts'}],
     avatar:             {type: String, default: "/img/default.png"}
 });
 

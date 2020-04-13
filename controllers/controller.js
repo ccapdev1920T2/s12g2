@@ -206,7 +206,7 @@ const controller = {
                     user.password = req.body.pw;
 
                     user.save(function(err){
-                        if (err) throw err;
+                        if (err) res.render("error");
                         console.log("Updated user: " + user);
                     });
                 })
@@ -242,7 +242,7 @@ const controller = {
                     client.number = req.body.contactd;
     
                 client.save(function(err){
-                    if (err) throw err;
+                    if (err) res.render("error");
                     console.log("Updated client: " + client);
                     res.redirect('/user/' + client.username);
                 });
@@ -457,7 +457,7 @@ const controller = {
             });
 
             user.save(function(err){
-                if (err) throw err;
+                if (err) res.render("error");
                 console.log('New User: ' + user);
     
                 var client = new Client({
@@ -475,11 +475,10 @@ const controller = {
                     hastw: null,
                     isSuspended: false,
                     likedposts: null,
-                    avatar: null
                 });
 
                 client.save(function(err){
-                    if (err) throw err;
+                    if (err) res.render("error");
                     console.log('New Client: ' + client);
                     res.render('welcome');
                 });
@@ -561,7 +560,7 @@ const controller = {
                 result.isOpen = false;
 
                 result.save(function(err) {
-                    if(err) throw err;
+                    if (err) res.render("error");
                     console.log("Updated post: " + post);
                 })
             }
@@ -727,7 +726,7 @@ const controller = {
                     })
 
                     review.save(function(err) {
-                        if(err) throw err;
+                        if (err) res.render("error");
                         console.log("New Review: " + review);
 
                         res.redirect(req.get('referer'));
@@ -934,7 +933,7 @@ const controller = {
 
                 console.log(req.body.details);
                 post.save(function(err){
-                    if (err) throw err;
+                    if (err) res.render("error");
                     console.log("Updated post: " + post);
                     res.redirect('/posts/' + post._id);
                 });
@@ -1096,7 +1095,7 @@ const controller = {
                     })
 
                     report.save(function(err) {
-                        if(err) throw err;
+                        if (err) res.render("error");
                         console.log("New Report: " + report);
 
                         res.redirect('/user/' + reported.username);
@@ -1199,7 +1198,7 @@ const controller = {
                     result.isOpen = false;
 
                 result.save(function(err){
-                    if (err) throw err;
+                    if (err) res.render("error");
                     console.log("Updated post: " + result);
 
                     var post = result.toObject();
@@ -1237,7 +1236,7 @@ const controller = {
                 {
                     result.isResolved = true;
                     result.save(function(err) {
-                        if(err) throw err;
+                        if (err) res.render("error");
                         console.log("Updated report: " + result);
                         res.redirect('/users');
                     })
@@ -1249,13 +1248,13 @@ const controller = {
                         client.isSuspended = true;
 
                         client.save(function(err) {
-                            if(err) throw err;
+                            if (err) res.render("error");
                             console.log("Updated client: " + client);
                         })
 
                         result.isResolved = true;
                         result.save(function(err) {
-                            if(err) throw err;
+                            if (err) res.render("error");
                             console.log("Updated report: " + result);
                             res.redirect('/users');
                         })
@@ -1284,7 +1283,7 @@ const controller = {
 
                     console.log("HELLO")
                     result.save(function(err) {
-                        if(err) throw err;
+                        if (err) res.render("error");
                         console.log("Updated report: " + result);
                         res.redirect('/');
                     })
