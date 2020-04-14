@@ -3,7 +3,19 @@
     
     <div class = "post">
         <div class="about" style="text-align: center">
+
+            {{#if isSelf}}
+            <h2 style="margin-top: 0px;">Your account has been suspended.</h2>
+            {{/if}}
+
+            {{#if isOther}}
             <h2 style="margin-top: 0px;">{{username}}'s account has been suspended.</h2>
+            {{/if}}
+
+            {{#if isPost}}
+            <h2 style="margin-top: 0px;">The owner of the post you're trying to view has been suspended.</h2>
+            {{/if}}
+
             <p>If you think this is a mistake, please don't hesitate to <a href="/about">contact us</a>.</p>
             <br><br>
             <div style="text-align: center">

@@ -69,6 +69,9 @@ const controller = {
                     if (viewedclient.isSuspended)
                     {
                         res.render("suspended", {
+                            isSelf: false,
+                            isOther: true,
+                            isPost: false,
                             username: viewedclient.username
                         })
                     }
@@ -294,31 +297,55 @@ const controller = {
                 Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                     if (err) throw err;
 
-                    var posts = [];
+                    var temp = []
+                    var posts = []
 
-                    if(results != null)
-                        posts = multipleMongooseToObj(results);
+                    if (results != null)
+                        temp = multipleMongooseToObj(results);
 
-                    posts.forEach(function (post) {
-                        post.postername = post.poster.username;
+                    temp.forEach(function (post) {
+                        if(!post.poster.isSuspended)
+                        {
+                            post.postername = post.poster.username;
+                            
+                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
-                        post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+                            post.tagname = post.category.name;
+        
+                            var timestamp = new Date(post.postdate)
+        
+                            post.date = timestamp.toDateString();
+                            post.time = timestamp.toTimeString();
 
-                        post.tagname = post.category.name;
-    
-                        var timestamp = new Date(post.postdate)
-    
-                        post.date = timestamp.toDateString();
-                        post.time = timestamp.toTimeString();
-                        post.itemimg = post.picture[0];
+                            post.itemimg = post.picture[0];
+
+                            posts.push(post);
+                        }
                     })
-    
+
                     Client.findOne({user: req.session.user}, function(err, result){
-                        res.render('homepage', {
-                            titletag: "Dashboard",
-                            username: result.username,
-                            post: posts
-                        });
+
+                        if(result.isSuspended)
+                        {
+                            req.session.destroy(function(err) {
+                                if(err)
+                                    console.log(err);
+                                else
+                                    res.render("suspended", {        
+                                        isSelf: true,
+                                        isOther: false,
+                                        isPost: false,
+                                    });
+                            });
+                        }
+                        else
+                        {
+                            res.render('homepage', {
+                                titletag: "Dashboard",
+                                username: result.username,
+                                post: posts
+                            });
+                        }
                     });
                 });
             });
@@ -327,23 +354,29 @@ const controller = {
 
             Post.find({isOpen: true, isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                 if(err) throw err;
+                var temp = []
                 var posts = []
                 if (results != null)
-                    posts = multipleMongooseToObj(results);
+                    temp = multipleMongooseToObj(results);
 
-                posts.forEach(function (post) {
-                    post.postername = post.poster.username;
-                    
-                    post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+                temp.forEach(function (post) {
+                    if(!post.poster.isSuspended)
+                    {
+                        post.postername = post.poster.username;
+                        
+                        post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
-                    post.tagname = post.category.name;
+                        post.tagname = post.category.name;
 
-                    var timestamp = new Date(post.postdate)
+                        var timestamp = new Date(post.postdate)
 
-                    post.date = timestamp.toDateString();
-                    post.time = timestamp.toTimeString();
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString();
 
-                    post.itemimg = post.picture;
+                        post.itemimg = post.picture;
+
+                        posts.push(post);
+                    }
                 })
 
                 res.render('admin-posts', {
@@ -382,23 +415,30 @@ const controller = {
                     Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                         if (err) throw err;
 
+                        var temp = []
                         var posts = []
+
                         if (results != null)
-                            posts = multipleMongooseToObj(results);
+                            temp = multipleMongooseToObj(results);
 
-                        posts.forEach(function (post) {
-                            post.postername = post.poster.username;
-                            
-                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+                        temp.forEach(function (post) {
+                            if(!post.poster.isSuspended)
+                            {
+                                post.postername = post.poster.username;
+                                
+                                post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
-                            post.tagname = post.category.name;
-        
-                            var timestamp = new Date(post.postdate)
-        
-                            post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
+                                post.tagname = post.category.name;
+            
+                                var timestamp = new Date(post.postdate)
+            
+                                post.date = timestamp.toDateString();
+                                post.time = timestamp.toTimeString();
 
-                            post.itemimg = post.picture[0];
+                                post.itemimg = post.picture[0];
+
+                                posts.push(post);
+                            }
                         })
 
                         Client.findOne({user: req.session.user}, function(err, result){
@@ -409,7 +449,11 @@ const controller = {
                                     if(err)
                                         console.log(err);
                                     else
-                                        res.render("self-suspended");
+                                        res.render("suspended", {        
+                                            isSelf: true,
+                                            isOther: false,
+                                            isPost: false,
+                                        });
                                 });
                             }
                             else
@@ -430,22 +474,28 @@ const controller = {
                         if(err) throw err;
 
                         var posts = []
+                        var temp = []
                         if (results != null)
-                            posts = multipleMongooseToObj(results);
+                            temp = multipleMongooseToObj(results);
         
-                        posts.forEach(function (post) {
-                            post.postername = post.poster.username;
-                            
-                            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+                        temp.forEach(function (post) {
+                            if(!post.poster.isSuspended)
+                            {
+                                post.postername = post.poster.username;
+                                
+                                post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
-                            post.tagname = post.category.name;
-        
-                            var timestamp = new Date(post.postdate)
-        
-                            post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
+                                post.tagname = post.category.name;
+            
+                                var timestamp = new Date(post.postdate)
+            
+                                post.date = timestamp.toDateString();
+                                post.time = timestamp.toTimeString();
 
-                            post.itemimg = post.picture[0];
+                                post.itemimg = post.picture[0];
+                                
+                                posts.push(post);
+                            }
                         });
         
                         res.render('admin-posts', {
@@ -542,69 +592,81 @@ const controller = {
                 res.render("error");
 
             var post = result.toObject();
-            post.postername = result.poster.username;
-            if(result.highestbidder){
-                post.biddername = result.highestbidder.username;
-                post.bidderavatar = post.highestbidder.avatar;
-            }
-            else 
+
+            if(result.poster.isSuspended)
             {
-                post.biddername = "-";
-                post.bidderavatar = '/img/default.png';
+                res.render("suspended", {
+                    isSelf: false,
+                    isOther: false,
+                    isPost: true
+                });
             }
-
-            var cutoff = new Date(post.cutoff);
-            var postdate = new Date(post.postdate);
-            var datenow = new Date(Date.now());
-            post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
-
-            post.tagname = post.category.name;
-            post.cutoffdate = cutoff.toDateString();
-            post.cutofftime = cutoff.toTimeString();
-            post.date = postdate.toDateString();
-            post.time = postdate.toTimeString();
-            
-            post.image = [];
-            post.picture.forEach(function(picture, index){
-                post.image[index] = new Object();
-                post.image[index].itemimg = picture;
-            });
-
-            post.itemimg = post.picture;
-            post.isStolen = (post.currentprice == post.stealprice) ? true : false;
-            post.isBidding = !post.isStolen;
-
-
-            post.isBidding = (cutoff.getTime() < datenow.getTime()) ? false: true;
-            
-            if(!post.isBidding)
+            else
             {
-                result.isOpen = false;
-
-                result.save(function(err) {
-                    if (err) res.render("error");
-                    console.log("Updated post: " + post);
-                })
+                post.postername = result.poster.username;
+                if(result.highestbidder){
+                    post.biddername = result.highestbidder.username;
+                    post.bidderavatar = post.highestbidder.avatar;
+                }
+                else 
+                {
+                    post.biddername = "-";
+                    post.bidderavatar = '/img/default.png';
+                }
+    
+                var cutoff = new Date(post.cutoff);
+                var postdate = new Date(post.postdate);
+                var datenow = new Date(Date.now());
+                post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+    
+                post.tagname = post.category.name;
+                post.cutoffdate = cutoff.toDateString();
+                post.cutofftime = cutoff.toTimeString();
+                post.date = postdate.toDateString();
+                post.time = postdate.toTimeString();
+                
+                post.image = [];
+                post.picture.forEach(function(picture, index){
+                    post.image[index] = new Object();
+                    post.image[index].itemimg = picture;
+                });
+    
+                post.itemimg = post.picture;
+                post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+                post.isBidding = !post.isStolen;
+    
+    
+                post.isBidding = (cutoff.getTime() < datenow.getTime()) ? false: true;
+                
+                if(!post.isBidding)
+                {
+                    result.isOpen = false;
+    
+                    result.save(function(err) {
+                        if (err) res.render("error");
+                        console.log("Updated post: " + post);
+                    })
+                }
+    
+                // find current session client
+                Client.findOne({user: req.session.user}, function(err, result){
+    
+                    // check if post is client's own post
+                    post.isNotPoster = (JSON.stringify(post.poster) != JSON.stringify(result)) ? true : false;
+    
+                    if(req.session.user.isClient) {
+                        res.render('viewpost', {
+                            titletag: post.title,
+                            username: result.username,
+                            post: post
+                        });
+                    }
+    
+                    else{
+                        res.render('admin-viewpost', post);
+                    }
+                });
             }
-
-            // find current session client
-            Client.findOne({user: req.session.user}, function(err, result){
-
-                // check if post is client's own post
-                post.isNotPoster = (JSON.stringify(post.poster) != JSON.stringify(result)) ? true : false;
-
-                if(req.session.user.isClient) {
-                    res.render('viewpost', {
-                        titletag: post.title,
-                        username: result.username,
-                        post: post
-                    });
-                }
-
-                else{
-                    res.render('admin-viewpost', post);
-                }
-            });
         });
     },
 
@@ -617,104 +679,116 @@ const controller = {
             // if profile exists
             if (viewedclient != null && viewedclient != undefined)
             {
-                viewedclient = viewedclient.toObject();
-
-                viewedclient.hasfb = (viewedclient.facebook);
-                viewedclient.hasig = (viewedclient.instagram);
-                viewedclient.hastw = (viewedclient.twitter);
-
-                //client view
-                if(req.session.user.isClient)
+                if(viewedclient.isSuspended)
                 {
-                    // if user is viewing their own profile
-                    if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
+                    res.render("suspended", {
+                        isSelf: false,
+                        isOther: true,
+                        isPost: false,
+                        username: viewedclient.username,
+                    });
+                }
+                else
+                {
+                    viewedclient = viewedclient.toObject();
 
+                    viewedclient.hasfb = (viewedclient.facebook);
+                    viewedclient.hasig = (viewedclient.instagram);
+                    viewedclient.hastw = (viewedclient.twitter);
+
+                    //client view
+                    if(req.session.user.isClient)
+                    {
+                        // if user is viewing their own profile
+                        if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
+
+                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                                var reviews = [];
+
+                                if(results != null)
+                                    reviews = multipleMongooseToObj(results);
+                                
+                                reviews.forEach(function (review)
+                                {
+                                    review.checkedStars = parseInt(review.num_stars);
+                                    review.uncheckedStars = 5 - parseInt(review.num_stars);
+                                    review.username = review.reviewer.username;
+                                    review.avatar = review.reviewer.avatar;
+                                    review.text = review.review;
+                                })
+                                
+
+                                res.render('self-profilereviews', {
+                                    titletag: "My Reviews",
+                                    title: viewedclient.username,
+                                    username: viewedclient.username,
+                                    profiledetails: viewedclient,
+                                    review: reviews
+                                });
+                            });                      
+                        }
+                        else {
+                            // find current session user
+
+                            Client.findOne({user: req.session.user}, function(err, currentclient){
+
+                                Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                                    
+                                    var reviews = [];
+                                    
+                                    if(results != null)
+                                        reviews = multipleMongooseToObj(results);
+
+                                    reviews.forEach(function (review) {
+                                        
+                                        review.checkedstars = parseInt(review.num_stars);
+                                        review.uncheckedstars = 5 - parseInt(review.num_stars);
+                                        review.username = review.reviewer.username;
+                                        review.avatar = review.reviewer.avatar;
+                                        review.text = review.review;
+
+                                    })
+        
+                                    res.render('profilereviews', {
+                                        titletag: viewedclient.username + "'s Reviews",
+                                        title: viewedclient.username,
+                                        username: currentclient.username,
+                                        profiledetails: viewedclient,
+                                        review: reviews
+                                    });
+                                });
+                            });
+                        }   
+                    }
+
+                    //admin view
+                    else
+                    {
                         Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                                
                             var reviews = [];
-
+                            
                             if(results != null)
                                 reviews = multipleMongooseToObj(results);
-                            
-                            reviews.forEach(function (review)
-                            {
+
+                            reviews.forEach(function (review) {
+                                
                                 review.checkedStars = parseInt(review.num_stars);
                                 review.uncheckedStars = 5 - parseInt(review.num_stars);
                                 review.username = review.reviewer.username;
                                 review.avatar = review.reviewer.avatar;
                                 review.text = review.review;
                             })
-                            
 
-                            res.render('self-profilereviews', {
-                                titletag: "My Reviews",
+                            res.render('admin-profilereviews', {
+                                titletag: viewedclient.username + "'s Reviews",
                                 title: viewedclient.username,
-                                username: viewedclient.username,
                                 profiledetails: viewedclient,
                                 review: reviews
                             });
-                        });                      
-                    }
-                    else {
-                        // find current session user
-
-                        Client.findOne({user: req.session.user}, function(err, currentclient){
-
-                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
-                                
-                                var reviews = [];
-                                
-                                if(results != null)
-                                    reviews = multipleMongooseToObj(results);
-
-                                reviews.forEach(function (review) {
-                                    
-                                    review.checkedstars = parseInt(review.num_stars);
-                                    review.uncheckedstars = 5 - parseInt(review.num_stars);
-                                    review.username = review.reviewer.username;
-                                    review.avatar = review.reviewer.avatar;
-                                    review.text = review.review;
-
-                                })
-    
-                                res.render('profilereviews', {
-                                    titletag: viewedclient.username + "'s Reviews",
-                                    title: viewedclient.username,
-                                    username: currentclient.username,
-                                    profiledetails: viewedclient,
-                                    review: reviews
-                                });
-                            });
                         });
-                    }   
-                }
-
-                //admin view
-                else
-                {
-                    Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
-                            
-                        var reviews = [];
                         
-                        if(results != null)
-                            reviews = multipleMongooseToObj(results);
-
-                        reviews.forEach(function (review) {
-                            
-                            review.checkedStars = parseInt(review.num_stars);
-                            review.uncheckedStars = 5 - parseInt(review.num_stars);
-                            review.username = review.reviewer.username;
-                            review.avatar = review.reviewer.avatar;
-                            review.text = review.review;
-                        })
-
-                        res.render('admin-profilereviews', {
-                            titletag: viewedclient.username + "'s Reviews",
-                            title: viewedclient.username,
-                            profiledetails: viewedclient,
-                            review: reviews
-                        });
-                    });
-                    
+                    }
                 }
             }
             else // if profile does not exist
@@ -1067,24 +1141,28 @@ const controller = {
         Report.find({isResolved: false}).populate('reporteduser').populate('reporter').exec(function(err, results){
             if (err) throw err;
 
+            var temp = []
             var reports = []
             if (reports != null)
-                reports = multipleMongooseToObj(results);
+                temp = multipleMongooseToObj(results);
 
-            reports.forEach(function (report) {
-
-                report._id = report._id;
-                report.avatar = report.reporteduser.avatar;
-                report.reported = report.reporteduser.username;
-                report.reason = report.reason;
-                report.complaint = report.complaint;
-
-                report.reporter = report.reporter.username;
-
-                var timestamp = new Date(report.datesubmitted)
-
-                report.date = timestamp.toDateString();
-                report.time = timestamp.toTimeString();
+            temp.forEach(function (report) {
+                if(!report.reporteduser.isSuspended)
+                {
+                    report._id = report._id;
+                    report.avatar = report.reporteduser.avatar;
+                    report.reported = report.reporteduser.username;
+                    report.reason = report.reason;
+                    report.complaint = report.complaint;
+    
+                    report.reporter = report.reporter.username;
+    
+                    var timestamp = new Date(report.datesubmitted)
+    
+                    report.date = timestamp.toDateString();
+                    report.time = timestamp.toTimeString();
+                    reports.push(report);
+                }                
             });
 
             res.render('admin-users', {
@@ -1136,17 +1214,34 @@ const controller = {
     loadReportUser: function(req, res) {
         console.log("@ loadReportUser");
 
-        Client.findOne({user: req.session.user}).exec(function(err, result) {
+        Client.findOne({user: req.session.user}).exec(function(err, reporter) {
             if(err) throw err;
             
-            res.render('reportuser', {
-                titletag: "Report",
-                username: result.username,
-                usern: req.params.username
+            Client.findOne({username: req.params.username}, function(err, reported)
+            {
+                if(err)
+                {
+                    res.render("error")
+                }
+                else if(reported.isSuspended)
+                {
+                    res.render("suspended", {
+                        isSelf: false,
+                        isOther: true,
+                        isPost: false,
+                        username: reported.username,
+                    });
+                }
+                else
+                {
+                    res.render('reportuser', {
+                        titletag: "Report",
+                        username: reporter.username,
+                        usern: reported.username
+                    });
+                }
             });
-
         });
-        
     },
 
     getTagged: function(req, res){
@@ -1207,40 +1302,51 @@ const controller = {
 
             Post.findOne({_id: req.params.postId}).populate('poster').populate('category').exec(function(err, result){
 
-                result.highestbidder = client;
-                //if action is bid, add only increment
-                if(req.params.action == "bid")
-                    result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
-                
-                //if action is steal, current price = steal price
-                else if (req.params.action == "steal")
-                    result.currentprice = result.stealprice;
-
-                if(result.currentprice == result.stealprice)
-                    result.isOpen = false;
-
-                result.save(function(err){
-                    if (err) res.render("error");
-                    console.log("Updated post: " + result);
-
-                    var post = result.toObject();
-                    post.postername = result.poster.username;
-                    post.biddername = result.highestbidder.username;
-
-                    var cutoff = new Date(post.cutoff);
-                    var postdate = new Date(post.postdate);
-
-                    post.tagname = post.category.name;
-                    post.cutoffdate = cutoff.toDateString();
-                    post.cutofftime = cutoff.toTimeString();
-                    post.date = postdate.toDateString();
-                    post.time = postdate.toTimeString();
-
-                    post.isStolen = (post.currentprice == post.stealprice) ? true : false;
-                    post.isBidding = !post.isStolen;
-
-                    res.redirect('/posts/' + req.params.postId);
-                });               
+                if(post.poster.isSuspended)
+                {
+                    res.render('suspended', {
+                        isSelf: false,
+                        isOther: false,
+                        isPost: true
+                    });
+                }
+                else
+                {
+                    result.highestbidder = client;
+                    //if action is bid, add only increment
+                    if(req.params.action == "bid")
+                        result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                    
+                    //if action is steal, current price = steal price
+                    else if (req.params.action == "steal")
+                        result.currentprice = result.stealprice;
+    
+                    if(result.currentprice == result.stealprice)
+                        result.isOpen = false;
+    
+                    result.save(function(err){
+                        if (err) res.render("error");
+                        console.log("Updated post: " + result);
+    
+                        var post = result.toObject();
+                        post.postername = result.poster.username;
+                        post.biddername = result.highestbidder.username;
+    
+                        var cutoff = new Date(post.cutoff);
+                        var postdate = new Date(post.postdate);
+    
+                        post.tagname = post.category.name;
+                        post.cutoffdate = cutoff.toDateString();
+                        post.cutofftime = cutoff.toTimeString();
+                        post.date = postdate.toDateString();
+                        post.time = postdate.toTimeString();
+    
+                        post.isStolen = (post.currentprice == post.stealprice) ? true : false;
+                        post.isBidding = !post.isStolen;
+    
+                        res.redirect('/posts/' + req.params.postId);
+                    });    
+                }           
             });
         });
     },
