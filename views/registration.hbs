@@ -93,9 +93,29 @@ $(document).ready(function () {
             });
     });
 
+    function: checkValidIdNum(idnum) {
+        var sum = 0;
+        var i = 1;
+
+        for(i = 1; i <= 8; i++)
+        {
+            sum += idnum % 10;
+            idnum = idnum % 10;
+
+        }
+
+        sum = sum % 11;
+
+        if(sum == 0)
+            return true;
+        else
+            return false;
+
+    } 
+
     $("#idnum").keyup(function(){
 
-        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
+        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8 || !checkValidIdNum($("#idnum")))
         {
             $("#idnum").css("background-color", "lightcoral");
 
@@ -133,29 +153,6 @@ $(document).ready(function () {
         {
             $("#phone").css("background-color", "white");
             $("#phoneerror").text("");
-            $("#submit").prop("disabled", false);
-            valid = true;
-        }
-            
-    });
-
-    $("#idnum").keyup(function(){
-
-        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
-        {
-            $("#idnum").css("background-color", "lightcoral");
-
-            if($.trim($("#idnum").val()) == "")
-                $("#idnumerror").text("Please add your ID number.");
-            else
-                $("#idnumerror").text("Invalid ID number.");
-
-            valid = false;
-        }
-        else
-        {
-            $("#idnum").css("background-color", "white");
-            $("#idnumerror").text("");
             $("#submit").prop("disabled", false);
             valid = true;
         }
@@ -231,21 +228,6 @@ $(document).ready(function () {
     });
 
     $("#submit").click(function() {
-
-      /*  $("#email").css("background-color", "white");
-        $("#username").css("background-color", "white");
-        $("#idnum").css("background-color", "white");
-        $("#phone").css("background-color", "white");
-        $("#password").css("background-color", "white");
-        $("#confirmpassword").css("background-color", "white");
-
-        $("#idnumerror").text("");
-        $("#emailerror").text("");
-        $("#usernameerror").text("");
-        $("#phoneerror").text("");
-        $("#passworderror").text("");
-        $("#emailerror").text("");
-        $("#usernameerror").text(""); */
 
         if($.trim($("#idnum").val()) == "")
         {
