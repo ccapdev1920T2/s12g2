@@ -46,6 +46,7 @@
 <script type = "text/javascript">
 
 $(document).ready(function () {
+    var valid;
 
     $("input").change(function(){
         $("#submit").prop("disabled", false);
@@ -59,12 +60,14 @@ $(document).ready(function () {
                     $("#username").css("background-color", "lightcoral");
                     $("#submit").prop("disabled", true);
                     $("#usernameerror").text("Username already taken.");
+                    valid = false;
                 }
                 else
                 {
                     $("#username").css("background-color", "white");
                     $("#usernameerror").text("");
-                    $("#submit").prop("disabled", false)
+                    $("#submit").prop("disabled", false);
+                    valid = true;
                 }
             });
     });
@@ -78,38 +81,19 @@ $(document).ready(function () {
                     $("#email").css("background-color", "lightcoral");
                     $("#submit").prop("disabled", true);
                     $("#emailerror").text("Email already taken.");
+                    valid = false;
                 }
                  else
                 {
                     $("#email").css("background-color", "white");
                     $("#emailerror").text("");
-                    $("#submit").prop("disabled", false)
+                    $("#submit").prop("disabled", false);
+                    valid = true;
                 }
             });
     });
 
-    $("#submit").click(function() {
- 
-        var valid = true;
-        var username = $("#username").val();
-        var email = $("#email").val();
-        var pw = $("#password").val();
-        var cpw = $("#confirmpassword").val();
-
-        $("#email").css("background-color", "white");
-        $("#username").css("background-color", "white");
-        $("#idnum").css("background-color", "white");
-        $("#phone").css("background-color", "white");
-        $("#password").css("background-color", "white");
-        $("#confirmpassword").css("background-color", "white");
-
-        $("#idnumerror").text("");
-        $("#emailerror").text("");
-        $("#usernameerror").text("");
-        $("#phoneerror").text("");
-        $("#passworderror").text("");
-        $("#emailerror").text("");
-        $("#usernameerror").text("");
+    $("#idnum").keyup(function(){
 
         if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
         {
@@ -124,7 +108,151 @@ $(document).ready(function () {
         }
         else
         {
+            $("#idnum").css("background-color", "white");
+            $("#idnumerror").text("");
             $("#submit").prop("disabled", false);
+            valid = true;
+        }
+            
+    });
+
+    $("#phone").keyup(function(){
+
+        if($.trim($("#phone").val()) == "" || !$("#phone").val().match(/^-{0,1}\d+$/) || $("#phone").val().length != 11)
+        {
+            $("#phone").css("background-color", "lightcoral");
+
+            if($.trim($("#phone").val()) == "")
+                $("#phoneerror").text("Please add your phone number.");
+            else
+                $("#phoneerror").text("Invalid phone number.");
+            
+            valid = false;
+        }
+        else
+        {
+            $("#phone").css("background-color", "white");
+            $("#phoneerror").text("");
+            $("#submit").prop("disabled", false);
+            valid = true;
+        }
+            
+    });
+
+    $("#idnum").keyup(function(){
+
+        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8)
+        {
+            $("#idnum").css("background-color", "lightcoral");
+
+            if($.trim($("#idnum").val()) == "")
+                $("#idnumerror").text("Please add your ID number.");
+            else
+                $("#idnumerror").text("Invalid ID number.");
+
+            valid = false;
+        }
+        else
+        {
+            $("#idnum").css("background-color", "white");
+            $("#idnumerror").text("");
+            $("#submit").prop("disabled", false);
+            valid = true;
+        }
+            
+    });
+
+    $("#password").keyup(function(){
+        
+        if($.trim($("#password").val()) == "")
+        {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            $("#passworderror").text("Please add a password.");
+            valid = false;
+        }
+        else if ($("#password").val().length < 8)
+        {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            $("#passworderror").text("Password must contain at least 8 characters.");
+            valid = false;
+        }
+        else if($("#confirmpassword").val() != $("#password").val())
+        {
+            $("#passworderror").text("Password and confirm password do not match.");
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            valid = false;
+        }
+        else
+        {
+            $("#password").css("background-color", "white");
+            $("#confirmpassword").css("background-color", "white");
+            $("#passworderror").text("");
+            $("#submit").prop("disabled", false);
+            valid = true;
+        }
+            
+    });
+
+    $("#confirmpassword").keyup(function(){
+        
+        if($.trim($("#password").val()) == "")
+        {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            $("#passworderror").text("Please add a password.");
+            valid = false;
+        }
+        else if ($("#password").val().length < 8)
+        {
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            $("#passworderror").text("Password must contain at least 8 characters.");
+            valid = false;
+        }
+        else if($("#confirmpassword").val() != $("#password").val())
+        {
+            $("#passworderror").text("Password and confirm password do not match.");
+            $("#password").css("background-color", "lightcoral");
+            $("#confirmpassword").css("background-color", "lightcoral");
+            valid = false;
+        }
+        else
+        {
+            $("#password").css("background-color", "white");
+            $("#confirmpassword").css("background-color", "white");
+            $("#passworderror").text("");
+            $("#submit").prop("disabled", false);
+            valid = true;
+        }
+            
+    });
+
+    $("#submit").click(function() {
+
+      /*  $("#email").css("background-color", "white");
+        $("#username").css("background-color", "white");
+        $("#idnum").css("background-color", "white");
+        $("#phone").css("background-color", "white");
+        $("#password").css("background-color", "white");
+        $("#confirmpassword").css("background-color", "white");
+
+        $("#idnumerror").text("");
+        $("#emailerror").text("");
+        $("#usernameerror").text("");
+        $("#phoneerror").text("");
+        $("#passworderror").text("");
+        $("#emailerror").text("");
+        $("#usernameerror").text(""); */
+
+        if($.trim($("#idnum").val()) == "")
+        {
+            $("#idnum").css("background-color", "lightcoral");
+            $("#idnumerror").text("Please add your ID number.");
+
+            valid = false;
         }
 
         if($.trim($("#email").val()) == "")
@@ -141,22 +269,13 @@ $(document).ready(function () {
             valid = false;
         }
 
-        if($.trim($("#phone").val()) == "" || !$("#phone").val().match(/^-{0,1}\d+$/) || $("#phone").val().length != 11)
+        if($.trim($("#phone").val()) == "")
         {
+
             $("#phone").css("background-color", "lightcoral");
-
-            if($.trim($("#phone").val()) == "")
-                $("#phoneerror").text("Please add your phone number.");
-            else
-                $("#phoneerror").text("Invalid phone number.");
-
+            $("#phoneerror").text("Please add your phone number.");
             valid = false;
         }
-        else
-        {
-            $("#submit").prop("disabled", false);
-        }
-
 
         if($.trim($("#password").val()) == "")
         {
@@ -165,25 +284,6 @@ $(document).ready(function () {
             $("#passworderror").text("Please add a password.");
             valid = false;
         }
-        else if (pw.length < 8)
-        {
-            $("#password").css("background-color", "lightcoral");
-            $("#confirmpassword").css("background-color", "lightcoral");
-            $("#passworderror").text("Password must contain at least 8 characters.");
-            valid = false;
-        }
-        else if(cpw != pw)
-        {
-            $("#passworderror").text("Password and confirm password do not match.");
-            $("#password").css("background-color", "lightcoral");
-            $("#confirmpassword").css("background-color", "lightcoral");
-            valid = false;
-        }
-        else
-        {
-            $("#submit").prop("disabled", false);
-        }
-
 
         if(!valid)
         {
