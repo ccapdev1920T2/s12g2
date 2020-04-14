@@ -234,9 +234,10 @@ input[type=email], input[type=password], input[type=text]
 
 .post, .postmain
 {
+	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 70px;
+	margin-bottom: 60px;
 	border-radius: 30px;
 
 	box-shadow: 10px 10px 20px #e0e0e0;
@@ -374,6 +375,11 @@ input[type=email], input[type=password], input[type=text]
 	margin-right: auto;
 	margin-left: auto;
 	width: 200px;
+}
+
+.filteroptions input[type="radio"]
+{
+	margin: 10px;
 }
 
 #filtertitleoptions
@@ -835,7 +841,8 @@ h1
 #details
 {
 	width: 300px;
-	height: 500px;
+	height: 100%;
+	min-height: 500px;
 	padding: 40px 20px 40px 20px;
 	position: relative;
 	display: flex;
@@ -987,6 +994,7 @@ h1
 	box-shadow: 10px 10px 20px gray;
 	box-sizing: border-box;
 	overflow: auto;
+	user-select: none;
 }
 
 #reportcontent2
@@ -1008,12 +1016,13 @@ h1
 	float: right;
 	margin: 20px;
 	border-radius: 100px;
-	border: 0px;
 	width: 30px;
 	height: 30px;
-	background-color: #DBAB61;
-	color: white;
-
+	background-color: transparent;
+	border: 0.5px solid black;
+	color: black;
+	outline: none;
+	cursor: pointer;
 }
 
 #report
@@ -1079,7 +1088,7 @@ h1
 #profilesubmit
 {
 	margin-top: 20px;
-	width: auto;
+	width: 60px;
 	margin-left: auto;
 	margin-right: auto;
 }
