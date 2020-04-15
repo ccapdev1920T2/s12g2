@@ -14,7 +14,7 @@
             <p class = "registrationerror" id = "idnumerror"></p><br>
 
             <label for = "email">email</label><br>
-            <input type="email" id = "email" name = "email" placeholder = "ex. hello@gmail.com"><br>
+            <input type="text" id = "email" name = "email" placeholder = "ex. hello@gmail.com"><br>
             <p class = "registrationerror" id = "emailerror"></p><br>
             
             <label for = "idnum">username</label><br>
@@ -93,19 +93,20 @@ $(document).ready(function () {
             });
     });
 
-    function: checkValidIdNum(idnum) {
+    function checkValidIdNum(idnum) {
         var sum = 0;
         var i = 1;
+        var x = 0;
 
         for(i = 1; i <= 8; i++)
-        {
-            sum += idnum % 10;
-            idnum = idnum % 10;
-
+        {   
+            x = idnum % 10;
+            idnum = parseInt(idnum / 10);
+            sum += x * i;
         }
 
         sum = sum % 11;
-
+        
         if(sum == 0)
             return true;
         else
@@ -115,7 +116,7 @@ $(document).ready(function () {
 
     $("#idnum").keyup(function(){
 
-        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8 || !checkValidIdNum($("#idnum")))
+        if($.trim($("#idnum").val()) == "" || !$("#idnum").val().match(/^-{0,1}\d+$/) || $("#idnum").val().length != 8 || !checkValidIdNum($("#idnum").val()))
         {
             $("#idnum").css("background-color", "lightcoral");
 
@@ -229,6 +230,8 @@ $(document).ready(function () {
 
     $("#submit").click(function() {
 
+        var temail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        
         if($.trim($("#idnum").val()) == "")
         {
             $("#idnum").css("background-color", "lightcoral");
@@ -241,6 +244,13 @@ $(document).ready(function () {
         {
             $("#email").css("background-color", "lightcoral");
             $("#emailerror").text("Please add an email address.");
+            valid = false;
+        }
+
+        if(!temail.test($("#email").val()))
+        {
+            $("#email").css("background-color", "lightcoral");
+            $("#emailerror").text("Invalid email address.");
             valid = false;
         }
 

@@ -632,21 +632,16 @@ const controller = {
                 });
     
                 post.itemimg = post.picture;
-                post.isStolen = (post.currentprice == post.stealprice) ? true : false;
-                post.isBidding = !post.isStolen;
-    
-    
-                post.isBidding = (cutoff.getTime() < datenow.getTime()) ? false: true;
-                
-                if(!post.isBidding)
-                {
-                    result.isOpen = false;
-    
+
+                post.isOpen = (cutoff.getTime() < datenow.getTime()) ? false: true;
+                post.isOpen = (post.currentprice == post.stealprice) ? false : true;
+
+                console.log(post.isOpen);
                     result.save(function(err) {
                         if (err) res.render("error");
                         console.log("Updated post: " + post);
                     })
-                }
+        
     
                 // find current session client
                 Client.findOne({user: req.session.user}, function(err, result){
@@ -1302,7 +1297,7 @@ const controller = {
 
             Post.findOne({_id: req.params.postId}).populate('poster').populate('category').exec(function(err, result){
 
-                if(post.poster.isSuspended)
+                if(result.poster.isSuspended)
                 {
                     res.render('suspended', {
                         isSelf: false,
@@ -1340,9 +1335,6 @@ const controller = {
                         post.cutofftime = cutoff.toTimeString();
                         post.date = postdate.toDateString();
                         post.time = postdate.toTimeString();
-    
-                        post.isStolen = (post.currentprice == post.stealprice) ? true : false;
-                        post.isBidding = !post.isStolen;
     
                         res.redirect('/posts/' + req.params.postId);
                     });    

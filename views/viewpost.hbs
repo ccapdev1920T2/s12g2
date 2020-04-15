@@ -51,7 +51,7 @@
     </div>
 
     <div class="sidebar">
-        {{#if isBidding}}
+        {{#if isOpen}}
         <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
         {{else}}
         <div class="sidebarlabels" style="font-size: 18px;">bidding closed</div>
@@ -74,7 +74,7 @@
         </div>
 
         {{#if isNotPoster}}
-        {{#if isBidding}}
+        {{#if isOpen}}
         <div class="actions">
             <span class="actionbutton" id="bidbutton">bid</span>
             <span class="actionbutton" id="stealbutton">steal</span>
