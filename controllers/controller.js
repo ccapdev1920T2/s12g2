@@ -697,7 +697,7 @@ const controller = {
                         // if user is viewing their own profile
                         if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
 
-                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
+                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({datesubmitted: -1}).exec(function(err, results){
                                 var reviews = [];
 
                                 if(results != null)
@@ -731,7 +731,7 @@ const controller = {
 
                             Client.findOne({user: req.session.user}, function(err, currentclient){
 
-                                Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
+                                Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({datesubmitted: -1}).exec(function(err, results){
                                     
                                     var reviews = [];
                                     
@@ -768,7 +768,7 @@ const controller = {
                     //admin view
                     else
                     {
-                        Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
+                        Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({datesubmitted: -1}).exec(function(err, results){
                                 
                             var reviews = [];
                             
