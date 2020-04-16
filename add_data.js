@@ -176,16 +176,16 @@ function createUsers(cb) {
             userCreate('bidspp@gmail.com', 'p@ssword', false, callback);
         },
         function(callback) {
-            userCreate('shargaw@dlsu.edu.ph', 'hatdog', true, callback);
+            userCreate('shargaw@dlsu.edu.ph', 'hatdog123', true, callback);
         },
         function(callback) {
             userCreate('kristine@yahoo.com', 'luvunemo', true, callback);
         },
         function(callback) {
-            userCreate('robijeanne@gmail.com', '921127', true, callback);
+            userCreate('robijeanne@gmail.com', '921127abc', true, callback);
         },
         function(callback) {
-            userCreate('nemo@puppers.com', 'henlo', true, callback);
+            userCreate('nemo@puppers.com', 'henloworld', true, callback);
         },
         function(callback) {
             userCreate('iammoana@gmail.com', 'heartoftefiti', true, callback);
@@ -206,7 +206,7 @@ function createUsers(cb) {
             userCreate('snowwhite@gmail.com', 'andthe7dwarfs', true, callback);
         },
         function(callback) {
-            userCreate('merida_ofdunbroch@gmail.com', 'bebrave', true, callback);
+            userCreate('merida_ofdunbroch@gmail.com', 'bebrave3', true, callback);
         },
         function(callback) {
             userCreate('vanellope_von_schweetz@dlsu.edu.ph', 'notaglitch', true, callback);
