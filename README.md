@@ -104,7 +104,7 @@ __Suspend reported users__
   1. Go to "Reported Users" located on the top right of the page.
   2. Click on the "x" button to suspend the user or the check button to disregard the report.
 
-### Addiotinal Notes
+### Additional Notes
 * Suspended clients are prohibited to access any client feature.
 * Supsended clients' profiles cannot be accessed by other clients.
 * Suspended clients' posts will not apper in other clients' homepage and cannot be viewed.
