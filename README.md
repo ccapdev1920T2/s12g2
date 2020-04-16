@@ -4,14 +4,14 @@ Bids++ is a (developing) web application that aims to simulate the concept of on
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. _See deployment for notes on how to deploy the project on a live system._
 
 ### Prerequisites
 
 Before running the web application, here are a few things needed to be installed in your system:
 
 * __[MongoDB](https://www.mongodb.com/download-center/community)__ - to add data into the database
-* __[NodeJS](https://nodejs.org/en/download/)__ - to run the web app
+* __[Node.js](https://nodejs.org/en/download/)__ - to run the web app
 
 ### Installing
 
@@ -23,7 +23,7 @@ git clone https://github.com/ccapdev1920T2/s12g2.git
 
 Open the command prompt to the folder where the project is.
 
-Step 1. Run the following code:
+Step 1. Run the following code to install the Node.js modules needed:
 
 ```
 npm install
@@ -52,7 +52,7 @@ Email | Password
 ----- | --------
 nemo@puppers.com | henloworld
 
-To log in as admin, use the following credentials:
+To log in as the admin, use the following credentials:
 
 Email | Password
 ----- | --------
@@ -62,7 +62,7 @@ bidspp@gmail.com | p@ssword
 
 ### Client Features
 
-New users may register a new account using a valid DLSU ID number and any email.
+New users may register a new account using a valid DLSU ID number and any email address.
 
 Once logged in, clients may be able to:
 
