@@ -127,3 +127,4 @@ __Suspend reported users__
 * DLSU Bids to Pick for inspiration
 * [Antonio B.](https://dev.to/abourass/how-to-solve-the-own-property-issue-in-handlebars-with-mongoose-2l7c) for code snippet
 * [w3schools](https://www.w3schools.com/howto/howto_css_star_rating.asp) for star rating icons
+* [Freepik](https://www.flaticon.com/authors/freepik) for the social media icons
