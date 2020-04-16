@@ -4,7 +4,7 @@ Bids++ is a (developing) web application that aims to simulate the concept of on
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. _See deployment for notes on how to deploy the project on a live system._
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -67,17 +67,35 @@ New users may register a new account using a valid DLSU ID number and any email 
 Once logged in, clients may be able to:
 
 * Edit profile
+  1. Go to "My Profile" located on the top right of the page.
+  2. Click edit profile.
 * Create, edit, and delete posts
+  1. Go to "My Profile" located on the top right of the page.
+  2. Click the "+" button to create a new post.
+  3. Click "EDIT" on a post to edit that post.
+  4. Click "X" on a post to delete the post.
 * Bid and/or steal
+  1. Click on a post's title to view its details.
+  2. Click "bid" to bid on the post.
+  3. Click "steal" to steal the items and automatically become the buyer.
 * Leave a review on other clients
+  1. Go to a user's profile by clicking on their username.
+  2. Go to "User Reviews".
+  3. Choose the number of stars, type in your review, and click submit.
 * Report account
+  1. Go to a user's profile by clicking on their username.
+  2. Click "Report User".
+  3. Select the appropriate reason, type in your complaint and click submit.
 
 ### Admin Features
 
-An admin is able to:
+Once logged in, an admin is able to:
 
 * Delete new posts
+  1. Click on the "x" button on a post to delete it and the check button to approve it.
 * Suspend reported users
+  1. Go to "Reported Users" located on the top right of the page.
+  2. Click on the "x" button to suspend the user or the check button to disregard the report.
 
 
 ## Built With
