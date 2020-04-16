@@ -46,7 +46,7 @@ Once done, open the web application at [localhost:3000](http://localhost:3000/).
 ## Log In
 There are two types of users of the web app: client and admin.
 
-To log in as a client, use the following credentials:
+To log in as a client, you may opt to create a new account yourself or use the following dummy account:
 
 Email | Password
 ----- | --------
