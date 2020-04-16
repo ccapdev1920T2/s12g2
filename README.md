@@ -69,20 +69,24 @@ Once logged in, clients may be able to:
 __Edit profile__
   1. Go to "My Profile" located on the top right of the page.
   2. Click edit profile.
+
 __Create, edit, and delete posts__
   1. Go to "My Profile" located on the top right of the page.
   2. Click the "+" button to create a new post.
   3. Click "EDIT" on a post to edit that post.
   4. Click "X" on a post to delete the post.
+
 __Bid and/or steal__
   1. Click on the title of a post to view its details.
   2. If the post has not yet been stolen by another user or is not yet past its cut-off, either of the following can be done:
     * Click "bid" to bid on the post
     * Click "steal" to steal the item/s and automatically become the buyer.
+
 __Leave a review on other clients__
   1. Go to a user's profile by clicking on their username.
   2. Go to "User Reviews".
   3. Choose the number of stars, type in your review, and click submit.
+
 __Report account__
   1. Go to a user's profile by clicking on their username.
   2. Click "Report User".
@@ -94,6 +98,7 @@ Once logged in, an admin is able to:
 
 __Delete new posts__
   1. Click on the "x" button on a post to delete it and the check button to let it remain in public.
+  
 __Suspend reported users__
   1. Go to "Reported Users" located on the top right of the page.
   2. Click on the "x" button to suspend the user or the check button to disregard the report.
