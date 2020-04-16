@@ -276,34 +276,34 @@ function createClients(cb) {
             clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[5], 11827101, "iammoana", "63167892453", "I am Moana of Motunui. You will board my boat, sail across the sea, and restore the heart of Te Fiti.", "iammoana", null, "iammoana", true, false, true, false, callback)
+            clientCreate(users[5], 11827101, "iammoana", "09167892453", "I am Moana of Motunui. You will board my boat, sail across the sea, and restore the heart of Te Fiti.", "iammoana", null, "iammoana", true, false, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[6], 11827101, "thelittlemermaid", "63265874695", "Look at this stuff, isn't it neat? Wouldn't you think my collection's complete? Wouldn't you think I'm the girl, the girl who has everything?", null, null, "thelittlemermaid", false, false, true, false, callback)
+            clientCreate(users[6], 11827101, "thelittlemermaid", "09265874695", "Look at this stuff, isn't it neat? Wouldn't you think my collection's complete? Wouldn't you think I'm the girl, the girl who has everything?", null, null, "thelittlemermaid", false, false, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[7], 11827101, "huamulan", "63178597562", "I will show the world what's inside my heart and be loved for who I am.", "huamulan", null, "huamulan", true, false, true, false, callback)
+            clientCreate(users[7], 11827101, "huamulan", "09178597562", "I will show the world what's inside my heart and be loved for who I am.", "huamulan", null, "huamulan", true, false, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[8], 11827101, "annaofarendelle", "63065482549", "I climbed the north mountain, survived a frozen heart, and save my sister from my ex-boyfriend.", "annaofarendelle", "annaofarendelle", null, true, true, false, false, callback)
+            clientCreate(users[8], 11827101, "annaofarendelle", "09065482549", "I climbed the north mountain, survived a frozen heart, and save my sister from my ex-boyfriend.", "annaofarendelle", "annaofarendelle", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[9], 11827101, "daretobedifferent", "639152458214", "I want adventure in the great wide somewhere... I want so much more than they've got planned.", null, "littlebeauty", null, false, true, false, false, callback)
+            clientCreate(users[9], 11827101, "daretobedifferent", "099152458214", "I want adventure in the great wide somewhere... I want so much more than they've got planned.", null, "littlebeauty", null, false, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[10], 11827101, "fairestoneofall", "63165874962", "Lips red as the rose, hair black as ebony, skin white as snow.", null, "fairestofall", "fairestofall", false, true, true, false, callback)
+            clientCreate(users[10], 11827101, "fairestoneofall", "09165874962", "Lips red as the rose, hair black as ebony, skin white as snow.", null, "fairestofall", "fairestofall", false, true, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[11], 11827101, "bravemerida", "63265874589", "I am Merida, and I'll be shooting for my own hand.", "bravemerida", "bravemerida", null, true, true, false, false, callback)
+            clientCreate(users[11], 11827101, "bravemerida", "09265874589", "I am Merida, and I'll be shooting for my own hand.", "bravemerida", "bravemerida", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[12], 11827101, "sugarrushqueen", "63154879863", "I'm not a glitch, I just have pixlexia", "sugarrushqueen", null, "sugarrushqueen", true, false, true, false, callback)
+            clientCreate(users[12], 11827101, "sugarrushqueen", "09154879863", "I'm not a glitch, I just have pixlexia", "sugarrushqueen", null, "sugarrushqueen", true, false, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[13], 11827101, "nameismatoaka", "63168954782", "If you walk the footsteps of a stranger, you'll learn things you never knew you never knew.", "nameismatoaka", "nameismatoaka", null, true, true, false, false, callback)
+            clientCreate(users[13], 11827101, "nameismatoaka", "09168954782", "If you walk the footsteps of a stranger, you'll learn things you never knew you never knew.", "nameismatoaka", "nameismatoaka", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[14], 11827101, "princessaurora", "63178954821", "Yes, it's only in my dreams. But they say if you dream a thing more than once, it's sure to come true, and I've dreamed that dream so many times.", "princessaurora", "princessaurora", "princessaurora", true, true, true, false, callback)
+            clientCreate(users[14], 11827101, "princessaurora", "09178954821", "Yes, it's only in my dreams. But they say if you dream a thing more than once, it's sure to come true, and I've dreamed that dream so many times.", "princessaurora", "princessaurora", "princessaurora", true, true, true, false, callback)
         },
     ], cb);
 }

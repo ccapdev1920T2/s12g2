@@ -106,7 +106,7 @@ __Suspend reported users__
 
 ### Additional Notes
 * Suspended clients are prohibited to access any client feature.
-* Supsended clients' profiles cannot be accessed by other clients.
+* Suspended clients' profiles cannot be accessed by other clients.
 * Suspended clients' posts will not apper in other clients' homepage and cannot be viewed.
 
 
