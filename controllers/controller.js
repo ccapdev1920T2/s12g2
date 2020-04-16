@@ -82,7 +82,7 @@ const controller = {
                         Post.find({poster: viewedclient._id}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                             var posts = [];
 
-                            if(results != null)
+                            if(results)
                                 posts = multipleMongooseToObj(results);
 
                             posts.forEach(function (post) {
@@ -98,7 +98,7 @@ const controller = {
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                                post.time = timestamp.toTimeString().substring(0, 5);
                                 post.itemimg = post.picture[0];
                             })
 
@@ -122,7 +122,7 @@ const controller = {
                                 
                                 var posts = [];
                                 
-                                if(results != null)
+                                if(results)
                                     posts = multipleMongooseToObj(results);
 
                                 posts.forEach(function (post) {
@@ -135,7 +135,7 @@ const controller = {
                                     var timestamp = new Date(post.postdate)
                 
                                     post.date = timestamp.toDateString();
-                                    post.time = timestamp.toTimeString();
+                                    post.time = timestamp.toTimeString().substring(0, 5);
 
                                     post.itemimg = post.picture[0];
                                 })
@@ -157,7 +157,7 @@ const controller = {
                                 
                         var posts = [];
                         
-                        if(results != null)
+                        if(results)
                             posts = multipleMongooseToObj(results);
 
                         posts.forEach(function (post) {
@@ -170,7 +170,7 @@ const controller = {
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
+                            post.time = timestamp.toTimeString().substring(0, 5);
 
                             post.itemimg = post.picture[0];
                         })
@@ -225,7 +225,7 @@ const controller = {
 
             Client.findOne({user: req.session.user}, function(err, client){
             
-                if(temp != undefined)
+                if(temp)
                     client.avatar = temp.substr(6);
     
                 if(req.body.tw)
@@ -300,7 +300,7 @@ const controller = {
                     var temp = []
                     var posts = []
 
-                    if (results != null)
+                    if (results)
                         temp = multipleMongooseToObj(results);
 
                     temp.forEach(function (post) {
@@ -315,7 +315,7 @@ const controller = {
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
+                            post.time = timestamp.toTimeString().substring(0, 5);
 
                             post.itemimg = post.picture[0];
 
@@ -356,7 +356,7 @@ const controller = {
                 if(err) throw err;
                 var temp = []
                 var posts = []
-                if (results != null)
+                if (results)
                     temp = multipleMongooseToObj(results);
 
                 temp.forEach(function (post) {
@@ -371,7 +371,7 @@ const controller = {
                         var timestamp = new Date(post.postdate)
 
                         post.date = timestamp.toDateString();
-                        post.time = timestamp.toTimeString();
+                        post.time = timestamp.toTimeString().substring(0, 5);
 
                         post.itemimg = post.picture;
 
@@ -399,7 +399,7 @@ const controller = {
 
             if (err) throw err;
 
-            if (result == null)
+            if (!result)
             {
                 res.status(404).send();
                 res.redirect('/#getstarted');
@@ -418,7 +418,7 @@ const controller = {
                         var temp = []
                         var posts = []
 
-                        if (results != null)
+                        if (results)
                             temp = multipleMongooseToObj(results);
 
                         temp.forEach(function (post) {
@@ -433,7 +433,7 @@ const controller = {
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                                post.time = timestamp.toTimeString().substring(0, 5);
 
                                 post.itemimg = post.picture[0];
 
@@ -475,7 +475,7 @@ const controller = {
 
                         var posts = []
                         var temp = []
-                        if (results != null)
+                        if (results)
                             temp = multipleMongooseToObj(results);
         
                         temp.forEach(function (post) {
@@ -490,7 +490,7 @@ const controller = {
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                                post.time = timestamp.toTimeString().substring(0, 5);
 
                                 post.itemimg = post.picture[0];
                                 
@@ -588,7 +588,7 @@ const controller = {
 
         Post.findOne({_id: req.params.postId}).populate('poster').populate('category').populate('highestbidder').exec(function(err, result){
 
-            if(result == null || result == undefined)
+            if(!result)
                 res.render("error");
 
             var post = result.toObject();
@@ -621,9 +621,9 @@ const controller = {
     
                 post.tagname = post.category.name;
                 post.cutoffdate = cutoff.toDateString();
-                post.cutofftime = cutoff.toTimeString();
+                post.cutofftime = cutoff.toTimeString().substring(0, 5);
                 post.date = postdate.toDateString();
-                post.time = postdate.toTimeString();
+                post.time = postdate.toTimeString().substring(0, 5);
                 
                 post.image = [];
                 post.picture.forEach(function(picture, index){
@@ -633,8 +633,8 @@ const controller = {
     
                 post.itemimg = post.picture;
 
-                post.isOpen = (cutoff.getTime() < datenow.getTime()) ? false: true;
-                post.isOpen = (post.currentprice == post.stealprice) ? false : true;
+                post.isOpen = (post.currentprice == post.stealprice || cutoff.getTime() < datenow.getTime()) ? false : true;
+                //post.isOpen = (cutoff.getTime() < datenow.getTime()) ? false : true;
 
                 console.log(post.isOpen);
                     result.save(function(err) {
@@ -672,7 +672,7 @@ const controller = {
         Client.findOne({username: req.params.username}, function(err, viewedclient){
 
             // if profile exists
-            if (viewedclient != null && viewedclient != undefined)
+            if (viewedclient)
             {
                 if(viewedclient.isSuspended)
                 {
@@ -700,7 +700,7 @@ const controller = {
                             Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({datesubmitted: -1}).exec(function(err, results){
                                 var reviews = [];
 
-                                if(results != null)
+                                if(results)
                                     reviews = multipleMongooseToObj(results);
                                 
                                 reviews.forEach(function (review)
@@ -735,7 +735,7 @@ const controller = {
                                     
                                     var reviews = [];
                                     
-                                    if(results != null)
+                                    if(results)
                                         reviews = multipleMongooseToObj(results);
 
                                     reviews.forEach(function (review) {
@@ -772,7 +772,7 @@ const controller = {
                                 
                             var reviews = [];
                             
-                            if(results != null)
+                            if(results)
                                 reviews = multipleMongooseToObj(results);
 
                             reviews.forEach(function (review) {
@@ -820,7 +820,7 @@ const controller = {
             Client.findOne({user: req.session.user}, function(err, poster){
 
                 Client.findOne({username: req.params.username}, function(err, reviewed) {
-                    if(reviewed == null || reviewed == undefined)
+                    if(!reviewed)
                         res.render("error");
 
                     var review = new Review({
@@ -1069,7 +1069,7 @@ const controller = {
                         Post.find({$text: {$search: input}, category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
         
-                            if (results != null)
+                            if (results)
                                 posts = multipleMongooseToObj(results);
                             
                             posts.forEach(function (post) {
@@ -1080,7 +1080,7 @@ const controller = {
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                                post.time = timestamp.toTimeString().substring(0, 5);
 
                                 post.itemimg = post.picture;
                             });
@@ -1090,7 +1090,7 @@ const controller = {
         
                                 var users = []
         
-                                if (result2 != null)
+                                if (result2)
                                     users = multipleMongooseToObj(result2);
         
                                 Client.findOne({user: req.session.user}, function(err, result1){
@@ -1115,7 +1115,7 @@ const controller = {
                         if (err) throw err;
         
                         var posts = []
-                        if (results != null)
+                        if (results)
                             posts = multipleMongooseToObj(results);
         
                         posts.forEach(function (post) {
@@ -1126,7 +1126,7 @@ const controller = {
                             var timestamp = new Date(post.postdate)
         
                             post.date = timestamp.toDateString();
-                            post.time = timestamp.toTimeString();
+                            post.time = timestamp.toTimeString().substring(0, 5);
 
                             post.itemimg = post.picture;
                         });
@@ -1152,7 +1152,7 @@ const controller = {
 
             var temp = []
             var reports = []
-            if (reports != null)
+            if (reports)
                 temp = multipleMongooseToObj(results);
 
             temp.forEach(function (report) {
@@ -1272,7 +1272,7 @@ const controller = {
                         Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
                             if (err) throw err;
             
-                            if (results != null)
+                            if (results)
                                 posts = multipleMongooseToObj(results);
                             
                             posts.forEach(function (post) {
@@ -1283,7 +1283,7 @@ const controller = {
                                 var timestamp = new Date(post.postdate)
             
                                 post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString();
+                                post.time = timestamp.toTimeString().substring(0, 5);
 
                                 post.itemimg = post.picture;
                             });
@@ -1346,9 +1346,9 @@ const controller = {
     
                         post.tagname = post.category.name;
                         post.cutoffdate = cutoff.toDateString();
-                        post.cutofftime = cutoff.toTimeString();
+                        post.cutofftime = cutoff.toTimeString().substring(0, 5);
                         post.date = postdate.toDateString();
-                        post.time = postdate.toTimeString();
+                        post.time = postdate.toTimeString().substring(0, 5);
     
                         res.redirect('/posts/' + req.params.postId);
                     });    
@@ -1364,7 +1364,7 @@ const controller = {
         Report.findOne({_id: req.params.id}).populate('reporteduser').exec(function(err, result) {
             console.log("RESULT: " + result);
             console.log(req.params._id);
-            if(result != null)
+            if(result)
             {
                 if(req.params.action == 'accept')
                 {
@@ -1408,7 +1408,7 @@ const controller = {
 
         Post.findOne({_id: req.params.id}).exec(function(err, result) {
 
-            if(result != null)
+            if(result)
             {
                 if(req.params.action == 'approve')
                 {
@@ -1446,7 +1446,7 @@ const controller = {
 
         Post.findOne({_id: req.params.postId}).exec(function(err, result) {
             
-            if(result != null)
+            if(result)
             {
                 Post.deleteOne({_id: req.params.postId}, function(err) {
                     if(err) throw err;
