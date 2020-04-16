@@ -62,7 +62,7 @@ bidspp@gmail.com | p@ssword
 
 ### Client Features
 
-New users may register a new account using a valid DLSU ID number and any email address.
+Users may register a new account using a valid DLSU ID number and any email address.
 
 Once logged in, clients may be able to:
 
@@ -79,8 +79,9 @@ __Create, edit, and delete posts__
 __Bid and/or steal__
   1. Click on the title of a post to view its details.
   2. If the post has not yet been stolen by another user or is not yet past its cut-off, either of the following can be done:
-    * Click "bid" to bid on the post
-    * Click "steal" to steal the item/s and automatically become the buyer.
+
+  * Click "bid" to bid on the post
+  * Click "steal" to steal the item/s and automatically become the buyer.
 
 __Leave a review on other clients__
   1. Go to a user's profile by clicking on their username.
@@ -98,7 +99,7 @@ Once logged in, an admin is able to:
 
 __Delete new posts__
   1. Click on the "x" button on a post to delete it and the check button to let it remain in public.
-  
+
 __Suspend reported users__
   1. Go to "Reported Users" located on the top right of the page.
   2. Click on the "x" button to suspend the user or the check button to disregard the report.
@@ -122,7 +123,7 @@ __Suspend reported users__
 
 ## Acknowledgments
 
-* Sir Arren Antioquia
+* [Sir Arren Antioquia](https://github.com/arvention)
 * DLSU Bids to Pick for inspiration
 * [Antonio B.](https://dev.to/abourass/how-to-solve-the-own-property-issue-in-handlebars-with-mongoose-2l7c) for code snippet
 * [w3schools](https://www.w3schools.com/howto/howto_css_star_rating.asp) for star rating icons
