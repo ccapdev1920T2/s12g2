@@ -75,9 +75,10 @@ Once logged in, clients may be able to:
   3. Click "EDIT" on a post to edit that post.
   4. Click "X" on a post to delete the post.
 * Bid and/or steal
-  1. Click on a post's title to view its details.
-  2. Click "bid" to bid on the post.
-  3. Click "steal" to steal the items and automatically become the buyer.
+  1. Click on the title of a post to view its details.
+  2. If the post has not yet been stolen by another user or is not yet past its cut-off, either of the following can be done:
+    * Click "bid" to bid on the post
+    * Click "steal" to steal the item/s and automatically become the buyer.
 * Leave a review on other clients
   1. Go to a user's profile by clicking on their username.
   2. Go to "User Reviews".
@@ -92,10 +93,15 @@ Once logged in, clients may be able to:
 Once logged in, an admin is able to:
 
 * Delete new posts
-  1. Click on the "x" button on a post to delete it and the check button to approve it.
+  1. Click on the "x" button on a post to delete it and the check button to let it remain in public.
 * Suspend reported users
   1. Go to "Reported Users" located on the top right of the page.
   2. Click on the "x" button to suspend the user or the check button to disregard the report.
+
+### Addiotinal Notes
+* Suspended clients are prohibited to access any client feature.
+* Supsended clients' profiles cannot be accessed by other clients.
+* Suspended clients' posts will not apper in other clients' homepage and cannot be viewed.
 
 
 ## Built With
@@ -111,6 +117,7 @@ Once logged in, an admin is able to:
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Sir Arren Antioquia
+* DLSU Bids to Pick for inspiration
+* [Antonio B.](https://dev.to/abourass/how-to-solve-the-own-property-issue-in-handlebars-with-mongoose-2l7c) for code snippet
+* [w3schools](https://www.w3schools.com/howto/howto_css_star_rating.asp) for star rating icons
