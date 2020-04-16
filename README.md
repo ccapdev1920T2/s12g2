@@ -1,5 +1,4 @@
 # Bids++
-_Banogon, Deticio, Gaw_
 
 Bids++ is a (developing) web application that aims to simulate the concept of online bidding, specifically that of Bids to Pick.
 
@@ -9,41 +8,55 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Before running the web application, here are a few things needed to be installed in your system:
 
-```
-Give examples
-```
+* __[MongoDB](https://www.mongodb.com/download-center/community)__ - to add data into the database
+* __[NodeJS](https://nodejs.org/en/download/)__ - to run the web app
 
 ### Installing
+
+You may opt to download the repository or create a clone by running the following code on the command line:
+
+```
+git clone https://github.com/ccapdev1920T2/s12g2.git
+```
 
 Open the command prompt to the folder where the project is.
 
 Step 1. Run the following code:
 
 ```
-npm install
+npm init
 ```
 
-Step 2. To populate the database:
+Step 2. Populate the database:
 
 ```
 node add_data.js
 ```
 
-Step 3. Run the application:
+Step 3. Run the application itself:
 
 ```
 node index.js
 ```
 
+Once done, open the web application at [localhost:3000](http://localhost:3000/).
+
+## Log In
+There are two types of users of the web app: client and admin.
+
 To log in as a client, use the following credentials:
-Email: shargaw@dlsu.edu.ph
-Password: hatdog
+
+Email | Password
+----- | --------
+nemo@puppers.com | henloworld
 
 To log in as admin, use the following credentials:
-Email: bidspp@gmail.com
-Password: p@ssword
+
+Email | Password
+----- | --------
+bidspp@gmail.com | p@ssword
 
 End with an example of getting some data out of the system or using it for a little demo
 
@@ -69,15 +82,14 @@ Give an example
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Express](https://www.mongodb.com) - The web framework used
+* [MongoDB](https://maven.apache.org/) - Database management
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated i
+* **Robi Banogon**
+* **Christine Deticio**
+* **Sharmaine Gaw**
 
 ## Acknowledgments
 
