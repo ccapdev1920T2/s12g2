@@ -22,6 +22,8 @@ var categories = []
 var users = []
 var clients = []
 var posts = []
+var reports = []
+var reviews = []
 
 
 
@@ -125,6 +127,47 @@ function postCreate(poster, title, description,
         cb(null, post);
     });
     
+}
+
+function reportCreate(reporter, reporteduser, reason, complaint, isResolved, cb)
+{
+    var report = new Report({
+            reporter: reporter,
+            reporteduser: reporteduser,
+            reason: reason,
+            complaint: complaint,
+            isResolved: isResolved
+        });
+
+    report.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log('New Report: ' + report);
+        reports.push(report);
+        cb(null, report);
+    });
+}
+
+function reviewCreate(num_stars, reviewer, revieweduser, review, cb)
+{
+    var review = new Review({
+            num_stars: num_stars,
+            reviewer: reviewer,
+            revieweduser: revieweduser,
+            review: review
+        });
+
+    review.save(function(err){
+        if (err) {
+            cb(err, null)
+            return
+        }
+        console.log('New Review: ' + review);
+        reviews.push(review);
+        cb(null, review);
+    });
 }
 
 function createUsers(cb) {
@@ -298,11 +341,53 @@ function createPosts(cb) {
     ], cb);
 }
 
+function createReports(cb) {
+    async.series([
+        function(callback) {
+            reportCreate(clients[1]._id, clients[10]._id, "flaking", "Never showed up and can't be contacted anymore.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[2]._id, clients[10]._id, "flaking", "We were supposed to meetup, but they never showed up and can't be contacted.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[3]._id, clients[13]._id, "spam", "Spammed my inbox with sketchy websites and ads.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[4]._id, clients[12]._id, "offensive", "Was extremely rude and did not care about customers.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[4]._id, clients[11]._id, "offensive", "Extremely rude and was not cooperative.", false, callback);
+        }
+    ], cb);
+}
+
+function createReviews(cb) {
+    async.series([
+        function(callback) {
+            reviewCreate(5, clients[1]._id, clients[2]._id, "Easy to talk to and arrived on time.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[2]._id, clients[3]._id, "Great items. Very responsive.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[4]._id, clients[3]._id, "Came on time. Items were better than expected.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[2]._id, clients[1]._id, "Great items! Would highly recommend seller.", callback);
+        },
+        function(callback) {
+            reviewCreate(2, clients[1]._id, clients[4]._id, "Took to long to response and arrived late.", callback);
+        }
+    ], cb);
+}
+
 async.series([
     createUsers,
     createCategories,
     createClients,
     createPosts,
+    createReports,
+    createReviews
 ],
 
 function(err, results)

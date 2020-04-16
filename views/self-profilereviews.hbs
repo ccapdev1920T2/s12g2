@@ -65,6 +65,7 @@
 			<!-- REVIEWS -->
 			{{#each review}}
 				<div class="reviews">
+					
 					<div id = "reviewstars">
 						{{#each (loop checkedstars)}}
 							<span class="fa fa-star checked"></span>
@@ -81,6 +82,11 @@
 					<p class = "reviewdesc">
 						{{text}}
 					</p>
+
+					<div class="dateposted" style = "text-align: left">
+							{{date}} | {{time}}
+					</div>
+
 				</div>
 			{{/each}}
 

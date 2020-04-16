@@ -61,13 +61,13 @@
 			{{#each review}}
 				<div class="reviews">
 					<div id = "reviewstars">
-						{{#each checkedstars}}
-							<span class="fa fa-star checked"></span>
-						{{/each}}
-						{{#each uncheckedstars}}
-							<span class="fa fa-star"></span>
-						{{/each}}
-					</div>
+							{{#each (loop checkedstars)}}
+								<span class="fa fa-star checked"></span>
+							{{/each}}
+							{{#each (loop uncheckedstars)}}
+								<span class="fa fa-star"></span>
+							{{/each}}
+					 </div>
 					<div class="reviewer">
 							<img class="avatar" src="{{avatar}}">
 							<a href="profile" class="username">{{username}}</a>
@@ -76,6 +76,11 @@
 					<p class = "reviewdesc">
 						{{text}}
 					</p>
+
+					<div class="dateposted" style = "text-align: left">
+							{{date}} | {{time}}
+					</div>
+
 				</div>
 			{{/each}}
 
