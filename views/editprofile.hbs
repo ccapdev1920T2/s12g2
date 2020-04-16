@@ -25,15 +25,16 @@
 
 						<p>contact details</p><br>
 						<label for="contact">phone number</label>
-						<input type="text" id="contactd" name="contactd" placeholder="{{number}}"><br>
+						<input type="text" id="contactd" name="contactd" placeholder="{{number}}" onkeypress="return isNumber(event)"><br>
+						<p id = "numerror">error</p><br>
 
 						<p>social media</p><br>
 						<label for="twt">Twitter</label><br>
-						<socmed>twitter.com/ </socmed><input type="text" id="twt" name="tw" placeholder="http://www.twitter.com/{{twitter}}" value="{{twitter}}"><br>
+						<socmed>twitter.com/</socmed><input type="text" id="twt" name="tw" placeholder="{{twitter}}" value="{{twitter}}"><br>
 						<label for="fb">FaceBook</label><br>
-						<socmed>facebook.com/ </socmed><input type="text" id="fb" name="fb" placeholder="http://www.facebook.com/{{facebook}}" value="{{facebook}}"><br>
+						<socmed>facebook.com/</socmed><input type="text" id="fb" name="fb" placeholder="{{facebook}}" value="{{facebook}}"><br>
 						<label for="ig">Instagram</label><br>
-						<socmed>facebook.com/ </socmed><input type="text" id="ig" name="ig" placeholder="http://www.instagram.com/{{instagram}}" value={{instagram}}><br>
+						<socmed>instagram.com/</socmed><input type="text" id="ig" name="ig" placeholder="{{instagram}}" value={{instagram}}><br>
 			
 						<div style="float:right">
 							<div class = "button" id = "submit">save</div>
@@ -45,10 +46,19 @@
 	</div>
 	{{/profiledetails}}
 </div>
-
 <script type="text/javascript">
 
 	$("#pwerror").css("color", "white");
+	$("#numerror").css("color", "white");
+
+	function isNumber(evt)
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
 
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -65,20 +75,26 @@
 	$("#submit").click(function() {
 		var valid = true;
 		var length = true;
-
+		var numlength = true;
 		$("#pw").css("background-color", "white");
         $("#cpw").css("background-color", "white");
 		var pw = document.getElementById("pw").value;
         var cpw = document.getElementById("cpw").value;
+		var number = document.getElementById("contactd").value;
 
 		if(pw != cpw)
 		{
 			valid = false;
 		}
 
-		if(pw.length < 8)
+		if(pw != "" && pw.length < 8)
 		{
 			length = false;
+		}
+
+		if(number != "" && number.length != 11)
+		{
+			numlength = false;
 		}
 
 		if (!length)
@@ -97,7 +113,14 @@
 			window.scrollTo(0,0);
 		}
 
-		else if (valid && length)
+		if(!numlength)
+		{
+			$("#numerror").css("color", "red");
+			$("#numerror").text("Invalid phone number.");
+			$("#contactd").css("background-color", "lightcoral");
+		}
+
+		else if (valid && length && numlength)
 		{
 			$("#editprof").submit();
 		}

@@ -644,7 +644,7 @@ input[type=email], input[type=password], input[type=text]
 	font-family: "Open Sans", sans-serif;
 }
 
-#createposterror, #pwerror
+#createposterror, #pwerror, #numerror
 {
 	color: red;
 	text-align: center;
