@@ -26,7 +26,7 @@ Open the command prompt to the folder where the project is.
 Step 1. Run the following code:
 
 ```
-npm init
+npm install
 ```
 
 Step 2. Populate the database:
@@ -58,27 +58,27 @@ Email | Password
 ----- | --------
 bidspp@gmail.com | p@ssword
 
-End with an example of getting some data out of the system or using it for a little demo
+## Features
 
-## Running the tests
+### Client Features
 
-Explain how to run the automated tests for this system
+New users may register a new account using a valid DLSU ID number and any email.
 
-### Break down into end to end tests
+Once logged in, clients may be able to:
 
-Explain what these tests test and why
+* Edit profile
+* Create, edit, and delete posts
+* Bid and/or steal
+* Leave a review on other clients
+* Report account
 
-```
-Give an example
-```
+### Admin Features
 
-### And coding style tests
+An admin is able to:
 
-Explain what these tests test and why
+* Delete new posts
+* Suspend reported users
 
-```
-Give an example
-```
 
 ## Built With
 
