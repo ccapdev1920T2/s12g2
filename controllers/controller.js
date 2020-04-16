@@ -634,13 +634,10 @@ const controller = {
                 post.itemimg = post.picture;
 
                 post.isOpen = (post.currentprice == post.stealprice || cutoff.getTime() < datenow.getTime()) ? false : true;
-                //post.isOpen = (cutoff.getTime() < datenow.getTime()) ? false : true;
 
-                console.log(post.isOpen);
-                    result.save(function(err) {
-                        if (err) res.render("error");
-                        console.log("Updated post: " + post);
-                    })
+                result.save(function(err) {
+                    if (err) res.render("error");
+                })
         
     
                 // find current session client
