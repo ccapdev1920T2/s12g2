@@ -697,7 +697,7 @@ const controller = {
                         // if user is viewing their own profile
                         if(JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
 
-                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                            Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
                                 var reviews = [];
 
                                 if(results != null)
@@ -705,13 +705,17 @@ const controller = {
                                 
                                 reviews.forEach(function (review)
                                 {
-                                    review.checkedStars = parseInt(review.num_stars);
-                                    review.uncheckedStars = 5 - parseInt(review.num_stars);
+                                    review.checkedstars = parseInt(review.num_stars);
+                                    review.uncheckedstars = 5 - parseInt(review.num_stars);
                                     review.username = review.reviewer.username;
                                     review.avatar = review.reviewer.avatar;
                                     review.text = review.review;
+
+                                    var timestamp = new Date(review.datesubmitted)
+    
+                                    review.date = timestamp.toDateString();
+                                    review.time = timestamp.toTimeString().substring(0, 5);
                                 })
-                                
 
                                 res.render('self-profilereviews', {
                                     titletag: "My Reviews",
@@ -727,7 +731,7 @@ const controller = {
 
                             Client.findOne({user: req.session.user}, function(err, currentclient){
 
-                                Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                                Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
                                     
                                     var reviews = [];
                                     
@@ -742,8 +746,13 @@ const controller = {
                                         review.avatar = review.reviewer.avatar;
                                         review.text = review.review;
 
-                                    })
+                                        var timestamp = new Date(review.datesubmitted)
         
+                                        review.date = timestamp.toDateString();
+                                        review.time = timestamp.toTimeString().substring(0, 5);
+
+                                    })
+                                   
                                     res.render('profilereviews', {
                                         titletag: viewedclient.username + "'s Reviews",
                                         title: viewedclient.username,
@@ -759,7 +768,7 @@ const controller = {
                     //admin view
                     else
                     {
-                        Review.find({revieweduser: viewedclient._id}).populate('reviewer').exec(function(err, results){
+                        Review.find({revieweduser: viewedclient._id}).populate('reviewer').sort({field: -1}).exec(function(err, results){
                                 
                             var reviews = [];
                             
@@ -768,11 +777,16 @@ const controller = {
 
                             reviews.forEach(function (review) {
                                 
-                                review.checkedStars = parseInt(review.num_stars);
-                                review.uncheckedStars = 5 - parseInt(review.num_stars);
+                                review.checkedstars = parseInt(review.num_stars);
+                                review.uncheckedstars = 5 - parseInt(review.num_stars);
                                 review.username = review.reviewer.username;
                                 review.avatar = review.reviewer.avatar;
                                 review.text = review.review;
+
+                                var timestamp = new Date(review.datesubmitted)
+
+                                review.date = timestamp.toDateString();
+                                review.time = timestamp.toTimeString().substring(0, 5);
                             })
 
                             res.render('admin-profilereviews', {
@@ -1155,7 +1169,7 @@ const controller = {
                     var timestamp = new Date(report.datesubmitted)
     
                     report.date = timestamp.toDateString();
-                    report.time = timestamp.toTimeString();
+                    report.time = timestamp.toTimeString().substring(0, 5);
                     reports.push(report);
                 }                
             });
