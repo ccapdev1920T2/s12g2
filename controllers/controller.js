@@ -58,7 +58,6 @@ const controller = {
 
                 if(viewedclient.rating) {
                     viewedclient.checkedstars = parseInt(viewedclient.rating);
-                    viewedclient.uncheckedstars = 5 - viewedclient.checkedstars;
                     viewedclient.rating = viewedclient.rating.toFixed(1);
                 }
                 viewedclient.hasfb = (viewedclient.facebook);
@@ -691,7 +690,6 @@ const controller = {
 
                     if(viewedclient.rating) {
                         viewedclient.checkedstars = parseInt(viewedclient.rating);
-                        viewedclient.uncheckedstars = 5 - viewedclient.checkedstars;
                         viewedclient.rating = viewedclient.rating.toFixed(1);
                     }
                     viewedclient.hasfb = (viewedclient.facebook);
