@@ -16,13 +16,8 @@
 					<p id = "profileusername">{{username}}</p>
 				</div>
 
-				<div id = "review">
-					{{#each checkedstars}}
-						<span class="fa fa-star checked"></span>
-					{{/each}}
-					{{#each uncheckedstars}}
-						<span class="fa fa-star"></span>
-					{{/each}}
+				<div id = "review" class="reviewnum">
+						<span class="fa fa-star checked"></span>{{rating}}/5<br>
 				</div>
 
 				<div id = "bio">
