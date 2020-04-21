@@ -12,7 +12,9 @@ const Post      = require('../models/post.js');
 const Report    = require('../models/report.js');
 const Review    = require('../models/review.js');
 const User      = require('../models/user.js');
+const bcrypt = require('bcrypt');
 
+const saltRounds = 10;
 
 // function that converts an array of documents to objects
 // got code from https://dev.to/abourass/how-to-solve-the-own-property-issue-in-handlebars-with-mongoose-2l7c
@@ -218,11 +220,13 @@ const controller = {
             if (req.body.pw && req.body.pw == req.body.cpw)
             {
                 User.findOne({_id: req.session.user._id}, function(err, user){
-                    user.password = req.body.pw;
-
-                    user.save(function(err){
-                        if (err) res.render("error");
-                        console.log("Updated user: " + user);
+                    bcrypt.hash(req.body.pw, saltRounds, function(err, hash) {
+                        user.password = hash;
+                        
+                        user.save(function(err){
+                            if (err) res.render("error");
+                            console.log("Updated user: " + user);
+                        });
                     });
                 })
             }
@@ -399,7 +403,7 @@ const controller = {
     getLogIn : function(req, res) {
         console.log("@ getLogIn");
         
-        User.findOne({email: req.body.email, password: req.body.password}, function(err, result){
+        User.findOne({email: req.body.email}, function(err, result){
 
             if (err) throw err;
 
@@ -407,107 +411,118 @@ const controller = {
             {
                 res.status(404).send();
                 res.redirect('/#getstarted');
-            }
+            }            
             
             else
             {
-                req.session.user = result;
 
-                if (req.session.user.isClient)
+                pw = req.body.password
+
+                bcrypt.compare(pw, result.password, function(err, equal)
                 {
+                    if(!equal)
+                        res.redirect('/#getstarted');
 
-                    Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
-                        if (err) throw err;
+                    else
+                    {
+                        req.session.user = result;
 
-                        var temp = []
-                        var posts = []
+                        if (req.session.user.isClient)
+                        {
+                            Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                                if (err) throw err;
 
-                        if (results)
-                            temp = multipleMongooseToObj(results);
+                                var temp = []
+                                var posts = []
 
-                        temp.forEach(function (post) {
-                            if(!post.poster.isSuspended)
-                            {
-                                post.postername = post.poster.username;
-                                
-                                post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+                                if (results)
+                                    temp = multipleMongooseToObj(results);
 
-                                post.tagname = post.category.name;
-            
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString().substring(0, 5);
+                                temp.forEach(function (post) {
+                                    if(!post.poster.isSuspended)
+                                    {
+                                        post.postername = post.poster.username;
+                                        
+                                        post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
 
-                                post.itemimg = post.picture[0];
+                                        post.tagname = post.category.name;
+                    
+                                        var timestamp = new Date(post.postdate)
+                    
+                                        post.date = timestamp.toDateString();
+                                        post.time = timestamp.toTimeString().substring(0, 5);
 
-                                posts.push(post);
-                            }
-                        })
+                                        post.itemimg = post.picture[0];
 
-                        Client.findOne({user: req.session.user}, function(err, result){
+                                        posts.push(post);
+                                    }
+                                })
 
-                            if(result.isSuspended)
-                            {
-                                req.session.destroy(function(err) {
-                                    if(err)
-                                        console.log(err);
-                                    else
-                                        res.render("suspended", {        
-                                            isSelf: true,
-                                            isOther: false,
-                                            isPost: false,
+                                Client.findOne({user: req.session.user}, function(err, result){
+
+                                    if(result.isSuspended)
+                                    {
+                                        req.session.destroy(function(err) {
+                                            if(err)
+                                                console.log(err);
+                                            else
+                                                res.render("suspended", {        
+                                                    isSelf: true,
+                                                    isOther: false,
+                                                    isPost: false,
+                                                });
                                         });
+                                    }
+                                    else
+                                    {
+                                        res.render('homepage', {
+                                            titletag: "Dashboard",
+                                            username: result.username,
+                                            post: posts
+                                        });
+                                    }
+                                    
                                 });
-                            }
-                            else
-                            {
-                                res.render('homepage', {
+                            })
+                        }
+                        else {
+
+                            Post.find({isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                                if(err) throw err;
+
+                                var posts = []
+                                var temp = []
+                                if (results)
+                                    temp = multipleMongooseToObj(results);
+                
+                                temp.forEach(function (post) {
+                                    if(!post.poster.isSuspended)
+                                    {
+                                        post.postername = post.poster.username;
+                                        
+                                        post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
+
+                                        post.tagname = post.category.name;
+                    
+                                        var timestamp = new Date(post.postdate)
+                    
+                                        post.date = timestamp.toDateString();
+                                        post.time = timestamp.toTimeString().substring(0, 5);
+
+                                        post.itemimg = post.picture[0];
+                                        
+                                        posts.push(post);
+                                    }
+                                });
+                
+                                res.render('admin-posts', {
                                     titletag: "Dashboard",
-                                    username: result.username,
                                     post: posts
                                 });
-                            }
-                            
-                        });
-                    })
-                }
-                else {
-
-                    Post.find({isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
-                        if(err) throw err;
-
-                        var posts = []
-                        var temp = []
-                        if (results)
-                            temp = multipleMongooseToObj(results);
-        
-                        temp.forEach(function (post) {
-                            if(!post.poster.isSuspended)
-                            {
-                                post.postername = post.poster.username;
-                                
-                                post.posteravatar = (post.poster.avatar == null) ? "/img/default.png" : post.poster.avatar;
-
-                                post.tagname = post.category.name;
-            
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString().substring(0, 5);
-
-                                post.itemimg = post.picture[0];
-                                
-                                posts.push(post);
-                            }
-                        });
-        
-                        res.render('admin-posts', {
-                            titletag: "Dashboard",
-                            post: posts
-                        });
-                    });
-                }
+                            });
+                        }
+                    }
+                });
             }
         });
     },
@@ -525,38 +540,40 @@ const controller = {
 
         if(idnum && idnum.length == 8 && email && username && phone &&
            phone.length == 11 && pw && cpw && pw == cpw) {
+            bcrypt.hash(pw, saltRounds, function(err, hash) {
 
-            var user = new User({
-                email: email,
-                password: pw,
-                isClient: true
-            });
-
-            user.save(function(err){
-                if (err) res.render("error");
-                console.log('New User: ' + user);
-    
-                var client = new Client({
-                    user: user,
-                    id_num: idnum,
-                    username: username,
-
-                    number: phone,
-                    bio: null,
-                    twitter: null,
-                    facebook: null,
-                    instagram: null,
-                    hasfb: null,
-                    hasig: null,
-                    hastw: null,
-                    isSuspended: false,
-                    likedposts: null,
+                var user = new User({
+                    email: email,
+                    password: hash,
+                    isClient: true
                 });
 
-                client.save(function(err){
+                user.save(function(err){
                     if (err) res.render("error");
-                    console.log('New Client: ' + client);
-                    res.render('welcome');
+                    console.log('New User: ' + user);
+        
+                    var client = new Client({
+                        user: user,
+                        id_num: idnum,
+                        username: username,
+    
+                        number: phone,
+                        bio: null,
+                        twitter: null,
+                        facebook: null,
+                        instagram: null,
+                        hasfb: null,
+                        hasig: null,
+                        hastw: null,
+                        isSuspended: false,
+                        likedposts: null,
+                    });
+    
+                    client.save(function(err){
+                        if (err) res.render("error");
+                        console.log('New Client: ' + client);
+                        res.render('welcome');
+                    });
                 });
             });
         }
@@ -867,13 +884,24 @@ const controller = {
         console.log("@ checkLogIn");
         
         var email = req.body.email;
-        var password = req.body.password;
+        var pw = req.body.password;
 
-        var query = {email: email, password: password};
+        var query = {email: email};
 
         User.findOne(query, function(err, result){
-            res.send(result);
-        })
+            if (result)
+            {
+                bcrypt.compare(pw, result.password, function(err, equal)
+                {
+                    if (!equal) result = ""
+                    res.send(result);
+                });
+            }
+            else
+            {
+                res.send(result);
+            }
+        });
     },
 
     /* LOADS CREATE POST */
@@ -1421,13 +1449,12 @@ const controller = {
     },
 
     /* DELETES POST */
-    getDeletePost: function(req, res){
+    getAdminDeletePost: function(req, res){
         console.log("@ getAdminDeletePost");
-        
+               
         Post.findOne({_id: req.body.postid}).exec(function(err, result) {
             if(result)
             {
-            
                 Post.deleteOne({_id: req.body.postid}, function(err) {
                     if(err) throw err;
 
@@ -1435,7 +1462,6 @@ const controller = {
                     
                     res.send(result);
                 })
-        
             }        
         })
     },

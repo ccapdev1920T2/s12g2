@@ -62,13 +62,13 @@
 			<!-- POSTS -->
 		{{#each post}}
 
-			<div class="post">
+			<div class="post" id = "{{_id}}">
 				<div class="postheader">
 					<a href="/posts/{{_id}}" class = "posttitle">
 						{{title}}
 					</a>
 					{{#ifCond postername ../username}}
-					<a href="/user/{{postername}}/{{_id}}/delete/2" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
+					<a class ="sbbutton" id="deletebutton">X</a>
 					<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
 					{{/ifCond}}
 				</div>
@@ -113,6 +113,18 @@
 </div>	
 
 <script type = "text/javascript">
+
+	$("#deletebutton").click(function() {
+        
+        var postid = jQuery(this).parent().parent().attr("id");
+		
+		if(confirm('Are you sure you want to delete this post?'))
+		{
+			$.post('/deletepost', {postid: postid}, function(status) {
+            	$("#" + postid).remove();
+        	});
+		}      
+    });
 
 	$("#submitbutton").click(function() {
 
