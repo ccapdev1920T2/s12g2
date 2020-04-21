@@ -9,6 +9,8 @@ var clientSchema = new Schema({
 
     number:             {type: String, maxLength: 11, required: true},
     bio:                {type: String/*, maxLength: */},
+    rating:             {type: Number, default: null},
+    num_reviews:        {type: Number, default: 0},
     twitter:            {type: String},
     facebook:           {type: String},
     instagram:          {type: String},

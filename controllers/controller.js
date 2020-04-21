@@ -56,6 +56,10 @@ const controller = {
             {
                 viewedclient = viewedclient.toObject();
 
+                if(viewedclient.rating) {
+                    viewedclient.checkedstars = parseInt(viewedclient.rating);
+                    viewedclient.uncheckedstars = 5 - viewedclient.checkedstars;
+                }
                 viewedclient.hasfb = (viewedclient.facebook);
                 viewedclient.hasig = (viewedclient.instagram);
                 viewedclient.hastw = (viewedclient.twitter);
@@ -684,6 +688,10 @@ const controller = {
                 {
                     viewedclient = viewedclient.toObject();
 
+                    if(viewedclient.rating) {
+                        viewedclient.checkedstars = parseInt(viewedclient.rating);
+                        viewedclient.uncheckedstars = 5 - viewedclient.checkedstars;
+                    }
                     viewedclient.hasfb = (viewedclient.facebook);
                     viewedclient.hasig = (viewedclient.instagram);
                     viewedclient.hastw = (viewedclient.twitter);
@@ -827,6 +835,19 @@ const controller = {
                         review: reviewtext
                     })
 
+                    if(reviewed.rating) {
+                        var temp = (Math.ceil(parseFloat(reviewed.rating) * parseInt(reviewed.num_reviews))  + parseInt(stars)) / (parseInt(reviewed.num_reviews) + 1)
+                        reviewed.rating = temp; 
+                    }
+                    else
+                        reviewed.rating = stars;
+
+                    reviewed.num_reviews += 1;
+
+                    reviewed.save(function(err) {
+                        //ADD??
+                    })
+
                     review.save(function(err) {
                         if (err) res.render("error");
                         console.log("New Review: " + review);
@@ -834,6 +855,8 @@ const controller = {
                         res.redirect(req.get('referer'));
 
                     })
+
+                
                 })
             });
         }
