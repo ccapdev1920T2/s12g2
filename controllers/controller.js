@@ -1377,52 +1377,7 @@ const controller = {
         });
     },
 
-    /* UPDATES REPORT AND CLIENT INFO (IF SUSPENDED) */
-    getAdminUserAction: function(req, res) {
-        console.log("@ getAdminUserAction");
-
-        Report.findOne({_id: req.params.id}).populate('reporteduser').exec(function(err, result) {
-            console.log("RESULT: " + result);
-            console.log(req.params._id);
-            if(result)
-            {
-                if(req.params.action == 'accept')
-                {
-                    result.isResolved = true;
-                    result.save(function(err) {
-                        if (err) res.render("error");
-                        console.log("Updated report: " + result);
-                        res.redirect('/users');
-                    })
-                }
-                else if (req.params.action == 'suspend')
-                {
-                    Client.findOne({username: result.reporteduser.username}).exec(function(err, client) {
-
-                        client.isSuspended = true;
-
-                        client.save(function(err) {
-                            if (err) res.render("error");
-                            console.log("Updated client: " + client);
-                        })
-
-                        result.isResolved = true;
-                        result.save(function(err) {
-                            if (err) res.render("error");
-                            console.log("Updated report: " + result);
-                            res.redirect('/users');
-                        })
-                    })
-                }
-                else
-                    res.redirect('/users');
-            }
-            else
-                res.redirect('/users');
-        });
-    },
-
-    /* UPDATES REPORT AND CLIENT INFO (IF SUSPENDED) */
+    /* APPROVES AND UPDATES POST */
     getAdminPostAction: function(req, res) {
         console.log("@ getAdminPostAction");
 
@@ -1430,16 +1385,17 @@ const controller = {
 
             if(result)
             {
+            
                 if(req.params.action == 'approve')
                 {
                     result.isApproved = true;
                     result.isReviewed = true;
 
-                    console.log("HELLO")
                     result.save(function(err) {
                         if (err) res.render("error");
                         console.log("Updated report: " + result);
                         res.redirect('/');
+                        
                     })
                 }
                 else if (req.params.action == 'delete')
@@ -1457,8 +1413,103 @@ const controller = {
             }
             else
                 res.redirect('/');
+        
         })
 
+    },
+
+    /* DELETES POST */
+    getAdminDeletePost: function(req, res){
+        console.log("@ getAdminDeletePost");
+        
+        Post.findOne({_id: req.body.postid}).exec(function(err, result) {
+
+            if(result)
+            {
+            
+                Post.deleteOne({_id: req.body.postid}, function(err) {
+                    if(err) throw err;
+
+                    console.log("Post successfully deleted");
+                    
+                    res.send(result);
+                })
+        
+            }
+
+        
+        })
+    },
+
+    /* APPROVES POST */
+    getAdminApprovePost: function(req, res){
+        console.log("@ getAdminApprovePost");
+
+        Post.findOne({_id: req.body.postid}).exec(function(err, result) {
+
+            if(result)
+            {
+                result.isApproved = true;
+                result.isReviewed = true;
+
+                result.save(function(err) {
+                    if (err) res.render("error");
+                    console.log("Updated report: " + result);
+                    res.send(result);
+                    
+                })
+                
+            }
+        })
+    },
+
+    /* SUSPENDS USER */
+    getAdminSuspendUser: function(req, res) {
+        console.log("@ getAdminSuspendUser");
+
+        Report.findOne({_id: req.body.userid}).populate('reporteduser').exec(function(err, result) {
+            
+            if(result)
+            {
+                Client.findOne({username: result.reporteduser.username}).exec(function(err, client) {
+
+                    client.isSuspended = true;
+
+                    client.save(function(err) {
+                        if (err) res.render("error");
+                        console.log("Updated client: " + client);
+                    })
+
+                    result.isResolved = true;
+                    
+                    result.save(function(err) {
+                        if (err) res.render("error");
+                        console.log("Updated result: " + result);
+                        res.send(result);
+                    })
+                })
+            }
+        });
+    },
+
+    /* DISREGARDS USER REPORT */
+    getAdminDisregardReport: function(req, res) {
+        console.log("@ getAdminDisregard");
+
+        Report.findOne({_id: req.body.userid}).populate('reporteduser').exec(function(err, result) {
+            
+            if(result)
+            {
+                result.isResolved = true;
+
+                result.save(function(err) {
+                    if (err) res.render("error");
+                    console.log("Updated report: " + result);
+                    res.send(result);
+                })
+                
+            }
+        });
     },
 
     getDeletePost: function(req, res){
