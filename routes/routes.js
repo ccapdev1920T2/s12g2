@@ -439,11 +439,11 @@ app.get('/:id/:action', function(req, res) {
 
 
 /*
-    Executes function getAdminDeletePost() as defined in the object controller in `../controllers/controller.js`
+    Executes function getDeletePost() as defined in the object controller in `../controllers/controller.js`
     when the admin decides to delete a post from their homepage.
 */
 app.post('/deletepost', function(req, res) {
-    controller.getAdminDeletePost(req, res);
+    controller.getDeletePost(req, res);
 })
 
 

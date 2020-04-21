@@ -1421,11 +1421,10 @@ const controller = {
     },
 
     /* DELETES POST */
-    getAdminDeletePost: function(req, res){
+    getDeletePost: function(req, res){
         console.log("@ getAdminDeletePost");
         
         Post.findOne({_id: req.body.postid}).exec(function(err, result) {
-
             if(result)
             {
             
@@ -1437,9 +1436,7 @@ const controller = {
                     res.send(result);
                 })
         
-            }
-
-        
+            }        
         })
     },
 
