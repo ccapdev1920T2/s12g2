@@ -415,7 +415,7 @@ app.get('/posts/:postId/edit', function(req, res){
     Executes function getClientAction() as defined in the object controller in `../controllers/controller.js`
     when a client either bids or steals a post
 */
-app.get('/posts/:postId/:action', function(req, res){
+app.post('/posts/:postId/:action', function(req, res){
     if(req.session.user == undefined) // if the user is not logged in
         res.redirect('/'); // redirects user back to the log in page
     else

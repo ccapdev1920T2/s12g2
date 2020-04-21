@@ -93,11 +93,15 @@
     var postId = url.substring(url.lastIndexOf('/') + 1);
 
     $("#bidbutton").click(function(){
-        window.location.replace("/posts/" + postId + "/bid");
-    });
+        $.post('/posts/' + postId + '/bid', function(data){
+            $('#wrapperflex').html(data);
+        });
+    })
 
     $("#stealbutton").click(function(){
-        window.location.replace("/posts/" + postId + "/steal")
+        $.post('/posts/' + postId + '/steal', function(data){
+            $('#wrapperflex').html(data);
+        });
     })
 
     $("#bidbutton").mouseenter(function(){

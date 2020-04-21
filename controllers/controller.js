@@ -1369,9 +1369,11 @@ const controller = {
                         post.cutofftime = cutoff.toTimeString().substring(0, 5);
                         post.date = postdate.toDateString();
                         post.time = postdate.toTimeString().substring(0, 5);
-    
-                        res.redirect('/posts/' + req.params.postId);
+
+                        
                     });    
+
+                    res.redirect('/posts/' + result._id);
                 }           
             });
         });
