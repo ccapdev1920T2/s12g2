@@ -424,24 +424,8 @@ app.get('/posts/:postId/:action', function(req, res){
 
 
 /*
-    Executes function getAdminUserAction() as defined in the object controller in `../controllers/controller.js`
-    when the admin decides to either suspend or disregard a report.
-*/
-app.get('/users/:id/:action', function(req, res) {
-    
-    // If no one is logged in or a client is logged in
-    if(req.session.user == undefined || req.session.user.isClient)
-        res.redirect('/');
-    else {
-        controller.getAdminUserAction(req, res);
-    }
-
-});
-
-
-/*
     Executes function getAdminPostAction() as defined in the object controller in `../controllers/controller.js`
-    when the admin decides to either approve or delete a post.
+    when the admin decides to either approve or delete a post from viewpost.
 */
 app.get('/:id/:action', function(req, res) {
     
@@ -453,6 +437,41 @@ app.get('/:id/:action', function(req, res) {
 
 });
 
+
+/*
+    Executes function getAdminDeletePost() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to delete a post from their homepage.
+*/
+app.post('/deletepost', function(req, res) {
+    controller.getAdminDeletePost(req, res);
+})
+
+
+/*
+    Executes function getAdminApprovePost() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to approve a post from their homepage.
+*/
+app.post('/approvepost', function(req, res) {
+    controller.getAdminApprovePost(req, res);
+})
+
+
+/*
+    Executes function getAdminDeletePost() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to delete a post from their homepage.
+*/
+app.post('/suspenduser', function(req, res) {
+    controller.getAdminSuspendUser(req, res);
+})
+
+
+/*
+    Executes function getAdminApprovePost() as defined in the object controller in `../controllers/controller.js`
+    when the admin decides to approve a post from their homepage.
+*/
+app.post('/disregardreport', function(req, res) {
+    controller.getAdminDisregardReport(req, res);
+})
 
 /*
     Executes function getReportedUsers() as defined in object controller in `../controllers/controller.js`

@@ -5,13 +5,16 @@
     <p class = "instructions">✓ - Approve Post</p>
     <p class = "instructions">✕ - Delete Post</p>
     {{#each post}}
-        <div class="post">
+        <div class="post" id = "{{_id}}">
             <div class="postheader">
                 <a href="/posts/{{_id}}" class = "posttitle">
                     {{title}}
                 </a>
-                <a class = "usersbutton" href = "/{{_id}}/delete"><div class = "deletebutton">✕</div></a>
-                <a class = "usersbutton" href = "/{{_id}}/approve"><div class = "acceptbutton">✓</div></a>
+                <!--<a class = "usersbutton" href = "/{{_id}}/delete"><div class = "deletebutton">✕</div></a>
+                <a class = "usersbutton" href = "/{{_id}}/approve"><div class = "acceptbutton">✓</div></a>-->
+
+                <div class = "deletebutton">✕</div>
+                <div class = "acceptbutton">✓</div>
             </div>
 
             <div class="posttags">
@@ -41,6 +44,27 @@
     {{/each}}
 
 <script type="text/javascript">
+
+    $(".deletebutton").click(function() {
+        
+        var postid = jQuery(this).parent().parent().attr("id");
+        
+        $.post('/deletepost', {postid: postid}, function(status) {
+            $("#" + postid).remove();
+        })
+
+    })
+
+    $(".acceptbutton").click(function() {
+        
+        var postid = jQuery(this).parent().parent().attr("id");
+
+        $.post('/approvepost', {postid: postid}, function(status) {
+            console.log("HERE")
+            $("#" + postid).remove();
+        })
+
+    })
 
     $(".acceptbutton").mouseenter(function(){
         $(this).css("background-color", "green");
