@@ -109,7 +109,7 @@ const controller = {
                             })
 
                             res.render('self-profile', {
-                                titletag: viewedclient.username,
+                                titletag: "My Profile", 
                                 title: viewedclient.username,
                                 username: viewedclient.username,
                                 profiledetails: viewedclient,
@@ -147,7 +147,7 @@ const controller = {
                                 })
     
                                 res.render('profile', {
-                                    titletag: viewedclient.username,
+                                    titletag: viewedclient.username + "'s Profile",
                                     title: viewedclient.username,
                                     username: currentclient.username,
                                     profiledetails: viewedclient,
@@ -182,7 +182,7 @@ const controller = {
                         })
 
                         res.render('admin-profile', {
-                            titletag: viewedclient.username,
+                            titletag: viewedclient.username + "'s Profile",
                             title: viewedclient.username,
                             profiledetails: viewedclient,
                             post: posts
