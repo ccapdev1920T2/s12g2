@@ -86,7 +86,10 @@
 					
 				</div>
 
-				<img class="itemimage" src="{{itemimg}}">
+				<a href="#openimage" rel="modal:open"><img class="itemimage" src="{{itemimg}}"></a>
+				<div id="openimage" class="modal">
+					<a href="#" rel="modal:close"><img class="itemimagefull" src=""></a>
+				</div>
 				
 				<div class="dateposted">
 					{{date}} | {{time}}
@@ -108,6 +111,9 @@
 </div>	
 
 <script type = "text/javascript">
+	$('.itemimage').click(function(){
+		$('.itemimagefull').attr('src', $(this).attr('src'));
+	})
 
 	$("#submitbutton").click(function() {
 
