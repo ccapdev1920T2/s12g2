@@ -12,6 +12,9 @@ const Post      = require('./models/post.js');
 const Report    = require('./models/report.js');
 const Review    = require('./models/review.js');
 const User      = require('./models/user.js');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/bids", {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true});
@@ -29,20 +32,22 @@ var reviews = []
 
 function userCreate(email, password, isClient, cb)
 {
-    var user = new User({
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        var user = new User({
             email:email,
-            password:password,
+            password:hash,
             isClient:isClient
         });
 
-    user.save(function(err){
-        if (err) {
-            cb(err, null)
-            return
-        }
-        console.log('New User: ' + user);
-        users.push(user);
-        cb(null, user);
+        user.save(function(err){
+            if (err) {
+                cb(err, null)
+                return
+            }
+            console.log('New User: ' + user);
+            users.push(user);
+            cb(null, user);
+        });
     });
 }
 
