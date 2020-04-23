@@ -239,16 +239,16 @@ function createCategories(cb) {
 function createClients(cb) {
     async.series([
         function(callback) {
-            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", 4.2, 5, null, null, null, false, false, false, false, callback)
+            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", 4.4, 5, null, null, null, false, false, false, false, callback)
+            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", 4.4, 5, "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
+            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", 4.6, 5, "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
+            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
         },
         function(callback) {
             clientCreate(users[5], 11827101, "randomperson", "09112233445", "Why are you looking at my profile?", null, null, null, false, false, false, false, callback)
@@ -360,7 +360,7 @@ function createReports(cb) {
 
 function createReviews(cb) {
     async.series([
-        // Reviews for sharmainegaw (4.2/5)
+        // Reviews for sharmainegaw
         function(callback) {
             reviewCreate(5, clients[1]._id, clients[0]._id, "Easy to talk to and arrived on time.", callback);
         },
@@ -377,7 +377,7 @@ function createReviews(cb) {
             reviewCreate(4, clients[3]._id, clients[0]._id, "I am very pleased with the items that I got.", callback);
         },
 
-        // Reviews for christinedtc (4.4/5)
+        // Reviews for christinedtc
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[1]._id, "Items were in good condition and arrived on time. Very easy to talk to.", callback);
         },
@@ -394,7 +394,7 @@ function createReviews(cb) {
             reviewCreate(4, clients[0]._id, clients[1]._id, "I am very pleased with the items.", callback);
         },
 
-        // Reviews for julibi (4.4/5)
+        // Reviews for julibi
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[2]._id, "Responsive and easy to talk to.", callback);
         },
@@ -411,7 +411,7 @@ function createReviews(cb) {
             reviewCreate(3, clients[0]._id, clients[2]._id, "Items were good. Seller took too long to respond.", callback);
         },
 
-        // Reviews for nemumu (4.6/5)
+        // Reviews for nemumu
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[3]._id, "Items were great! Seller sometimes barks, but it's ok.", callback);
         },
