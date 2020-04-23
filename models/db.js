@@ -1,7 +1,8 @@
 const mongodb = require('mongodb');
 
 const client = mongodb.MongoClient;
-const url = "mongodb://localhost:27017";
+//const url = "mongodb://localhost:27017";
+const url = process.env.MONGODB_URI || "mongodb:localhost:27017/bids";
 
 const options = { useUnifiedTopology: true};
 
