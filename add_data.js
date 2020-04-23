@@ -193,37 +193,7 @@ function createUsers(cb) {
             userCreate('nemo@puppers.com', 'henloworld', true, callback);
         },
         function(callback) {
-            userCreate('iammoana@gmail.com', 'heartoftefiti', true, callback);
-        },
-        function(callback) {
-            userCreate('princessariel@gmail.com', 'thingamabob', true, callback);
-        },
-        function(callback) {
-            userCreate('mulan_hua@dlsu.edu.ph', 'reflection1998', true, callback);
-        },
-        function(callback) {
-            userCreate('annaofarendelle@gmail.com', 'nextrightthing', true, callback);
-        },
-        function(callback) {
-            userCreate('littlebeauty@gmail.com', 'andthebeast', true, callback);
-        },
-        function(callback) {
-            userCreate('snowwhite@gmail.com', 'andthe7dwarfs', true, callback);
-        },
-        function(callback) {
-            userCreate('merida_ofdunbroch@gmail.com', 'bebrave3', true, callback);
-        },
-        function(callback) {
-            userCreate('vanellope_von_schweetz@dlsu.edu.ph', 'notaglitch', true, callback);
-        },
-        function(callback) {
-            userCreate('the_pocahontas@gmail.com', 'colorsofthewind', true, callback);
-        },
-        function(callback) {
-            userCreate('thesleepingbeauty@gmail.com', 'deepsleep', true, callback);
-        },
-        function(callback) {
-            userCreate('princecharming@gmail.com', 'maybehenry', true, callback);
+            userCreate('random@random.com', 'qwerty12345', true, callback);
         }
     ], cb);
 }
@@ -269,47 +239,20 @@ function createCategories(cb) {
 function createClients(cb) {
     async.series([
         function(callback) {
-            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", null, null, null, false, false, false, false, callback)
+            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", 4.2, 5, null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", null, null, null, false, false, false, false, callback)
+            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", 4.4, 5, null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
+            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", 4.4, 5, "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
+            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", 4.6, 5, "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
         },
         function(callback) {
-            clientCreate(users[5], 11827101, "iammoana", "09167892453", "I am Moana of Motunui. You will board my boat, sail across the sea, and restore the heart of Te Fiti.", "iammoana", null, "iammoana", true, false, true, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[6], 11827101, "thelittlemermaid", "09265874695", "Look at this stuff, isn't it neat? Wouldn't you think my collection's complete? Wouldn't you think I'm the girl, the girl who has everything?", null, null, "thelittlemermaid", false, false, true, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[7], 11827101, "huamulan", "09178597562", "I will show the world what's inside my heart and be loved for who I am.", "huamulan", null, "huamulan", true, false, true, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[8], 11827101, "annaofarendelle", "09065482549", "I climbed the north mountain, survived a frozen heart, and save my sister from my ex-boyfriend.", "annaofarendelle", "annaofarendelle", null, true, true, false, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[9], 11827101, "daretobedifferent", "099152458214", "I want adventure in the great wide somewhere... I want so much more than they've got planned.", null, "littlebeauty", null, false, true, false, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[10], 11827101, "fairestoneofall", "09165874962", "Lips red as the rose, hair black as ebony, skin white as snow.", null, "fairestofall", "fairestofall", false, true, true, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[11], 11827101, "bravemerida", "09265874589", "I am Merida, and I'll be shooting for my own hand.", "bravemerida", "bravemerida", null, true, true, false, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[12], 11827101, "sugarrushqueen", "09154879863", "I'm not a glitch, I just have pixlexia", "sugarrushqueen", null, "sugarrushqueen", true, false, true, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[13], 11827101, "nameismatoaka", "09168954782", "If you walk the footsteps of a stranger, you'll learn things you never knew you never knew.", "nameismatoaka", "nameismatoaka", null, true, true, false, false, callback)
-        },
-        function(callback) {
-            clientCreate(users[14], 11827101, "princessaurora", "09178954821", "Yes, it's only in my dreams. But they say if you dream a thing more than once, it's sure to come true, and I've dreamed that dream so many times.", "princessaurora", "princessaurora", "princessaurora", true, true, true, false, callback)
-        },
+            clientCreate(users[5], 11827101, "randomperson", "09112233445", "Why are you looking at my profile?", null, null, null, false, false, false, false, callback)
+        }
     ], cb);
 }
 
@@ -349,40 +292,143 @@ function createPosts(cb) {
 function createReports(cb) {
     async.series([
         function(callback) {
-            reportCreate(clients[1]._id, clients[10]._id, "flaking", "Never showed up and can't be contacted anymore.", false, callback);
+            reportCreate(clients[0]._id, clients[4]._id, "flaking", "Never showed up and can't be contacted anymore.", false, callback);
         },
         function(callback) {
-            reportCreate(clients[2]._id, clients[10]._id, "flaking", "We were supposed to meetup, but they never showed up and can't be contacted.", false, callback);
+            reportCreate(clients[1]._id, clients[4]._id, "flaking", "We were supposed to meetup, but they never showed up and can't be contacted.", false, callback);
         },
         function(callback) {
-            reportCreate(clients[3]._id, clients[13]._id, "spam", "Spammed my inbox with sketchy websites and ads.", false, callback);
+            reportCreate(clients[2]._id, clients[4]._id, "spam", "Spammed my inbox with sketchy websites and ads.", false, callback);
         },
         function(callback) {
-            reportCreate(clients[4]._id, clients[12]._id, "offensive", "Was extremely rude and did not care about customers.", false, callback);
+            reportCreate(clients[3]._id, clients[4]._id, "offensive", "Was extremely rude and did not care about customers.", false, callback);
         },
         function(callback) {
-            reportCreate(clients[4]._id, clients[11]._id, "offensive", "Extremely rude and was not cooperative.", false, callback);
+            reportCreate(clients[0]._id, clients[4]._id, "offensive", "Extremely rude and was not cooperative.", false, callback);
+        },
+
+        function(callback) {
+            reportCreate(clients[1]._id, clients[4]._id, "flaking", "Did not show up for our meetup.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[2]._id, clients[4]._id, "flaking", "We were going to meetup but I can't contact them.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[3]._id, clients[4]._id, "spam", "Spammed my inbox with ads.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[0]._id, clients[4]._id, "offensive", "Started insulting me when I requested a later date for a meetup.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[1]._id, clients[4]._id, "offensive", "Used insulting words, when I said the time wasn't possible for me.", false, callback);
+        },
+
+        function(callback) {
+            reportCreate(clients[2]._id, clients[4]._id, "flaking", "Didn't show up.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[3]._id, clients[4]._id, "flaking", "Did not even show up for our meetup.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[0]._id, clients[4]._id, "spam", "Spammed my inbox and left 1000 irrelevant messages.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[1]._id, clients[4]._id, "offensive", "Uses vulgar words.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[2]._id, clients[4]._id, "offensive", "Insulted me when I refused his other products.", false, callback);
+        },
+
+        function(callback) {
+            reportCreate(clients[3]._id, clients[4]._id, "flaking", "Did not show up for our meetup. I waited for 2 hours.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[0]._id, clients[4]._id, "flaking", "An hour before our meetup I couldn't contact him anymore.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[1]._id, clients[4]._id, "spam", "Spammed my inbox with ads.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[2]._id, clients[4]._id, "offensive", "Very rude when I said I only wanted the product I bidded on.", false, callback);
+        },
+        function(callback) {
+            reportCreate(clients[3]._id, clients[4]._id, "offensive", "Rude and uncooperative.", false, callback);
         }
+
     ], cb);
 }
 
 function createReviews(cb) {
     async.series([
+        // Reviews for sharmainegaw (4.2/5)
         function(callback) {
-            reviewCreate(5, clients[1]._id, clients[2]._id, "Easy to talk to and arrived on time.", callback);
+            reviewCreate(5, clients[1]._id, clients[0]._id, "Easy to talk to and arrived on time.", callback);
         },
         function(callback) {
-            reviewCreate(5, clients[2]._id, clients[3]._id, "Great items. Very responsive.", callback);
+            reviewCreate(5, clients[2]._id, clients[0]._id, "Great items. Very responsive.", callback);
         },
         function(callback) {
-            reviewCreate(4, clients[4]._id, clients[3]._id, "Came on time. Items were better than expected.", callback);
+            reviewCreate(4, clients[3]._id, clients[0]._id, "Came on time. Items were better than expected.", callback);
         },
         function(callback) {
-            reviewCreate(4, clients[2]._id, clients[1]._id, "Great items! Would highly recommend seller.", callback);
+            reviewCreate(3, clients[2]._id, clients[0]._id, "Took quite long to respond, but items were in great condition.", callback);
         },
         function(callback) {
-            reviewCreate(2, clients[1]._id, clients[4]._id, "Took to long to response and arrived late.", callback);
+            reviewCreate(4, clients[3]._id, clients[0]._id, "I am very pleased with the items that I got.", callback);
+        },
+
+        // Reviews for christinedtc (4.4/5)
+        function(callback) {
+            reviewCreate(5, clients[0]._id, clients[1]._id, "Items were in good condition and arrived on time. Very easy to talk to.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[2]._id, clients[1]._id, "Very responsive. Items in great condition.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[3]._id, clients[1]._id, "I love my owner. <3", callback);
+        },
+        function(callback) {
+            reviewCreate(3, clients[2]._id, clients[1]._id, "Accidentally brought the wrong item. It's fine though, but had to wait for her to get the right one.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[0]._id, clients[1]._id, "I am very pleased with the items.", callback);
+        },
+
+        // Reviews for julibi (4.4/5)
+        function(callback) {
+            reviewCreate(5, clients[0]._id, clients[2]._id, "Responsive and easy to talk to.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[1]._id, clients[2]._id, "Very responsive. Items were better than expected", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[3]._id, clients[2]._id, "Items were delicious.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[1]._id, clients[2]._id, "Very kind seller. Would definitely buy from again.", callback);
+        },
+        function(callback) {
+            reviewCreate(3, clients[0]._id, clients[2]._id, "Items were good. Seller took too long to respond.", callback);
+        },
+
+        // Reviews for nemumu (4.6/5)
+        function(callback) {
+            reviewCreate(5, clients[0]._id, clients[3]._id, "Items were great! Seller sometimes barks, but it's ok.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[2]._id, clients[3]._id, "Loved the items. Would purchase from again.", callback);
+        },
+        function(callback) {
+            reviewCreate(5, clients[1]._id, clients[3]._id, "Great dog. Items are a bit chewed up, but it's ok.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[2]._id, clients[3]._id, "Accidentally brought the wrong item, but it's okay, because she's kind.", callback);
+        },
+        function(callback) {
+            reviewCreate(4, clients[0]._id, clients[3]._id, "Great items and nice seller!", callback);
         }
+
+        
     ], cb);
 }
 
