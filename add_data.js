@@ -239,16 +239,16 @@ function createCategories(cb) {
 function createClients(cb) {
     async.series([
         function(callback) {
-            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", 4.2, 5, null, null, null, false, false, false, false, callback)
+            clientCreate(users[1], 11827101, "sharmainegaw", "09959201000", "decluttering.", null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", 4.4, 5, null, null, null, false, false, false, false, callback)
+            clientCreate(users[2], 11827101, "christinedtc", "09912345678", "for nemo <3", null, null, null, false, false, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", 4.4, 5, "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
+            clientCreate(users[3], 11827101, "julibi", "09062583907", "Hello! I sell a lot of original KPOP merch.", "hawkeye1006", "robijeanne.banogon", null, true, true, false, false, callback)
         },
         function(callback) {
-            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", 4.6, 5, "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
+            clientCreate(users[4], 11827101, "nemumu", "09123456789", "I am an adorable little dog, who will bid for treats.", "nemumu", "nemumu", "nemumu", true, true, true, false, callback)
         },
         function(callback) {
             clientCreate(users[5], 11827101, "randomperson", "09112233445", "Why are you looking at my profile?", null, null, null, false, false, false, false, callback)
