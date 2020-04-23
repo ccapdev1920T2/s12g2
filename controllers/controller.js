@@ -1,7 +1,9 @@
 const multer = require('multer');
 
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/bids", {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+const url = process.env.MONGODB_URI || "mongodb://localhost/bids";
+
+mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 var mongodb = mongoose.connection;
 mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
