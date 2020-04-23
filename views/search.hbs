@@ -1,6 +1,7 @@
 <div id = "reportscreen">
 	<div id = "reportcontent">
 		<button id = "close">X</button>
+		<br><br>
 		<h1 style = "text-align: center; margin-left: 80px; margin-bottom: 0px">FILTER AND SORT</h1>
 		<br>
 		<div id = "filtersortsubmit">
@@ -10,7 +11,7 @@
 						<div id = "filter" style="margin-left: 30px;">
 							
 								<div class = "filteroptions">
-									<form method = "get" name = "searchsortf">
+									<form method = "get" name = "sortfilter">
 									<div>
 										<input type = "radio" id = "book" name = "filter" value = "Book">
 										<label for = "book" style = "color: black">Book</label>
@@ -116,16 +117,19 @@
 									</div>
 
 								</div>
+
+							</form>
 						</div>
 					</div>
 				</div>
 
 				
-				<div id = "submitbutton">
-					<div class = "button" id = "profilesubmit" onclick = "searchsortf.submit()">search</div>
-				</div>
+				
 			
 		</div>
+			<div id = "submitbutton">
+				<div class = "button" id = "profilesubmit" onclick = "sortfilter.submit()">search</div>
+			</div>
 	</div>
 </div>
 
