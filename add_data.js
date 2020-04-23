@@ -360,7 +360,7 @@ function createReports(cb) {
 
 function createReviews(cb) {
     async.series([
-        // Reviews for sharmainegaw (4.2/5)
+        // Reviews for sharmainegaw
         function(callback) {
             reviewCreate(5, clients[1]._id, clients[0]._id, "Easy to talk to and arrived on time.", callback);
         },
@@ -377,7 +377,7 @@ function createReviews(cb) {
             reviewCreate(4, clients[3]._id, clients[0]._id, "I am very pleased with the items that I got.", callback);
         },
 
-        // Reviews for christinedtc (4.4/5)
+        // Reviews for christinedtc
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[1]._id, "Items were in good condition and arrived on time. Very easy to talk to.", callback);
         },
@@ -394,7 +394,7 @@ function createReviews(cb) {
             reviewCreate(4, clients[0]._id, clients[1]._id, "I am very pleased with the items.", callback);
         },
 
-        // Reviews for julibi (4.4/5)
+        // Reviews for julibi
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[2]._id, "Responsive and easy to talk to.", callback);
         },
@@ -411,7 +411,7 @@ function createReviews(cb) {
             reviewCreate(3, clients[0]._id, clients[2]._id, "Items were good. Seller took too long to respond.", callback);
         },
 
-        // Reviews for nemumu (4.6/5)
+        // Reviews for nemumu
         function(callback) {
             reviewCreate(5, clients[0]._id, clients[3]._id, "Items were great! Seller sometimes barks, but it's ok.", callback);
         },
