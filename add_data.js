@@ -17,7 +17,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI || "mongodb:localhost:27017/bids", {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost/bids", {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true});
 var mongodb = mongoose.connection;
 mongodb.on('error', console.error.bind(console, 'MongoDB connection error'));
 
