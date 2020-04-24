@@ -1,96 +1,98 @@
-<div id = "wrapperflex">
+<div id="extradiv">
+    <div id = "wrapperflex">
 
-    {{> userheader username = username}}
-    <div id = "profile">
-        <!-- POSTS -->
-        {{#post}}
-        <div class="postmain">
-            
-            <div class="postheader">
-                <p class = "posttitle">
-                    {{title}}
-                </p>
-                {{#ifCond postername ../username}}
-                {{#if isDeletable}}
-                <a href="/user/{{postername}}/{{_id}}/delete/2" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
-                {{/if}}
+        {{> userheader username = username}}
+        <div id = "profile">
+            <!-- POSTS -->
+            {{#post}}
+            <div class="postmain">
+                
+                <div class="postheader">
+                    <p class = "posttitle">
+                        {{title}}
+                    </p>
+                    {{#ifCond postername ../username}}
+                    {{#if isDeletable}}
+                    <a href="/user/{{postername}}/{{_id}}/delete/2" name = "delete" class ="sbbutton" id="filterbutton" onclick="return confirm('Are you sure you want to delete this post?')">X</a>
+                    {{/if}}
+                    {{#if isOpen}}
+                    <a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
+                    {{/if}}
+                    {{/ifCond}}
+                </div>
+
+                <div class="posttags">
+                    <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
+                </div>
+
+                <div class="postedby">
+                    <img class="avatar" src="{{posteravatar}}">
+                    <a href="/user/{{postername}}" class="username">{{postername}}</a>
+                </div>
+
+                <pre class = "postdesc">
+                    <br>{{description}}
+                </pre>
+
+                <div class="adtldetails">
+                    <p class =  "payment">
+                        <b>mode of payment:</b> {{paymentmode}}
+                    </p>
+                    <p class = "cutoff">
+                        <b>cut-off:</b> {{cutoffdate}} | {{cutofftime}}
+                    </p>
+                    <p class = "details">
+                        <b>meet-up details:</b> {{details}}
+                    </p>
+                </div>
+
+                {{#each image}}
+                <a href="#openimage" rel="modal:open"><img class="itemimage" src="{{itemimg}}"></a>
+                <div id="openimage" class="modal">
+                    <a href="#" rel="modal:close"><img class="itemimagefull" src=""></a>
+                </div>
+                {{/each}}
+                
+                <div class="dateposted">
+                    {{date}} | {{time}}
+                </div>
+            </div>
+
+            <div class="sidebar">
                 {{#if isOpen}}
-                <a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
+                <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
+                {{else}}
+                <div class="sidebarlabels" style="font-size: 18px;">bidding closed</div>
+                <div class="sidebarlabels" style="font-size: 18px;">sold to</div>
                 {{/if}}
-                {{/ifCond}}
-            </div>
 
-            <div class="posttags">
-                <a href="/tagged/{{tagname}}" class="tag">{{tagname}}</a>
-            </div>
 
-            <div class="postedby">
-                <img class="avatar" src="{{posteravatar}}">
-                <a href="/user/{{postername}}" class="username">{{postername}}</a>
-            </div>
+                <img class="bidderavatar" src="{{bidderavatar}}">
+                <div class="biddername">{{biddername}}</div>
+                <div class="pricemain currentprice">
+                    P{{currentprice}}
+                </div>
+                <div class="sidebarlabels">increment</div>
+                <div class="pricemain increment" style="background-color: rgb(80, 80, 80);">
+                    P{{incrementprice}}
+                </div>
+                <div class="sidebarlabels">steal price</div>
+                <div class="pricemain stealprice">
+                    P{{stealprice}}
+                </div>
 
-            <pre class = "postdesc">
-                <br>{{description}}
-            </pre>
+                {{#if isNotPoster}}
+                {{#if isOpen}}
+                <div class="actions">
+                    <span class="actionbutton" id="bidbutton">bid</span>
+                    <span class="actionbutton" id="stealbutton">steal</span>
+                </div>
+                {{/if}}
+                {{/if}}
 
-            <div class="adtldetails">
-                <p class =  "payment">
-                    <b>mode of payment:</b> {{paymentmode}}
-                </p>
-                <p class = "cutoff">
-                    <b>cut-off:</b> {{cutoffdate}} | {{cutofftime}}
-                </p>
-                <p class = "details">
-                    <b>meet-up details:</b> {{details}}
-                </p>
             </div>
-
-            {{#each image}}
-            <a href="#openimage" rel="modal:open"><img class="itemimage" src="{{itemimg}}"></a>
-            <div id="openimage" class="modal">
-                <a href="#" rel="modal:close"><img class="itemimagefull" src=""></a>
-            </div>
-            {{/each}}
-            
-            <div class="dateposted">
-                {{date}} | {{time}}
-            </div>
+            {{/post}}
         </div>
-
-        <div class="sidebar">
-            {{#if isOpen}}
-            <div class="sidebarlabels" style="font-size: 18px;">highest bidder</div>
-            {{else}}
-            <div class="sidebarlabels" style="font-size: 18px;">bidding closed</div>
-            <div class="sidebarlabels" style="font-size: 18px;">sold to</div>
-            {{/if}}
-
-
-            <img class="bidderavatar" src="{{bidderavatar}}">
-            <div class="biddername">{{biddername}}</div>
-            <div class="pricemain currentprice">
-                P{{currentprice}}
-            </div>
-            <div class="sidebarlabels">increment</div>
-            <div class="pricemain increment" style="background-color: rgb(80, 80, 80);">
-                P{{incrementprice}}
-            </div>
-            <div class="sidebarlabels">steal price</div>
-            <div class="pricemain stealprice">
-                P{{stealprice}}
-            </div>
-
-            {{#if isNotPoster}}
-            {{#if isOpen}}
-            <div class="actions">
-                <span class="actionbutton" id="bidbutton">bid</span>
-                <span class="actionbutton" id="stealbutton">steal</span>
-            </div>
-            {{/if}}
-            {{/if}}
-
-        </div>
-        {{/post}}
     </div>
 </div>
 
@@ -105,13 +107,13 @@
 
     $("#bidbutton").click(function(){
         $.post('/posts/' + postId + '/bid', function(data){
-            $('#wrapperflex').html(data);
+            $('#extradiv').html(data);
         });
     })
 
     $("#stealbutton").click(function(){
         $.post('/posts/' + postId + '/steal', function(data){
-            $('#wrapperflex').html(data);
+            $('#extradiv').html(data);
         });
     })
 
