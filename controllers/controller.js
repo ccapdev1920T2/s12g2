@@ -87,7 +87,7 @@ const controller = {
                     // if user is viewing their own profile
                     else if (JSON.stringify(req.session.user._id) == JSON.stringify(viewedclient.user)){
 
-                        Post.find({poster: viewedclient._id}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                        Post.find({poster: viewedclient._id}).populate('poster').populate('category').populate('highestbidder').sort({postdate : -1}).exec(function(err, results){
                             var posts = [];
 
                             if(results)
@@ -108,6 +108,9 @@ const controller = {
                                 post.date = timestamp.toDateString();
                                 post.time = timestamp.toTimeString().substring(0, 5);
                                 post.itemimg = post.picture[0];
+                                
+                                post.isDeletable = (post.highestbidder) ? false : true;
+                                post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
                             })
 
                             res.render('self-profile', {
@@ -304,7 +307,7 @@ const controller = {
             
             Category.find(filter).exec(function(err, result){
 
-                Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+                Post.find({category: result}).populate('poster').populate('category').populate('highestbidder').sort(sortOpt).exec(function(err, results){
                     if (err) throw err;
 
                     var temp = []
@@ -326,6 +329,8 @@ const controller = {
         
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString().substring(0, 5);
+                            post.isDeletable = (post.highestbidder) ? false : true;
+                            post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
                             post.itemimg = post.picture[0];
 
@@ -431,7 +436,7 @@ const controller = {
 
                         if (req.session.user.isClient)
                         {
-                            Post.find({}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
+                            Post.find({}).populate('poster').populate('category').populate('highestbidder').sort({postdate : -1}).exec(function(err, results){
                                 if (err) throw err;
 
                                 var temp = []
@@ -453,6 +458,8 @@ const controller = {
                     
                                         post.date = timestamp.toDateString();
                                         post.time = timestamp.toTimeString().substring(0, 5);
+                                        post.isDeletable = (post.highestbidder) ? false : true;
+                                        post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
                                         post.itemimg = post.picture[0];
 
@@ -488,7 +495,8 @@ const controller = {
                             })
                         }
                         else {
-
+                            
+                            // admin side
                             Post.find({isApproved: false, isReviewed: false}).populate('poster').populate('category').sort({postdate : -1}).exec(function(err, results){
                                 if(err) throw err;
 
@@ -627,12 +635,15 @@ const controller = {
             else
             {
                 post.postername = result.poster.username;
-                if(result.highestbidder){
+                if(result.highestbidder)
+                {
+                    post.isDeletable = false
                     post.biddername = result.highestbidder.username;
                     post.bidderavatar = post.highestbidder.avatar;
                 }
                 else 
                 {
+                    post.isDeletable = true
                     post.biddername = "-";
                     post.bidderavatar = '/img/default.png';
                 }
@@ -1122,56 +1133,56 @@ const controller = {
                 var input = req.query.search;
                 var query = {$text: {$search: input}};
 
+                Category.find(filter).exec(function(err, result){
 
+                    Post.find({$text: {$search: input}, category: result}).populate('poster').populate('category').populate('highestbidder').sort(sortOpt).exec(function(err, results){
+                        if (err) throw err;
+    
+                        if (results)
+                            posts = multipleMongooseToObj(results);
+                        
+                        posts.forEach(function (post) {
+                            post.postername = post.poster.username;
+                            post.posteravatar = post.poster.avatar;
+                            post.tagname = post.category.name;
             
+                            var timestamp = new Date(post.postdate)
+        
+                            post.date = timestamp.toDateString();
+                            post.time = timestamp.toTimeString().substring(0, 5);
+                            post.isDeletable = (post.highestbidder) ? false : true;
+                            post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
-                    Category.find(filter).exec(function(err, result){
-                        Post.find({$text: {$search: input}, category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+                            post.itemimg = post.picture;
+                        });
+                        
+                        Client.find(query).sort(sortOpt).exec(function(err, result2){
                             if (err) throw err;
-        
-                            if (results)
-                                posts = multipleMongooseToObj(results);
-                            
-                            posts.forEach(function (post) {
-                                post.postername = post.poster.username;
-                                post.posteravatar = post.poster.avatar;
-                                post.tagname = post.category.name;
-                
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString().substring(0, 5);
-
-                                post.itemimg = post.picture;
-                            });
-                            
-                            Client.find(query).sort(sortOpt).exec(function(err, result2){
-                                if (err) throw err;
-        
-                                var users = []
-        
-                                if (result2)
-                                    users = multipleMongooseToObj(result2);
-        
-                                Client.findOne({user: req.session.user}, function(err, result1){
-                                    res.render('search', {
-                                        titletag: "Search Results for " + input,
-                                        isSearch: true,
-                                        isTag: false,
-                                        query: input,
-                                        username: result1.username,
-                                        profiledetails: users, 
-                                        post: posts
-                                    });
-                                }); 
-                            });
+    
+                            var users = []
+    
+                            if (result2)
+                                users = multipleMongooseToObj(result2);
+    
+                            Client.findOne({user: req.session.user}, function(err, result1){
+                                res.render('search', {
+                                    titletag: "Search Results for " + input,
+                                    isSearch: true,
+                                    isTag: false,
+                                    query: input,
+                                    username: result1.username,
+                                    profiledetails: users, 
+                                    post: posts
+                                });
+                            }); 
                         });
                     });
+                });
             }
             else
             {
                 Category.find(filter).exec(function(err, result){
-                    Post.find({}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
+                    Post.find({}).populate('poster').populate('category').populate('highestbidder').sort(sortOpt).exec(function(err, results){
                         if (err) throw err;
         
                         var posts = []
@@ -1187,6 +1198,8 @@ const controller = {
         
                             post.date = timestamp.toDateString();
                             post.time = timestamp.toTimeString().substring(0, 5);
+                            post.isDeletable = (post.highestbidder) ? false : true;
+                            post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
                             post.itemimg = post.picture;
                         });
@@ -1329,37 +1342,39 @@ const controller = {
 
             Category.findOne({name: req.params.tagname}).exec(function(err, result){
                                 
-                        Post.find({category: result}).populate('poster').populate('category').sort(sortOpt).exec(function(err, results){
-                            if (err) throw err;
-            
-                            if (results)
-                                posts = multipleMongooseToObj(results);
-                            
-                            posts.forEach(function (post) {
-                                post.postername = post.poster.username;
-                                post.posteravatar = post.poster.avatar;
-                                post.tagname = post.category.name;
-                
-                                var timestamp = new Date(post.postdate)
-            
-                                post.date = timestamp.toDateString();
-                                post.time = timestamp.toTimeString().substring(0, 5);
+                Post.find({category: result}).populate('poster').populate('category').populate('highestbidder').sort(sortOpt).exec(function(err, results){
+                    if (err) throw err;
+    
+                    if (results)
+                        posts = multipleMongooseToObj(results);
+                    
+                    posts.forEach(function (post) {
+                        post.postername = post.poster.username;
+                        post.posteravatar = post.poster.avatar;
+                        post.tagname = post.category.name;
+        
+                        var timestamp = new Date(post.postdate)
+    
+                        post.date = timestamp.toDateString();
+                        post.time = timestamp.toTimeString().substring(0, 5);
+                        post.isDeletable = (post.highestbidder) ? false : true;
+                        post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
-                                post.itemimg = post.picture;
-                            });
-                            
-                            Client.findOne({user: req.session.user}, function(err, client){
-                                res.render('search', {
-                                    titletag: "Posts tagged with " + req.params.tagname,
-                                    isSearch: false,
-                                    isTag: true,
-                                    query: req.params.tagname,
-                                    username: client.username,
-                                    //profiledetails: users, 
-                                    post: posts
-                                });
-                            }); 
+                        post.itemimg = post.picture;
+                    });
+                    
+                    Client.findOne({user: req.session.user}, function(err, client){
+                        res.render('search', {
+                            titletag: "Posts tagged with " + req.params.tagname,
+                            isSearch: false,
+                            isTag: true,
+                            query: req.params.tagname,
+                            username: client.username,
+                            //profiledetails: users, 
+                            post: posts
                         });
+                    }); 
+                });
             });
 
         }
@@ -1415,7 +1430,7 @@ const controller = {
                         post.date = postdate.toDateString();
                         post.time = postdate.toTimeString().substring(0, 5);
 
-                        
+                        post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
                     });    
 
                     res.redirect('/posts/' + result._id);
