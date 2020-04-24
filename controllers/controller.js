@@ -1359,7 +1359,7 @@ const controller = {
     
         Client.findOne({user: req.session.user}, function(err, client){
 
-            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').exec(function(err, result){
+            Post.findOne({_id: req.params.postId}).populate('poster').populate('category').populate('highestbidder').exec(function(err, result){
 
                 if(result.poster.isSuspended)
                 {
@@ -1371,14 +1371,19 @@ const controller = {
                 }
                 else
                 {
-                    result.highestbidder = client;
-                    //if action is bid, add only increment
+                    //if action is bid
                     if(req.params.action == "bid")
-                        result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                        // add increment if there is already a previous bidder
+                        if (result.highestbidder)
+                            result.currentprice = (result.currentprice + result.incrementprice >= result.stealprice) ? result.stealprice : (result.currentprice + result.incrementprice);
+                        else
+                            result.currentprice = result.startprice;
                     
                     //if action is steal, current price = steal price
                     else if (req.params.action == "steal")
                         result.currentprice = result.stealprice;
+    
+                    result.highestbidder = client;
     
                     if(result.currentprice == result.stealprice)
                         result.isOpen = false;
