@@ -890,20 +890,30 @@ const controller = {
 
         var query = {email: email};
 
-        User.findOne(query, function(err, result){
-            if (result)
-            {
-                bcrypt.compare(pw, result.password, function(err, equal)
+        if (email && pw)
+        {
+            User.findOne(query, function(err, result){
+                if (result)
                 {
-                    if (!equal) result = ""
+                    bcrypt.compare(pw, result.password, function(err, equal)
+                    {
+                        if (!equal) result = ""
+                        res.send(result);
+                    });
+                }
+                else
+                {
                     res.send(result);
-                });
-            }
-            else
-            {
-                res.send(result);
-            }
-        });
+                }
+            });
+        }
+        else
+        {
+            res.render('home', {
+                email: email,
+            })
+        }
+
     },
 
     /* LOADS CREATE POST */
