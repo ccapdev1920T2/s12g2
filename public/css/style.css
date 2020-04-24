@@ -548,9 +548,11 @@ input[type=email], input[type=password], input[type=text]
 	box-shadow: 10px 10px 20px #e0e0e0;
 	padding: 30px;
 	max-height: 470px;
-	width: 300px;
+	min-width: 300px;
+	max-width: 300px;
 	box-sizing: border-box;
 	background-color:white;
+	
 }
 
 .sidebarlabels
