@@ -185,8 +185,12 @@
 					{{title}}
 				</a>
 				{{#ifCond postername ../username}}
+				{{#if isDeletable}}
             	<a class ="sbbutton" id="deletebutton">X</a>
+				{{/if}}
+				{{#if isOpen}}
 				<a href="/posts/{{_id}}/edit" class ="sbbutton" id="searchbutton">edit</a>
+				{{/if}}
             	{{/ifCond}}
 			</div>
 
