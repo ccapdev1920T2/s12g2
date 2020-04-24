@@ -24,7 +24,7 @@
     <!-- LOG IN -->
 
     <div id = "form">
-        <form method = "post" action = "">
+        <form name = "login" id = "login" method = "post">
             <label for = "email">email</label><br>
             <input type="email" id="email" name = "email" value = {{email}}><br>
             
@@ -33,7 +33,7 @@
 
             <p class = "registrationerror" id = "loginerror"></p><br>
             
-            <input class = "button" type = "submit" id = "submit" value = "log in">
+            <div class = "button" id = "submitpost" onclick = "validate()">log in</div>
         </form>
         
         <br><br>
@@ -46,33 +46,33 @@
 
 <script>
 
-    $("input").keyup(function(){
-        $("#submit").prop("disabled", false);
-    });
-
-    $("#submit").click(function(){
+    function validate()
+    {
         var email = $("#email").val();
         var password = $("#password").val();
-
         var query = {email: email, password: password};
 
         if(email.trim() != "" && password.trim() != "")
         {
             $.post('/checkLogIn', query, function(result) {
-                if(result == "") {
-                    
-                    alert("Invalid email/or password.")
-
+                
+                if(!result) {
+                    $("#loginerror").css("color", "red")
+                    $("#loginerror").text("Invalid email and/or password.")
+                }
+                else
+                {
+                    $("#loginerror").css("color", "white")
+                    $("#login").submit();
                 }
             });
         }
         else
         {
-            alert("Invalid email/or password.")
-            $("#submit").prop("disabled", true);
+            $("#loginerror").css("color", "red")
+            $("#loginerror").text("Please enter your log-in credentials.")
         }
+     
+    }
 
-        
-        
-    }); 
 </script>
