@@ -52,15 +52,18 @@
 
         var query = {email: email, password: password};
 
-        $.post('/checkLogIn', query, function(result) {
-            
-            if(result == "") {
-                
-                alert("Invalid email/or password.")
+        if(email.trim() != "" && password.trim() != "")
+        {
+            $.post('/checkLogIn', query, function(result) {
+                if(result == "") {
+                    
+                    alert("Invalid email/or password.")
 
-            }
-            
-        });
+                }
+            });
+        }
+
+        
         
     }); 
 </script>
