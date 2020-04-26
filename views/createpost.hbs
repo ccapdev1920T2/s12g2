@@ -82,7 +82,12 @@
                     <!-- UPLOAD -->
                     <label for="pic">Upload Picture/s</label><br>
                     <input type="file" id = "pic" name="pic" accept="image/*" multiple/><br>
-                   
+                    <div class="gallery">
+                        <div id="openimage" class="modal">
+                            <a href="#" rel="modal:close"><img class="itemimagefull" src=""></a> 
+                        
+                        </div>
+                    </div>
                     <!-- SUBMIT -->
                     
                     <div style="text-align: center; border-bottom: 0px">
@@ -96,7 +101,32 @@
 <script type="text/javascript">
 
     $("#createposterror").css("color", "white");
-    
+
+    $('#pic').on('change', function() {
+
+        if (this.files) {
+            var filesAmount = this.files.length;
+            $("div.gallery img.postimage").remove();
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var file = event.target.result;
+                    $('div.gallery').append('<a href="#openimage" rel="modal:open"><img class="postimage" src="'+ file + 
+                    '"></a>');
+
+                    $("div.gallery img.postimage").click(function(){
+		                $('.itemimagefull').attr('src', $(this).attr('src'));
+	                })
+
+                }
+
+                reader.readAsDataURL(this.files[i]);
+            }
+        }
+
+    });
+
     function isNumber(evt)
     {
         var charCode = (evt.which) ? evt.which : event.keyCode

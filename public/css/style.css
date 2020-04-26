@@ -659,6 +659,19 @@ input[type=email], input[type=password], input[type=text]
 	font-family: "Open Sans", sans-serif;
 }
 
+.postimage
+{
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	margin-right: 5px;
+}
+
+.postimage:hover
+{
+	opacity: 70%;
+}
+
 #createposterror, #pwerror, #numerror
 {
 	color: red;
@@ -761,7 +774,7 @@ input[type=email], input[type=password], input[type=text]
 	cursor: pointer;
 }
 
-#submitpost
+#submitpost, #removepic
 {
 	text-align: center;
 	margin-top: 20px;
