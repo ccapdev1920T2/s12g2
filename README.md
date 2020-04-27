@@ -4,7 +4,7 @@ Bids++ is a (developing) web application that aims to simulate the concept of on
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+You may choose to view the project in https://bidspp.herokuapp.com/ or follow the instructions below to get a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
