@@ -115,6 +115,20 @@ __Suspend reported users__
 * [Express](https://www.mongodb.com) - The web framework used
 * [MongoDB](https://maven.apache.org/) - Database management
 
+## Modules Used
+* async
+* bcrypt
+* body-parser
+* express
+* express-handlebars
+* express-hbs
+* express-session
+* handlebars
+* hbs
+* mongodb
+* mongoose
+* multer
+
 ## Authors
 
 * **Robi Banogon**
