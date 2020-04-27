@@ -493,7 +493,8 @@ input[type=email], input[type=password], input[type=text]
 	font-family: 'Open Sans', sans-serif;
 	letter-spacing: 0.5px;
 	word-break: break-all;
-	white-space: normal
+	white-space: normal;
+	margin: 0px 0px 20px 0px;
 }
 
 .adtldetails
