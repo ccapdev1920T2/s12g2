@@ -388,7 +388,7 @@ const controller = {
                         post.date = timestamp.toDateString();
                         post.time = timestamp.toTimeString().substring(0, 5);
 
-                        post.itemimg = post.picture;
+                        post.itemimg = post.picture[0];
 
                         posts.push(post);
                     }
@@ -1153,7 +1153,7 @@ const controller = {
                             post.isDeletable = (post.highestbidder) ? false : true;
                             post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
-                            post.itemimg = post.picture;
+                            post.itemimg = post.picture[0];
                         });
                         
                         Client.find(query).sort(sortOpt).exec(function(err, result2){
@@ -1201,7 +1201,7 @@ const controller = {
                             post.isDeletable = (post.highestbidder) ? false : true;
                             post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
-                            post.itemimg = post.picture;
+                            post.itemimg = post.picture[0];
                         });
         
                         Client.findOne({user: req.session.user}, function(err, result){
@@ -1360,7 +1360,7 @@ const controller = {
                         post.isDeletable = (post.highestbidder) ? false : true;
                         post.isOpen = (post.currentprice == post.stealprice || post.cutoff.getTime() < (new Date(Date.now())).getTime()) ? false : true;
 
-                        post.itemimg = post.picture;
+                        post.itemimg = post.picture[0];
                     });
                     
                     Client.findOne({user: req.session.user}, function(err, client){
